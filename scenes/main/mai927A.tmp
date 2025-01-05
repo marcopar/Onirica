@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://bqghirh8g0ov4"]
+
+[ext_resource type="Script" path="res://scenes/main/main.gd" id="1_xny0v"]
+[ext_resource type="Texture2D" uid="uid://b1gjt3rpk4sc3" path="res://assets/sprites/cards/background.png" id="2_ec000"]
+[ext_resource type="PackedScene" uid="uid://kpjmqglw46ry" path="res://scenes/deck/deck.tscn" id="3_25a8g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8l0gn"]
+size = Vector2(1080, 200)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_xny0v")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(540, 960)
+texture = ExtResource("2_ec000")
+
+[node name="Deck" parent="." instance=ExtResource("3_25a8g")]
+position = Vector2(540, 1600)
+
+[node name="CardsContainer" type="Node2D" parent="."]
+
+[node name="Labyrinth" type="Area2D" parent="." groups=["labyrinth"]]
+position = Vector2(0, 539)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Labyrinth"]
+position = Vector2(540, 0)
+shape = SubResource("RectangleShape2D_8l0gn")
+
+[connection signal="area_entered" from="Labyrinth" to="." method="_on_labyrinth_area_entered"]

@@ -1,0 +1,48 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Onirica"
+run/main_scene="res://scenes/main/main.tscn"
+config/features=PackedStringArray("4.3", "Mobile")
+config/icon="res://icon.svg"
+
+[autoload]
+
+Constants="*res://manager/constants.gd"
+SignalManager="*res://manager/signal_manager.gd"
+CardManager="*res://manager/card_manager.gd"
+GameManager="*res://manager/game_manager.gd"
+
+[display]
+
+window/size/viewport_width=1080
+window/size/viewport_height=1920
+window/stretch/mode="canvas_items"
+window/handheld/orientation=1
+window/vsync/vsync_mode=0
+
+[global_group]
+
+discard=""
+labyrinth=""
+limbo=""
+cards=""
+deck=""
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
+[rendering]
+
+renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true
