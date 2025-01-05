@@ -28,7 +28,9 @@ func _ready() -> void:
 	while await draw_card(false):
 		pass
 	if not GameManager.limbo.is_empty():
-		empty_limbo()
+		await empty_limbo()
+	#enable cards to be picked
+	set_hand_pickable(true)
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -44,6 +46,8 @@ func draw_card(empty_limbo_enabled: bool) -> bool:
 				return false
 			var card_model: CardModel = GameManager.deck_model.get_next_card()
 			var card: Card = CARD.instantiate()
+			#card is not pickable until explicitly enabled at a later stage
+			card.input_pickable = false
 			card.card_model = card_model
 			card_container.add_child(card)
 			if card_model.can_be_in_hand:
@@ -59,7 +63,7 @@ func draw_card(empty_limbo_enabled: bool) -> bool:
 				await animate_card_to_limbo(card)
 				SignalManager.card_added_to_limbo.emit(card)
 		if empty_limbo_enabled and not GameManager.limbo.is_empty():
-			empty_limbo()
+			await empty_limbo()
 		return card_drawn
 	return false
 
@@ -75,7 +79,6 @@ func empty_limbo() -> void:
 	await animate_shuffle()
 	GameManager.shuffle()
 	
-
 	
 func card_return_to_hand(card: Card) -> void:
 	card.position = hand_markers[card.hand_position].global_position
@@ -83,10 +86,20 @@ func card_return_to_hand(card: Card) -> void:
 	card.z_index = card.hand_position + Constants.HAND_BASE_Z
 
 func card_added_to_labyrinth(card: Card) -> void:
-	draw_card(true)
+	set_hand_pickable(false)
+	await draw_card(true)
+	set_hand_pickable(true)
 
 func card_added_to_discard(card: Card) -> void:
-	draw_card(true)
+	set_hand_pickable(false)
+	await draw_card(true)
+	set_hand_pickable(true)
+
+func set_hand_pickable(enabled: bool) -> void:
+	for child in card_container.get_children():
+		var card: Card = child
+		card.input_pickable = enabled
+		print(str(card) + " " + str(enabled))
 
 func animate_shuffle() -> void:
 	var cards: Array[Card] = [CARD.instantiate(), CARD.instantiate(), CARD.instantiate(), CARD.instantiate()]
