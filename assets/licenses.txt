@@ -1,0 +1,6 @@
+https://www.svgrepo.com/svg/51231/halloween-ghost
+
+https://fonts.google.com/icons?icon.set=Material+Symbols&icon.style=Outlined&icon.size=96&icon.color=%23000000&query=symb
+
+phosphoricon - MIT license
+remixicon - Apache 2
