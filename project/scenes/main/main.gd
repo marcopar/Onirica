@@ -86,6 +86,9 @@ func card_return_to_hand(card: Card) -> void:
 	card.z_index = card.hand_position + Constants.HAND_BASE_Z
 
 func card_added_to_labyrinth(card: Card) -> void:
+	var color: CardManager.CARD_COLOR = GameManager.check_labyrinth()
+	if color != CardManager.CARD_COLOR.NONE:
+		print(str("combo found ", color))
 	set_hand_pickable(false)
 	await draw_card(true)
 	set_hand_pickable(true)
@@ -99,7 +102,6 @@ func set_hand_pickable(enabled: bool) -> void:
 	for child in card_container.get_children():
 		var card: Card = child
 		card.input_pickable = enabled
-		print(str(card) + " " + str(enabled))
 
 func animate_shuffle() -> void:
 	var cards: Array[Card] = [CARD.instantiate(), CARD.instantiate(), CARD.instantiate(), CARD.instantiate()]
