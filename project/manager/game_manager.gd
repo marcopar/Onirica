@@ -90,10 +90,12 @@ func check_labyrinth() -> CardManager.CARD_COLOR:
 	
 func check_for_door_combo(last3: Array[Card]) -> bool:
 	var colors: Dictionary = {}
+	#count the different colors
 	for card in last3:
 		if card.card_model.color == CardManager.CARD_COLOR.MULTI:
 			continue
 		colors[card.card_model.color] = true
+	#check the colors number and the types
 	if colors.keys().size() == 1 and \
 		last3[0].card_model.type != last3[1].card_model.type and \
 		last3[1].card_model.type != last3[2].card_model.type:

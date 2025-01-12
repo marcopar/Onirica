@@ -70,6 +70,8 @@ func draw_card(empty_limbo_enabled: bool) -> bool:
 func empty_limbo() -> void:
 	var limbo_copy: Array[Card]
 	limbo_copy.append_array(GameManager.limbo)
+	#remove cards from the top one, it's visually nicer
+	limbo_copy.reverse()
 	for card in limbo_copy:
 		await animate_card_from_limbo_to_deck(card)
 		GameManager.deck_model.add_card_back(card.card_model)
