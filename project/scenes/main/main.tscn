@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bqghirh8g0ov4"]
+[gd_scene load_steps=8 format=3 uid="uid://bqghirh8g0ov4"]
 
 [ext_resource type="Script" path="res://scenes/main/main.gd" id="1_xny0v"]
 [ext_resource type="Texture2D" uid="uid://b1gjt3rpk4sc3" path="res://assets/sprites/cards/background.png" id="2_ec000"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cau3cr0g51h8p" path="res://scenes/labyrinth/labyrinth.tscn" id="4_qul2u"]
 [ext_resource type="PackedScene" uid="uid://bnxsoiggcrqk" path="res://scenes/discard/discard.tscn" id="5_korep"]
 [ext_resource type="PackedScene" uid="uid://dbcm0qgdsw0l7" path="res://scenes/limbo/limbo.tscn" id="6_jqqak"]
+[ext_resource type="PackedScene" uid="uid://bxhxggou0553h" path="res://scenes/doorspanel/doors_panel.tscn" id="7_dlvyq"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_xny0v")
@@ -49,6 +50,9 @@ position = Vector2(930, 1770)
 position = Vector2(150, 1770)
 
 [node name="CardContainer" type="Node2D" parent="."]
+
+[node name="DoorsPanel" parent="." instance=ExtResource("7_dlvyq")]
+position = Vector2(0, 220)
 
 [connection signal="area_entered" from="Deck" to="Deck" method="_on_area_entered"]
 [connection signal="area_exited" from="Deck" to="Deck" method="_on_area_exited"]
