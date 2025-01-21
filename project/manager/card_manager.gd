@@ -21,7 +21,7 @@ var CARD_TYPE_TEXT: Dictionary = {
 		CARD_TYPE.DEADEND: "deadend"
 }
 
-const BASE_DECK = {
+const BASE_DECK: Dictionary = {
 	CARD_TYPE.SUN: {
 		CARD_COLOR.RED: 9,
 		CARD_COLOR.BLUE: 8,
@@ -51,7 +51,7 @@ const BASE_DECK = {
 	}
 }
 
-const GLYPHS_EXPANSION_DECK = {
+const GLYPHS_EXPANSION_DECK: Dictionary = {
 	CARD_TYPE.GLYPH: {
 		CARD_COLOR.RED: 2,
 		CARD_COLOR.BLUE: 2,
@@ -66,7 +66,7 @@ const GLYPHS_EXPANSION_DECK = {
 	}
 }
 
-const CROSSROADS_AND_DEADENDS_EXPANSION_DECK = {
+const CROSSROADS_AND_DEADENDS_EXPANSION_DECK: Dictionary = {
 	CARD_TYPE.SUN: {
 		CARD_COLOR.MULTI: 3
 	},

@@ -36,3 +36,9 @@ func add_card_front(card: CardModel):
 func add_card_back(card: CardModel):
 	deck.push_back(card)
 	
+func get_number_of(type: CardManager.CARD_TYPE) -> int:
+	var count: int
+	for card in deck:
+		if card.type == type:
+			count += 1
+	return count

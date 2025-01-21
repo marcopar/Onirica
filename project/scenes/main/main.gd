@@ -8,6 +8,7 @@ extends Node2D
 @onready var deck: Deck = $Deck
 @onready var limbo: Limbo = $Limbo
 @onready var card_container: Node2D = $CardContainer
+@onready var doors_panel: DoorsPanel = $DoorsPanel
 
 const CARD = preload("res://scenes/card/card.tscn")
 
@@ -25,6 +26,7 @@ func _ready() -> void:
 	hand_markers.push_back(hand_marker_5)
 	get_viewport().physics_object_picking_sort = true
 	GameManager.new_game()
+	doors_panel.setup(GameManager.deck_model.get_number_of(CardManager.CARD_TYPE.DOOR))
 	while await draw_card(false):
 		pass
 	if not GameManager.limbo.is_empty():
