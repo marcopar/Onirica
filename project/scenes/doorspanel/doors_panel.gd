@@ -9,6 +9,9 @@ const GREEN_DOOR = preload("res://assets/sprites/cards/green_door.png")
 const BLUE_DOOR = preload("res://assets/sprites/cards/blue_door.png")
 const YELLOW_DOOR = preload("res://assets/sprites/cards/yellow_door.png")
 
+const LIGHT_DOOR: float = 1
+const DARK_DOOR: float = 0.2
+
 const DOOR_TEXTURES: Dictionary = {
 	CardManager.CARD_COLOR.RED: RED_DOOR,
 	CardManager.CARD_COLOR.GREEN: GREEN_DOOR,
@@ -31,8 +34,8 @@ const DOOR_COLORS_12: Array = [
 const MAX_DOORS: int = 12
 var doors: int
 
-func setup(doors: int):
-	self.doors = doors
+func setup(door_count: int):
+	doors = door_count
 	
 	for i in range(1, MAX_DOORS):
 		var node: Sprite2D = door_container.find_child(str("D", i))
@@ -50,19 +53,25 @@ func setup(doors: int):
 		for i in range(first_door, MAX_DOORS + 1):
 			var node: Sprite2D = door_container.find_child(str("D", i))
 			node.visible = true
-			node.texture = DOOR_TEXTURES[DOOR_COLORS_12[i-first_door]]
+			node.texture = DOOR_TEXTURES[DOOR_COLORS_12[i-first_door]]	
 		
-		
-func set_doors_found(color: CardManager.CARD_COLOR, door_count: int, value: bool):
+func set_doors_found(color: CardManager.CARD_COLOR, door_count: int):
 	if doors == 8:
-		var first_door: int = 3 + DOOR_COLORS_8.find(color) - 1
-		for i in range(first_door, first_door + door_count):
+		var first_door: int = 3 + DOOR_COLORS_8.find(color)
+		for i in range(first_door, first_door + 2):
 			var node: Sprite2D = door_container.find_child(str("D", i))
-			node.self_modulate = Color(1,1,1,1)
-		pass
+			if i - first_door < door_count:
+				node.self_modulate = Color(LIGHT_DOOR, LIGHT_DOOR, LIGHT_DOOR,1)
+			else:
+				node.self_modulate = Color(DARK_DOOR, DARK_DOOR, DARK_DOOR, 1)
 	if doors == 12:
-		var first_door: int = 1
-		pass
+		var first_door: int = 1 + DOOR_COLORS_12.find(color)
+		for i in range(first_door, first_door + 3):
+			var node: Sprite2D = door_container.find_child(str("D", i))
+			if i - first_door < door_count:
+				node.self_modulate = Color(LIGHT_DOOR, LIGHT_DOOR, LIGHT_DOOR,1)
+			else:
+				node.self_modulate = Color(DARK_DOOR, DARK_DOOR, DARK_DOOR, 1)
 	pass
 
 # Called when the node enters the scene tree for the first time.

@@ -35,14 +35,14 @@ position = Vector2(68, 27)
 
 [node name="D1" type="Sprite2D" parent="Background/DoorContainer"]
 visible = false
-self_modulate = Color(0.196078, 0.196078, 0.196078, 1)
+self_modulate = Color(0.2, 0.2, 0.2, 1)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_qfj76")
 centered = false
 
 [node name="D2" type="Sprite2D" parent="Background/DoorContainer"]
 visible = false
-self_modulate = Color(0.196078, 0.196078, 0.196078, 1)
+self_modulate = Color(0.2, 0.2, 0.2, 1)
 position = Vector2(80, 0)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_qfj76")
@@ -50,7 +50,7 @@ centered = false
 
 [node name="D3" type="Sprite2D" parent="Background/DoorContainer"]
 visible = false
-self_modulate = Color(0.196078, 0.196078, 0.196078, 1)
+self_modulate = Color(0.2, 0.2, 0.2, 1)
 position = Vector2(160, 0)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_qfj76")
@@ -58,7 +58,7 @@ centered = false
 
 [node name="D4" type="Sprite2D" parent="Background/DoorContainer"]
 visible = false
-self_modulate = Color(0.196078, 0.196078, 0.196078, 1)
+self_modulate = Color(0.2, 0.2, 0.2, 1)
 position = Vector2(240, 0)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_edn8y")
@@ -66,7 +66,7 @@ centered = false
 
 [node name="D5" type="Sprite2D" parent="Background/DoorContainer"]
 visible = false
-self_modulate = Color(0.196078, 0.196078, 0.196078, 1)
+self_modulate = Color(0.2, 0.2, 0.2, 1)
 position = Vector2(320, 0)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_edn8y")
@@ -74,7 +74,7 @@ centered = false
 
 [node name="D6" type="Sprite2D" parent="Background/DoorContainer"]
 visible = false
-self_modulate = Color(0.196078, 0.196078, 0.196078, 1)
+self_modulate = Color(0.2, 0.2, 0.2, 1)
 position = Vector2(400, 0)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_edn8y")
@@ -82,7 +82,7 @@ centered = false
 
 [node name="D7" type="Sprite2D" parent="Background/DoorContainer"]
 visible = false
-self_modulate = Color(0.196078, 0.196078, 0.196078, 1)
+self_modulate = Color(0.2, 0.2, 0.2, 1)
 position = Vector2(480, 0)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_by7ci")
@@ -90,7 +90,7 @@ centered = false
 
 [node name="D8" type="Sprite2D" parent="Background/DoorContainer"]
 visible = false
-self_modulate = Color(0.196078, 0.196078, 0.196078, 1)
+self_modulate = Color(0.2, 0.2, 0.2, 1)
 position = Vector2(560, 0)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_by7ci")
@@ -98,7 +98,7 @@ centered = false
 
 [node name="D9" type="Sprite2D" parent="Background/DoorContainer"]
 visible = false
-self_modulate = Color(0.196078, 0.196078, 0.196078, 1)
+self_modulate = Color(0.2, 0.2, 0.2, 1)
 position = Vector2(640, 0)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_by7ci")
@@ -106,7 +106,7 @@ centered = false
 
 [node name="D10" type="Sprite2D" parent="Background/DoorContainer"]
 visible = false
-self_modulate = Color(0.196078, 0.196078, 0.196078, 1)
+self_modulate = Color(0.2, 0.2, 0.2, 1)
 position = Vector2(720, 0)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("4_6kguw")
@@ -114,7 +114,7 @@ centered = false
 
 [node name="D11" type="Sprite2D" parent="Background/DoorContainer"]
 visible = false
-self_modulate = Color(0.196078, 0.196078, 0.196078, 1)
+self_modulate = Color(0.2, 0.2, 0.2, 1)
 position = Vector2(800, 0)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("4_6kguw")
@@ -122,7 +122,7 @@ centered = false
 
 [node name="D12" type="Sprite2D" parent="Background/DoorContainer"]
 visible = false
-self_modulate = Color(0.196078, 0.196078, 0.196078, 1)
+self_modulate = Color(0.2, 0.2, 0.2, 1)
 position = Vector2(880, 0)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("4_6kguw")
