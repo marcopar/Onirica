@@ -1,6 +1,5 @@
-[gd_scene load_steps=10 format=3 uid="uid://bxhxggou0553h"]
+[gd_scene load_steps=9 format=3 uid="uid://bxhxggou0553h"]
 
-[ext_resource type="Script" path="res://scenes/doorspanel/background.gd" id="1_4f65k"]
 [ext_resource type="Texture2D" uid="uid://cnhxk20xt15ay" path="res://assets/sprites/cards/blue_door.png" id="1_by7ci"]
 [ext_resource type="Script" path="res://scenes/doorspanel/doors_panel.gd" id="1_n3ltj"]
 [ext_resource type="Texture2D" uid="uid://btnkgsntbdm5f" path="res://assets/sprites/cards/red_door.png" id="1_qfj76"]
@@ -28,7 +27,6 @@ script = ExtResource("1_n3ltj")
 material = SubResource("CanvasItemMaterial_ys538")
 texture = SubResource("GradientTexture2D_c8mwo")
 centered = false
-script = ExtResource("1_4f65k")
 
 [node name="DoorContainer" type="Node2D" parent="Background"]
 position = Vector2(68, 27)

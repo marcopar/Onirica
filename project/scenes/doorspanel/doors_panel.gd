@@ -16,7 +16,7 @@ const DOOR_TEXTURES: Dictionary = {
 	CardManager.CARD_COLOR.RED: RED_DOOR,
 	CardManager.CARD_COLOR.GREEN: GREEN_DOOR,
 	CardManager.CARD_COLOR.BLUE: BLUE_DOOR,
-	CardManager.CARD_COLOR.YELLOW: YELLOW_DOOR,
+	CardManager.CARD_COLOR.YELLOW: YELLOW_DOOR
 }
 const DOOR_COLORS_8: Array = [
 	CardManager.CARD_COLOR.RED, CardManager.CARD_COLOR.RED, 

@@ -19,6 +19,7 @@ func _ready() -> void:
 	SignalManager.card_return_to_hand.connect(card_return_to_hand)
 	SignalManager.card_added_to_discard.connect(card_added_to_discard)
 	SignalManager.card_added_to_labyrinth.connect(card_added_to_labyrinth)
+	SignalManager.door_found.connect(door_found)
 	hand_markers.push_back(hand_marker_1)
 	hand_markers.push_back(hand_marker_2)
 	hand_markers.push_back(hand_marker_3)
@@ -83,16 +84,13 @@ func empty_limbo() -> void:
 	await animate_shuffle()
 	GameManager.shuffle()
 	
-	
 func card_return_to_hand(card: Card) -> void:
 	card.position = hand_markers[card.hand_position].global_position
 	card.rotation = hand_markers[card.hand_position].rotation
 	card.z_index = card.hand_position + Constants.HAND_BASE_Z
 
 func card_added_to_labyrinth(card: Card) -> void:
-	var color: CardManager.CARD_COLOR = GameManager.check_labyrinth()
-	if color != CardManager.CARD_COLOR.NONE:
-		print(str("combo found ", color))
+	GameManager.check_labyrinth()
 	set_hand_pickable(false)
 	await draw_card(true)
 	set_hand_pickable(true)
@@ -106,6 +104,10 @@ func set_hand_pickable(enabled: bool) -> void:
 	for child in card_container.get_children():
 		var card: Card = child
 		card.input_pickable = enabled
+		
+func door_found(color: CardManager.CARD_COLOR):
+	doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
+	pass
 
 func animate_shuffle() -> void:
 	var cards: Array[Card] = [CARD.instantiate(), CARD.instantiate(), CARD.instantiate(), CARD.instantiate()]

@@ -38,6 +38,17 @@ var discard: Array[Card]:
 	set(value):
 		discard = value
 		
+var found_doors: Dictionary = {
+	CardManager.CARD_COLOR.RED: [],
+	CardManager.CARD_COLOR.GREEN: [],
+	CardManager.CARD_COLOR.BLUE: [],
+	CardManager.CARD_COLOR.YELLOW: []
+	}:
+	get:
+		return found_doors
+	set(value):
+		found_doors = value
+		
 func _ready() -> void:
 	SignalManager.card_added_to_discard.connect(card_added_to_discard)
 	SignalManager.card_added_to_labyrinth.connect(card_added_to_labyrinth)
@@ -71,7 +82,7 @@ func shuffle() -> void:
 	SignalManager.shuffle.emit()
 
 #checks the whole lanyrinth every time but doesn't need to store extra flags
-func check_labyrinth() -> CardManager.CARD_COLOR:
+func check_labyrinth() -> void:
 	var last3: Array[Card] = []
 	for card in labyrinth:
 		last3.push_back(card)
@@ -79,14 +90,19 @@ func check_labyrinth() -> CardManager.CARD_COLOR:
 			continue		
 		if check_for_door_combo(last3):
 			#if it's the last 3 then we found a combo
-			if labyrinth.find(card) == labyrinth.size() - 1:				
-				return card.card_model.color
+			if labyrinth.find(card) == labyrinth.size() - 1:
+				#get the door from the deck
+				var door: CardModel = deck_model.search(CardManager.CARD_TYPE.DOOR, card.card_model.color)
+				if door != null:
+					#renmove the door (model) from the deck and add it to the found doors
+					deck_model.deck.erase(door)
+					found_doors[door.color].push_back(door)
+					SignalManager.door_found.emit(card.card_model.color)
 			#we found an old combo, clear the last3 and start from scratch
 			last3.clear()
 		else:
 			#remove the first card as we didn't find a combo (slide forward one step)
 			last3.pop_front()
-	return CardManager.CARD_COLOR.NONE
 	
 func check_for_door_combo(last3: Array[Card]) -> bool:
 	var colors: Dictionary = {}

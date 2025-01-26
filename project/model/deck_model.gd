@@ -42,3 +42,10 @@ func get_number_of(type: CardManager.CARD_TYPE) -> int:
 		if card.type == type:
 			count += 1
 	return count
+	
+func search(type: CardManager.CARD_TYPE, color: CardManager.CARD_COLOR) -> CardModel:
+	for card in deck:
+		if card.type == type and card.color == color:
+			return card
+	return null
+			
