@@ -9,6 +9,7 @@ extends Node2D
 @onready var limbo: Limbo = $Limbo
 @onready var card_container: Node2D = $CardContainer
 @onready var doors_panel: DoorsPanel = $DoorsPanel
+@onready var door_found_marker: Marker2D = $DoorFoundMarker
 
 const CARD = preload("res://scenes/card/card.tscn")
 
@@ -20,6 +21,7 @@ func _ready() -> void:
 	SignalManager.card_added_to_discard.connect(card_added_to_discard)
 	SignalManager.card_added_to_labyrinth.connect(card_added_to_labyrinth)
 	SignalManager.door_found.connect(door_found)
+	SignalManager.door_discarded.connect(door_discarded)
 	hand_markers.push_back(hand_marker_1)
 	hand_markers.push_back(hand_marker_2)
 	hand_markers.push_back(hand_marker_3)
@@ -105,10 +107,34 @@ func set_hand_pickable(enabled: bool) -> void:
 		var card: Card = child
 		card.input_pickable = enabled
 		
-func door_found(color: CardManager.CARD_COLOR):
+func door_found(color: CardManager.CARD_COLOR) -> void:
 	doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
-	pass
+	await animate_door_found(color)
 
+func door_discarded(color: CardManager.CARD_COLOR) -> void:
+	GameManager.door_discarded(color)
+	doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
+	
+func animate_door_found(color: CardManager.CARD_COLOR) -> void:
+	var card_model = GameManager.deck_model.search(CardManager.CARD_TYPE.DOOR, color)
+	var card: Card = CARD.instantiate()
+	card.card_model = card_model
+	card.input_pickable = false
+	card_container.add_child(card)
+	card.z_index = Constants.DRAGGING_BASE_Z
+	card.position = deck.position
+	card.set_back_texture()
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property(card, "position", door_found_marker.position, 0.5)
+	tween.tween_property(card, "scale", Vector2(0,1), 0.2)
+	tween.tween_callback(card.set_front_texture)
+	tween.tween_property(card, "scale", Vector2(1,1), 0.1)
+	tween.tween_interval(0.5)
+	tween.tween_property(card, "position", Vector2(door_found_marker.position.x, doors_panel.position.y), 0.3)
+	tween.parallel().tween_property(card, "scale", Vector2(0, 0), 0.3)
+	await tween.finished
+	card.queue_free()
+		
 func animate_shuffle() -> void:
 	var cards: Array[Card] = [CARD.instantiate(), CARD.instantiate(), CARD.instantiate(), CARD.instantiate()]
 	var tweens: Array[Tween]

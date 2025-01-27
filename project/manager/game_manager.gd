@@ -94,7 +94,7 @@ func check_labyrinth() -> void:
 				#get the door from the deck
 				var door: CardModel = deck_model.search(CardManager.CARD_TYPE.DOOR, card.card_model.color)
 				if door != null:
-					#renmove the door (model) from the deck and add it to the found doors
+					#remove the door (model) from the deck and add it to the found doors
 					deck_model.deck.erase(door)
 					found_doors[door.color].push_back(door)
 					SignalManager.door_found.emit(card.card_model.color)
@@ -103,6 +103,11 @@ func check_labyrinth() -> void:
 		else:
 			#remove the first card as we didn't find a combo (slide forward one step)
 			last3.pop_front()
+			
+func door_discarded(color: CardManager.CARD_COLOR) -> void:
+	var door: CardModel = found_doors[color].pop_back()
+	deck_model.deck.push_back(door)
+	pass
 	
 func check_for_door_combo(last3: Array[Card]) -> bool:
 	var colors: Dictionary = {}

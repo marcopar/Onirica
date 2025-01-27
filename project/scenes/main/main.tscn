@@ -54,5 +54,8 @@ position = Vector2(150, 1770)
 [node name="DoorsPanel" parent="." instance=ExtResource("7_dlvyq")]
 position = Vector2(0, 220)
 
+[node name="DoorFoundMarker" type="Marker2D" parent="."]
+position = Vector2(540, 900)
+
 [connection signal="area_entered" from="Deck" to="Deck" method="_on_area_entered"]
 [connection signal="area_exited" from="Deck" to="Deck" method="_on_area_exited"]
