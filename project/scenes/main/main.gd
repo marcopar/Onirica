@@ -20,8 +20,7 @@ func _ready() -> void:
 	SignalManager.card_return_to_hand.connect(card_return_to_hand)
 	SignalManager.card_added_to_discard.connect(card_added_to_discard)
 	SignalManager.card_added_to_labyrinth.connect(card_added_to_labyrinth)
-	SignalManager.door_found.connect(door_found)
-	SignalManager.door_not_found.connect(door_not_found)	
+	SignalManager.card_added_to_limbo.connect(card_added_to_limbo)
 	SignalManager.door_discarded.connect(door_discarded)
 	hand_markers.push_back(hand_marker_1)
 	hand_markers.push_back(hand_marker_2)
@@ -29,7 +28,8 @@ func _ready() -> void:
 	hand_markers.push_back(hand_marker_4)
 	hand_markers.push_back(hand_marker_5)
 	get_viewport().physics_object_picking_sort = true
-	GameManager.new_game()
+	GameManager.new_game()		
+	SignalManager.new_game.emit()
 	doors_panel.setup(GameManager.deck_model.get_number_of(CardManager.CARD_TYPE.DOOR))
 	while await draw_card(false):
 		pass
@@ -96,25 +96,31 @@ func card_return_to_hand(card: Card) -> void:
 	card.z_index = card.hand_position + Constants.HAND_BASE_Z
 
 func card_added_to_labyrinth(card: Card) -> void:
-	GameManager.check_labyrinth()
+	GameManager.card_added_to_labyrinth(card)
+	var color: CardManager.CARD_COLOR = GameManager.check_door_found()
+	if color != CardManager.CARD_COLOR.NONE:
+		await animate_door_found(color)
+		doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
+		if GameManager.check_won_game():
+			pass
+		else:
+			await animate_shuffle()
+			GameManager.shuffle()
+			await draw_card(true)
+	else:
+		await draw_card(true)
 	
 func card_added_to_discard(card: Card) -> void:
+	GameManager.card_added_to_discard(card)
 	await draw_card(true)
+
+func card_added_to_limbo(card: Card) -> void:
+	GameManager.card_added_to_limbo(card)
 
 func set_hand_pickable(enabled: bool) -> void:
 	for child in card_container.get_children():
 		var card: Card = child
 		card.input_pickable = enabled
-		
-func door_found(color: CardManager.CARD_COLOR) -> void:
-	await animate_door_found(color)
-	doors_panel.set_doors_found(color, GameManager.found_doors[color].size())	
-	await animate_shuffle()
-	GameManager.shuffle()
-	await draw_card(true)
-
-func door_not_found() -> void:
-	await draw_card(true)
 
 func door_discarded(color: CardManager.CARD_COLOR) -> void:
 	GameManager.door_discarded(color)
