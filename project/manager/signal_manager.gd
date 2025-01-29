@@ -10,4 +10,5 @@ signal card_added_to_limbo(card: Card)
 signal card_removed_from_limbo(card: Card)
 signal card_return_to_hand(card: Card)
 signal door_found(color: CardManager.CARD_COLOR)
+signal door_not_found
 signal door_discarded(color: CardManager.CARD_COLOR)

@@ -98,11 +98,13 @@ func check_labyrinth() -> void:
 					deck_model.deck.erase(door)
 					found_doors[door.color].push_back(door)
 					SignalManager.door_found.emit(card.card_model.color)
+					return
 			#we found an old combo, clear the last3 and start from scratch
 			last3.clear()
 		else:
 			#remove the first card as we didn't find a combo (slide forward one step)
 			last3.pop_front()
+	SignalManager.door_not_found.emit()
 			
 func door_discarded(color: CardManager.CARD_COLOR) -> void:
 	var door: CardModel = found_doors[color].pop_back()
