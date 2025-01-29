@@ -27,6 +27,7 @@ func _ready() -> void:
 	hand_markers.push_back(hand_marker_3)
 	hand_markers.push_back(hand_marker_4)
 	hand_markers.push_back(hand_marker_5)
+	#this is to handle overlapping cards properly
 	get_viewport().physics_object_picking_sort = true
 	GameManager.new_game()		
 	SignalManager.new_game.emit()
@@ -43,7 +44,6 @@ func _process(delta: float) -> void:
 	pass
 	
 func draw_card(empty_limbo_enabled: bool) -> bool:
-	set_hand_pickable(false)
 	var card_drawn: bool = false
 	for hand_position in range(0, GameManager.HAND_SIZE):
 		if not GameManager.hand[hand_position] == null:
@@ -71,9 +71,7 @@ func draw_card(empty_limbo_enabled: bool) -> bool:
 				SignalManager.card_added_to_limbo.emit(card)
 		if empty_limbo_enabled and not GameManager.limbo.is_empty():
 			await empty_limbo()
-		set_hand_pickable(true)
 		return card_drawn
-	set_hand_pickable(true)
 	return false
 
 func empty_limbo() -> void:
@@ -126,7 +124,11 @@ func door_discarded(color: CardManager.CARD_COLOR) -> void:
 	GameManager.door_discarded(color)
 	doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
 	
+####################################################
+### Animations
+
 func animate_door_found(color: CardManager.CARD_COLOR) -> void:
+	set_hand_pickable(false)
 	#just get the first found of the given color
 	var card_model = GameManager.found_doors[color][0]
 	var card: Card = CARD.instantiate()
@@ -140,14 +142,16 @@ func animate_door_found(color: CardManager.CARD_COLOR) -> void:
 	tween.tween_property(card, "position", door_found_marker.position, 0.5)
 	tween.tween_property(card, "scale", Vector2(0,1), 0.2)
 	tween.tween_callback(card.set_front_texture)
-	tween.tween_property(card, "scale", Vector2(1,1), 0.1)
+	tween.tween_property(card, "scale", Vector2(1.5,1.5), 0.1)
 	tween.tween_interval(0.5)
-	tween.tween_property(card, "position", Vector2(door_found_marker.position.x, doors_panel.position.y), 0.3)
-	tween.parallel().tween_property(card, "scale", Vector2(0, 0), 0.3)
+	tween.tween_property(card, "position", Vector2(door_found_marker.position.x, doors_panel.position.y), 0.1)
+	tween.parallel().tween_property(card, "scale", Vector2(0, 0), 0.1)
 	await tween.finished
 	card.queue_free()
+	set_hand_pickable(true)
 		
 func animate_shuffle() -> void:
+	set_hand_pickable(false)
 	var cards: Array[Card] = [CARD.instantiate(), CARD.instantiate(), CARD.instantiate(), CARD.instantiate()]
 	var tweens: Array[Tween]
 	for card in cards:
@@ -173,8 +177,10 @@ func animate_shuffle() -> void:
 		await tween.finished
 	for card in cards:
 		card.queue_free()
+	set_hand_pickable(true)
 	
 func animate_card_draw(card: Card) -> void:
+	set_hand_pickable(false)
 	card.z_index = card.hand_position + Constants.HAND_BASE_Z
 	card.position = deck.position
 	card.rotation = hand_markers[card.hand_position].rotation
@@ -184,14 +190,18 @@ func animate_card_draw(card: Card) -> void:
 	tween.tween_callback(card.set_front_texture)
 	tween.tween_property(card, "scale", Vector2(1,1), 0.1)
 	await tween.finished
+	set_hand_pickable(true)
 
 func animate_card_to_limbo(card: Card) -> void:
+	set_hand_pickable(false)
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(card, "global_position", limbo.global_position, 0.2)
 	tween.parallel().tween_property(card, "scale", Card.LIMBO_SIZE, 0.2)
 	await tween.finished
+	set_hand_pickable(true)
 	
 func animate_card_from_limbo_to_deck(card: Card) -> void:
+	set_hand_pickable(false)
 	var tween: Tween = get_tree().create_tween()
 	tween.parallel().tween_property(card, "global_position", deck.global_position, 0.2)
 	tween.parallel().tween_property(card, "scale", Vector2(0,1), 0.2)
@@ -199,3 +209,4 @@ func animate_card_from_limbo_to_deck(card: Card) -> void:
 	tween.tween_callback(card.set_back_texture)
 	tween.tween_property(card, "scale", Vector2(1,1), 0.1)
 	await tween.finished
+	set_hand_pickable(true)
