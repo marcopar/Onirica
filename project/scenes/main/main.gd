@@ -32,7 +32,7 @@ func _ready() -> void:
 	GameManager.new_game()		
 	SignalManager.new_game.emit()
 	doors_panel.setup(GameManager.deck_model.get_number_of(CardManager.CARD_TYPE.DOOR))
-	while await draw_card(false):
+	while await draw_card(false, false):
 		pass
 	if not GameManager.limbo.is_empty():
 		await empty_limbo()
@@ -43,7 +43,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 	
-func draw_card(empty_limbo_enabled: bool) -> bool:
+func draw_card(empty_limbo_enabled: bool, nightmares_enabled: bool) -> bool:
 	var card_drawn: bool = false
 	for hand_position in range(0, GameManager.HAND_SIZE):
 		if not GameManager.hand[hand_position] == null:
@@ -67,8 +67,11 @@ func draw_card(empty_limbo_enabled: bool) -> bool:
 			else:
 				card.hand_position = hand_position
 				await animate_card_draw(card)
-				await animate_card_to_limbo(card)
-				SignalManager.card_added_to_limbo.emit(card)
+				if nightmares_enabled and card.card_model.type == CardManager.CARD_TYPE.NIGHTMARE:
+					await animate_nightmare(card)
+				else:					
+					await animate_card_to_limbo(card)
+					SignalManager.card_added_to_limbo.emit(card)
 		if empty_limbo_enabled and not GameManager.limbo.is_empty():
 			await empty_limbo()
 		return card_drawn
@@ -99,18 +102,18 @@ func card_added_to_labyrinth(card: Card) -> void:
 	if color != CardManager.CARD_COLOR.NONE:
 		await animate_door_found(color)
 		doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
-		if GameManager.check_won_game():
+		if GameManager.check_won_game():			
 			pass
 		else:
 			await animate_shuffle()
 			GameManager.shuffle()
-			await draw_card(true)
+			await draw_card(true, true)
 	else:
-		await draw_card(true)
+		await draw_card(true, true)
 	
 func card_added_to_discard(card: Card) -> void:
 	GameManager.card_added_to_discard(card)
-	await draw_card(true)
+	await draw_card(true, true)
 
 func card_added_to_limbo(card: Card) -> void:
 	GameManager.card_added_to_limbo(card)
@@ -127,6 +130,15 @@ func door_discarded(color: CardManager.CARD_COLOR) -> void:
 ####################################################
 ### Animations
 
+func animate_nightmare(card: Card) -> void:
+	set_hand_pickable(false)
+	card.z_index = Constants.DRAGGING_BASE_Z
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property(card, "position", door_found_marker.position, 0.2)
+	tween.parallel().tween_property(card, "rotation_degrees", 360, 0.2)
+	await tween.finished
+	set_hand_pickable(true)
+	
 func animate_door_found(color: CardManager.CARD_COLOR) -> void:
 	set_hand_pickable(false)
 	#just get the first found of the given color

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bg8dfal8l0mxv"]
 
 [ext_resource type="Script" path="res://scenes/card/card.gd" id="1_atepj"]
-[ext_resource type="Texture2D" uid="uid://c5jkms2sw4amx" path="res://assets/sprites/cards/dream.png" id="2_toevi"]
+[ext_resource type="Texture2D" uid="uid://c5jkms2sw4amx" path="res://assets/sprites/cards/nightmare.png" id="2_toevi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rpjld"]
 size = Vector2(236, 364)

@@ -10,14 +10,14 @@ var CARD_COLOR_TEXT: Dictionary = {
 		CARD_COLOR.NONE: "none"
 }
 
-enum CARD_TYPE {SUN, MOON, KEY, GLYPH, DOOR, DREAM, DEADEND}
+enum CARD_TYPE {SUN, MOON, KEY, GLYPH, DOOR, NIGHTMARE, DEADEND}
 var CARD_TYPE_TEXT: Dictionary = {
 		CARD_TYPE.SUN: "sun",
 		CARD_TYPE.MOON: "moon",
 		CARD_TYPE.KEY: "key",
 		CARD_TYPE.GLYPH: "glyph",
 		CARD_TYPE.DOOR: "door",
-		CARD_TYPE.DREAM: "dream",
+		CARD_TYPE.NIGHTMARE: "nightmare",
 		CARD_TYPE.DEADEND: "deadend"
 }
 
@@ -46,7 +46,7 @@ const BASE_DECK: Dictionary = {
 		CARD_COLOR.GREEN: 2,
 		CARD_COLOR.YELLOW: 2
 	},
-	CARD_TYPE.DREAM: {
+	CARD_TYPE.NIGHTMARE: {
 		CARD_COLOR.NONE: 10
 	}
 }
