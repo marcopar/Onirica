@@ -69,6 +69,7 @@ func draw_card(empty_limbo_enabled: bool, nightmares_enabled: bool) -> bool:
 				await animate_card_draw(card)
 				if nightmares_enabled and card.card_model.type == CardManager.CARD_TYPE.NIGHTMARE:
 					await animate_nightmare(card)
+					return true
 				else:					
 					await animate_card_to_limbo(card)
 					SignalManager.card_added_to_limbo.emit(card)
