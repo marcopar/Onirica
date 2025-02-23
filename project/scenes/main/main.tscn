@@ -48,7 +48,6 @@ rotation = 0.349066
 position = Vector2(930, 1770)
 
 [node name="Limbo" parent="." instance=ExtResource("6_jqqak")]
-z_index = 10
 position = Vector2(150, 1770)
 
 [node name="CardContainer" type="Node2D" parent="."]
@@ -59,10 +58,13 @@ position = Vector2(0, 220)
 [node name="DoorFoundMarker" type="Marker2D" parent="."]
 position = Vector2(540, 900)
 
+[node name="NightmareFoundMarker" type="Marker2D" parent="."]
+position = Vector2(540, 1330)
+
 [node name="NightmarePanel" parent="." instance=ExtResource("8_7jqxr")]
-z_index = 1000
-position = Vector2(540, 900)
-scale = Vector2(5, 5)
+visible = false
+z_index = 199
+position = Vector2(220, 788)
 
 [connection signal="area_entered" from="Deck" to="Deck" method="_on_area_entered"]
 [connection signal="area_exited" from="Deck" to="Deck" method="_on_area_exited"]

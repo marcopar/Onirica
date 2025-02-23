@@ -10,6 +10,8 @@ extends Node2D
 @onready var card_container: Node2D = $CardContainer
 @onready var doors_panel: DoorsPanel = $DoorsPanel
 @onready var door_found_marker: Marker2D = $DoorFoundMarker
+@onready var nightmare_found_marker: Marker2D = $NightmareFoundMarker
+@onready var nightmare_panel: Node2D = $NightmarePanel
 
 const CARD = preload("res://scenes/card/card.tscn")
 
@@ -69,6 +71,8 @@ func draw_card(empty_limbo_enabled: bool, nightmares_enabled: bool) -> bool:
 				await animate_card_draw(card)
 				if nightmares_enabled and card.card_model.type == CardManager.CARD_TYPE.NIGHTMARE:
 					await animate_nightmare(card)
+					set_hand_pickable(false)
+					nightmare_panel.visible = true
 					return true
 				else:					
 					await animate_card_to_limbo(card)
@@ -135,8 +139,9 @@ func animate_nightmare(card: Card) -> void:
 	set_hand_pickable(false)
 	card.z_index = Constants.DRAGGING_BASE_Z
 	var tween: Tween = get_tree().create_tween()
-	tween.tween_property(card, "position", door_found_marker.position, 0.2)
+	tween.tween_property(card, "position", nightmare_found_marker.position, 0.2)
 	tween.parallel().tween_property(card, "rotation_degrees", 360, 0.2)
+	tween.parallel().tween_property(card, "scale", Vector2(1.3,1.3), 0.2)
 	await tween.finished
 	set_hand_pickable(true)
 	
