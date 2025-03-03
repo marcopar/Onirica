@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bnxsoiggcrqk"]
 
-[ext_resource type="Script" path="res://scenes/discard/discard.gd" id="1_h4lno"]
+[ext_resource type="Script" uid="uid://df7kpmryjeb8u" path="res://scenes/discard/discard.gd" id="1_h4lno"]
 [ext_resource type="Gradient" uid="uid://bku5rcu7ieurn" path="res://scenes/limbo_discart_gradient.tres" id="2_em7rx"]
 
 [sub_resource type="Gradient" id="Gradient_auh55"]
