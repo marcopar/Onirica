@@ -8,17 +8,20 @@
 
 [node name="NightmarePanel" type="Node2D"]
 
-[node name="NightmareButton" parent="." instance=ExtResource("1_habke")]
+[node name="ButtonDiscardDeck" parent="." instance=ExtResource("1_habke")]
 texture = ExtResource("1_uyndy")
+type = 1
 
-[node name="NightmareButton2" parent="." instance=ExtResource("1_habke")]
+[node name="ButtonDiscardDoor" parent="." instance=ExtResource("1_habke")]
 position = Vector2(220, 0)
 texture = ExtResource("2_t4lxu")
+type = 2
 
-[node name="NightmareButton3" parent="." instance=ExtResource("1_habke")]
+[node name="ButtonDiscardHand" parent="." instance=ExtResource("1_habke")]
 position = Vector2(440, 0)
 texture = ExtResource("3_fl2d7")
 
-[node name="NightmareButton4" parent="." instance=ExtResource("1_habke")]
+[node name="ButtonDiscardKey" parent="." instance=ExtResource("1_habke")]
 position = Vector2(660, 0)
 texture = ExtResource("4_3ai2i")
+type = 3

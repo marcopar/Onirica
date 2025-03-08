@@ -4,6 +4,7 @@ extends Node2D
 @onready var background: Sprite2D = $Background
 
 @export var texture: Texture2D
+@export var type: Constants.NIGHTMARE_DISCARD
 
 var selected: bool = false:
 	get:
@@ -11,13 +12,24 @@ var selected: bool = false:
 	set(value):		
 		selected = value
 		if selected:
-			background.self_modulate = Color(1,1,0)
+			background.self_modulate = Color(1, 1, 0, 1)
 		else:
-			background.self_modulate = Color(1,1,1)
+			background.self_modulate = Color(1, 1, 1, 1)
+
+var enabled: bool = true:
+	get:
+		return enabled
+	set(value):		
+		enabled = value
+		if enabled:
+			modulate = Color(1, 1, 1, 1)
+		else:
+			modulate = Color(1, 1, 1, 0.5)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	icon.texture = texture
+	enabled = true
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -26,9 +38,12 @@ func _process(delta: float) -> void:
 
 
 func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if not enabled:
+		return
 	if event is InputEventScreenTouch:
 		if event.pressed:
 			if selected:
 				selected = false
 			else:
 				selected = true
+			SignalManager.nightmare_discard_selected.emit(type, selected)
