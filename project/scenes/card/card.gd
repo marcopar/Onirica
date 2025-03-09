@@ -38,7 +38,8 @@ func _process(delta: float) -> void:
 	pass
 	
 func set_outline(enabled: bool) -> void:
-	sprite_2d.material.set_shader_parameter("")
+	##the shader has an instance parameter to enable it or not on the single card
+	sprite_2d.set_instance_shader_parameter("enabled", enabled)
 	
 func _notification(what : int):
 	if dragging and what == NOTIFICATION_WM_MOUSE_EXIT:
