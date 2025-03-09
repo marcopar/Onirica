@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dtcl11a05xwoe"]
+[gd_scene load_steps=10 format=3 uid="uid://dtcl11a05xwoe"]
 
 [ext_resource type="Script" uid="uid://lgunxy87r4b5" path="res://scenes/nightmare_panel/nightmare_panel.gd" id="1_fdyaw"]
 [ext_resource type="PackedScene" uid="uid://cnvk7ds1on5x1" path="res://scenes/nightmare_panel/nightmare_button.tscn" id="1_habke"]
@@ -7,8 +7,29 @@
 [ext_resource type="Texture2D" uid="uid://c5qu3i2sl286a" path="res://assets/sprites/icons/nightmare_discard_hand.png" id="3_fl2d7"]
 [ext_resource type="Texture2D" uid="uid://8rv57y1q14fg" path="res://assets/sprites/icons/nightmare_discard_key.png" id="4_3ai2i"]
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fdyaw"]
+blend_mode = 3
+
+[sub_resource type="Gradient" id="Gradient_t1ikr"]
+offsets = PackedFloat32Array(0, 0.657051, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.625, 0.625, 0.625, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ru42g"]
+gradient = SubResource("Gradient_t1ikr")
+width = 1000
+height = 300
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+metadata/_snap_enabled = true
+
 [node name="NightmarePanel" type="Node2D"]
 script = ExtResource("1_fdyaw")
+
+[node name="Shade" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_fdyaw")
+position = Vector2(330, 0)
+texture = SubResource("GradientTexture2D_ru42g")
 
 [node name="ButtonDiscardDeck" parent="." instance=ExtResource("1_habke")]
 texture = ExtResource("1_uyndy")
