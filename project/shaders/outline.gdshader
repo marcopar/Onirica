@@ -1,6 +1,7 @@
-//small changes applied
-//https://godotengine.org/asset-library/asset/2829
+//slightly customized
+//2D outline shader 1.0.0
 //Julian-Vos; MIT; 2024-04-01
+//https://godotengine.org/asset-library/asset/2829
 
 shader_type canvas_item;
 
@@ -11,21 +12,25 @@ uniform bool inside = false;
 uniform bool add_margins = true; // only useful when inside is false
 uniform vec2 number_of_images = vec2(1.0); // number of horizontal and vertical images in the sprite sheet
 
+// CUSTOM
 varying flat vec4 modulate;
+// CUSTOM
 
 instance uniform bool enabled = false;
 
 void vertex() {
+	// CUSTOM
 	if(enabled) {
+	// CUSTOM
 		modulate = COLOR;
-	}
-	if (add_margins) {
-		if ((UV.x <= 0.0 || UV.x >= 1.0) && (UV.y <= 0.0 || UV.y >= 1.0)) {
-			VERTEX += (UV * 2.0 - 1.0) * width;
-		} else {
-			VERTEX += sign(VERTEX) * width; // replace sign(VERTEX) by (sign(VERTEX) * 2.0 - 1.0) if your AnimatedSprite2D isn't Centered
+		if (add_margins) {
+			if ((UV.x <= 0.0 || UV.x >= 1.0) && (UV.y <= 0.0 || UV.y >= 1.0)) {
+				VERTEX += (UV * 2.0 - 1.0) * width;
+			} else {
+				VERTEX += sign(VERTEX) * width; // replace sign(VERTEX) by (sign(VERTEX) * 2.0 - 1.0) if your AnimatedSprite2D isn't Centered
+			}
 		}
-	}
+	}	
 }
 
 bool hasContraryNeighbour(vec2 uv, vec2 texture_pixel_size, vec2 image_top_left, vec2 image_bottom_right, sampler2D texture) {
@@ -55,7 +60,9 @@ bool hasContraryNeighbour(vec2 uv, vec2 texture_pixel_size, vec2 image_top_left,
 }
 
 void fragment() {
+	// CUSTOM
 	if(enabled) {
+	// CUSTOM
 		vec2 uv = UV;
 		vec2 image_top_left = floor(uv * number_of_images) / number_of_images;
 		vec2 image_bottom_right = image_top_left + vec2(1.0) / number_of_images;
