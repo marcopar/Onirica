@@ -1,7 +1,7 @@
 extends Node
 
 enum CARD_COLOR {RED, GREEN, BLUE, YELLOW, MULTI, NONE}
-var CARD_COLOR_TEXT: Dictionary = {
+var CARD_COLOR_TEXT: Dictionary[CardManager.CARD_COLOR, String] = {
 		CARD_COLOR.RED: "red",
 		CARD_COLOR.BLUE: "blue",
 		CARD_COLOR.GREEN: "green",
@@ -11,7 +11,7 @@ var CARD_COLOR_TEXT: Dictionary = {
 }
 
 enum CARD_TYPE {SUN, MOON, KEY, GLYPH, DOOR, NIGHTMARE, DEADEND}
-var CARD_TYPE_TEXT: Dictionary = {
+var CARD_TYPE_TEXT: Dictionary[CardManager.CARD_TYPE, String] = {
 		CARD_TYPE.SUN: "sun",
 		CARD_TYPE.MOON: "moon",
 		CARD_TYPE.KEY: "key",
@@ -21,7 +21,7 @@ var CARD_TYPE_TEXT: Dictionary = {
 		CARD_TYPE.DEADEND: "deadend"
 }
 
-const BASE_DECK: Dictionary = {
+const BASE_DECK: Dictionary[CardManager.CARD_TYPE, Variant] = {
 	CARD_TYPE.SUN: {
 		CARD_COLOR.RED: 9,
 		CARD_COLOR.BLUE: 8,
@@ -51,7 +51,7 @@ const BASE_DECK: Dictionary = {
 	}
 }
 
-const GLYPHS_EXPANSION_DECK: Dictionary = {
+const GLYPHS_EXPANSION_DECK: Dictionary[CardManager.CARD_TYPE, Variant] = {
 	CARD_TYPE.GLYPH: {
 		CARD_COLOR.RED: 2,
 		CARD_COLOR.BLUE: 2,
@@ -66,7 +66,7 @@ const GLYPHS_EXPANSION_DECK: Dictionary = {
 	}
 }
 
-const CROSSROADS_AND_DEADENDS_EXPANSION_DECK: Dictionary = {
+const CROSSROADS_AND_DEADENDS_EXPANSION_DECK: Dictionary[CardManager.CARD_TYPE, Variant] = {
 	CARD_TYPE.SUN: {
 		CARD_COLOR.MULTI: 3
 	},

@@ -40,7 +40,7 @@ var discard: Array[Card]:
 		
 var doors_to_be_found: int
 		
-var found_doors: Dictionary = {
+var found_doors: Dictionary[CardManager.CARD_COLOR, Variant] = {
 	CardManager.CARD_COLOR.RED: [],
 	CardManager.CARD_COLOR.GREEN: [],
 	CardManager.CARD_COLOR.BLUE: [],
@@ -109,7 +109,7 @@ func door_discarded(color: CardManager.CARD_COLOR) -> void:
 	pass
 	
 func check_for_door_combo(last3: Array[Card]) -> bool:
-	var colors: Dictionary = {}
+	var colors: Dictionary[CardManager.CARD_COLOR, bool] = {}
 	#count the different colors
 	for card in last3:
 		if card.card_model.color == CardManager.CARD_COLOR.MULTI:
