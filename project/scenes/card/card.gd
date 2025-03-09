@@ -37,6 +37,9 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 	
+func set_outline(enabled: bool) -> void:
+	sprite_2d.material.set_shader_parameter("")
+	
 func _notification(what : int):
 	if dragging and what == NOTIFICATION_WM_MOUSE_EXIT:
 		abort_dragging()
