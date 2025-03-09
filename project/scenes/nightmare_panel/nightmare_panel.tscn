@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://dtcl11a05xwoe"]
+[gd_scene load_steps=7 format=3 uid="uid://dtcl11a05xwoe"]
 
+[ext_resource type="Script" uid="uid://lgunxy87r4b5" path="res://scenes/nightmare_panel/nightmare_panel.gd" id="1_fdyaw"]
 [ext_resource type="PackedScene" uid="uid://cnvk7ds1on5x1" path="res://scenes/nightmare_panel/nightmare_button.tscn" id="1_habke"]
 [ext_resource type="Texture2D" uid="uid://c38rjp8p3aj6j" path="res://assets/sprites/icons/nightmare_discard_5.png" id="1_uyndy"]
 [ext_resource type="Texture2D" uid="uid://b58m2hj6f7hau" path="res://assets/sprites/icons/nightmare_discard_door.png" id="2_t4lxu"]
@@ -7,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://8rv57y1q14fg" path="res://assets/sprites/icons/nightmare_discard_key.png" id="4_3ai2i"]
 
 [node name="NightmarePanel" type="Node2D"]
+script = ExtResource("1_fdyaw")
 
 [node name="ButtonDiscardDeck" parent="." instance=ExtResource("1_habke")]
 texture = ExtResource("1_uyndy")

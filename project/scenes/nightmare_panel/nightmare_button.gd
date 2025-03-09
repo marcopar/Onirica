@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name NightmareButton
+
 @onready var icon: Sprite2D = $Icon
 @onready var background: Sprite2D = $Background
 
@@ -46,4 +48,4 @@ func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 				selected = false
 			else:
 				selected = true
-			SignalManager.nightmare_discard_selected.emit(type, selected)
+			SignalManager.nightmare_button_selected.emit(type, selected)
