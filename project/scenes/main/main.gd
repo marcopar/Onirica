@@ -24,6 +24,8 @@ func _ready() -> void:
 	SignalManager.card_added_to_labyrinth.connect(card_added_to_labyrinth)
 	SignalManager.card_added_to_limbo.connect(card_added_to_limbo)
 	SignalManager.door_discarded.connect(door_discarded)
+	SignalManager.nightmare_action_selected.connect(nightmare_action_selected)
+	SignalManager.nightmare_action_activated.connect(nightmare_action_activated)
 	hand_markers.push_back(hand_marker_1)
 	hand_markers.push_back(hand_marker_2)
 	hand_markers.push_back(hand_marker_3)
@@ -131,9 +133,50 @@ func set_hand_pickable(enabled: bool) -> void:
 func door_discarded(color: CardManager.CARD_COLOR) -> void:
 	GameManager.door_discarded(color)
 	doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
+
+func nightmare_action_selected(type: Constants.NIGHTMARE_DISCARD) -> void:
+	match(type):
+		Constants.NIGHTMARE_DISCARD.NONE:
+			deck.set_outline(false)
+			doors_panel.set_outline(false)
+			set_hand_outline(false)
+		Constants.NIGHTMARE_DISCARD.DECK:
+			deck.set_outline(true)
+			doors_panel.set_outline(false)
+			set_hand_outline(false)
+		Constants.NIGHTMARE_DISCARD.DOOR:
+			deck.set_outline(false)
+			doors_panel.set_outline(true)
+			set_hand_outline(false)
+		Constants.NIGHTMARE_DISCARD.KEY:
+			deck.set_outline(false)
+			doors_panel.set_outline(false)
+			set_hand_outline(false)
+			set_keys_outline(true)
+		Constants.NIGHTMARE_DISCARD.HAND:
+			deck.set_outline(false)
+			doors_panel.set_outline(false)
+			set_hand_outline(true)
+
+func nightmare_action_activated(type: Constants.NIGHTMARE_DISCARD) -> void:
+	pass
 	
+func set_hand_outline(enabled: bool) -> void:
+	set_cards_outline(enabled, false)
+
+func set_keys_outline(enabled: bool) -> void:
+	set_cards_outline(enabled, true)
+	
+func set_cards_outline(enabled: bool, keys_only: bool) -> void:
+	for card in GameManager.hand:
+		if card != null:
+			if not keys_only or card.card_model.type == CardManager.CARD_TYPE.KEY:
+				card.set_outline(enabled)
+			
+
 ####################################################
 ### Animations
+####################################################
 
 func animate_nightmare(card: Card) -> void:
 	set_hand_pickable(false)

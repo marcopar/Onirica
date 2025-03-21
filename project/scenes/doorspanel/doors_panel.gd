@@ -3,6 +3,7 @@ extends Node2D
 class_name DoorsPanel
 
 @onready var door_container: Node2D = $Background/DoorContainer
+@onready var outline: Sprite2D = $Outline
 
 const RED_DOOR = preload("res://assets/sprites/cards/red_door.png")
 const GREEN_DOOR = preload("res://assets/sprites/cards/green_door.png")
@@ -73,6 +74,10 @@ func set_doors_found(color: CardManager.CARD_COLOR, door_count: int):
 			else:
 				node.self_modulate = Color(DARK_DOOR, DARK_DOOR, DARK_DOOR, 1)
 	pass
+	
+func set_outline(enabled: bool) -> void:
+	##the shader has an instance parameter to enable it or not on the single card
+	outline.visible = enabled
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

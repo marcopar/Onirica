@@ -21,6 +21,7 @@ script = ExtResource("1_atepj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_g65cd")
+instance_shader_parameters/enabled = false
 texture = ExtResource("2_toevi")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

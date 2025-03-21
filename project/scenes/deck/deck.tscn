@@ -1,8 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://kpjmqglw46ry"]
+[gd_scene load_steps=7 format=3 uid="uid://kpjmqglw46ry"]
 
 [ext_resource type="Texture2D" uid="uid://b24ywwxn5efhv" path="res://assets/sprites/cards/back.png" id="1_5an2p"]
 [ext_resource type="Script" uid="uid://cghvgcfio327k" path="res://scenes/deck/deck.gd" id="1_lvj0y"]
 [ext_resource type="Shader" uid="uid://ev2hcn4hhgq2" path="res://shaders/outline.gdshader" id="1_u3j8v"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_765a5"]
+shader = ExtResource("1_u3j8v")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 0
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+shader_parameter/number_of_images = Vector2(1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u3j8v"]
 shader = ExtResource("1_u3j8v")
@@ -17,6 +26,7 @@ shader_parameter/number_of_images = Vector2(1, 1)
 size = Vector2(256, 384)
 
 [node name="Deck" type="Area2D" groups=["deck"]]
+material = SubResource("ShaderMaterial_765a5")
 script = ExtResource("1_lvj0y")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

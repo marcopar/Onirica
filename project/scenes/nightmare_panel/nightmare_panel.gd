@@ -29,3 +29,6 @@ func nightmare_button_selected(type: Constants.NIGHTMARE_DISCARD, selected: bool
 		for button in buttons:
 			if button.type != type:
 				button.selected = false
+		SignalManager.nightmare_action_selected.emit(type)
+	else:
+		SignalManager.nightmare_action_selected.emit(Constants.NIGHTMARE_DISCARD.NONE)

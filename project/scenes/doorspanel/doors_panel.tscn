@@ -1,12 +1,31 @@
-[gd_scene load_steps=9 format=3 uid="uid://bxhxggou0553h"]
+[gd_scene load_steps=13 format=3 uid="uid://bxhxggou0553h"]
 
 [ext_resource type="Texture2D" uid="uid://cnhxk20xt15ay" path="res://assets/sprites/cards/blue_door.png" id="1_by7ci"]
 [ext_resource type="Script" uid="uid://bi1yoni0bh1vi" path="res://scenes/doorspanel/doors_panel.gd" id="1_n3ltj"]
 [ext_resource type="Texture2D" uid="uid://btnkgsntbdm5f" path="res://assets/sprites/cards/red_door.png" id="1_qfj76"]
 [ext_resource type="Texture2D" uid="uid://bc8aj5jwkixg1" path="res://assets/sprites/cards/green_door.png" id="2_edn8y"]
+[ext_resource type="Shader" uid="uid://ev2hcn4hhgq2" path="res://shaders/outline.gdshader" id="2_plo07"]
 [ext_resource type="Texture2D" uid="uid://ve0ailn7fsq5" path="res://assets/sprites/cards/yellow_door.png" id="4_6kguw"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ys538"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bcca8"]
+shader = ExtResource("2_plo07")
+shader_parameter/color = Color(1, 1, 0, 1)
+shader_parameter/width = 5.0
+shader_parameter/pattern = 2
+shader_parameter/inside = true
+shader_parameter/add_margins = false
+shader_parameter/number_of_images = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_pfa5x"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0, 0, 0, 0.00392157)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7qlxk"]
+gradient = SubResource("Gradient_pfa5x")
+width = 1080
+height = 150
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ldbn4"]
 blend_mode = 3
 
 [sub_resource type="Gradient" id="Gradient_l478p"]
@@ -23,8 +42,15 @@ fill_from = Vector2(0.5, 0.5)
 [node name="DoorsPanel" type="Node2D"]
 script = ExtResource("1_n3ltj")
 
+[node name="Outline" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_bcca8")
+instance_shader_parameters/enabled = true
+texture = SubResource("GradientTexture2D_7qlxk")
+centered = false
+
 [node name="Background" type="Sprite2D" parent="."]
-material = SubResource("CanvasItemMaterial_ys538")
+material = SubResource("CanvasItemMaterial_ldbn4")
 texture = SubResource("GradientTexture2D_c8mwo")
 centered = false
 
