@@ -62,6 +62,7 @@ position = Vector2(540, 900)
 position = Vector2(540, 1330)
 
 [node name="NightmarePanel" parent="." instance=ExtResource("8_7jqxr")]
+visible = false
 z_index = 199
 position = Vector2(220, 788)
 

@@ -8,8 +8,8 @@
 radius = 100.0
 
 [sub_resource type="Gradient" id="Gradient_el3ds"]
-offsets = PackedFloat32Array(0, 0.565517, 0.674138)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0)
+offsets = PackedFloat32Array(0, 0.560897, 0.674138)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.431373, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_krnib"]
 gradient = SubResource("Gradient_el3ds")

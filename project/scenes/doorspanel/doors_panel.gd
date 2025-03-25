@@ -76,6 +76,7 @@ func set_doors_found(color: CardManager.CARD_COLOR, door_count: int):
 func set_outline(enabled: bool) -> void:
 	for i in range(1, MAX_DOORS + 1):
 		var node: Sprite2D = door_container.find_child(str("D", i))
+		#if the door is light the we should apply the outline
 		if node.self_modulate.r == LIGHT_DOOR:
 			##the shader has an instance parameter to enable it or not on the single card
 			node.set_instance_shader_parameter("enabled", enabled)

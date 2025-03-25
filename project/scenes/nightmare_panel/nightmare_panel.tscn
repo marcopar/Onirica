@@ -11,7 +11,7 @@
 blend_mode = 3
 
 [sub_resource type="Gradient" id="Gradient_t1ikr"]
-offsets = PackedFloat32Array(0, 0.657051, 1)
+offsets = PackedFloat32Array(0.323718, 0.74359, 1)
 colors = PackedColorArray(0, 0, 0, 1, 0.625, 0.625, 0.625, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ru42g"]
