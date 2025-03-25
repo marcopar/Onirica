@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bxhxggou0553h"]
+[gd_scene load_steps=11 format=3 uid="uid://bxhxggou0553h"]
 
 [ext_resource type="Texture2D" uid="uid://cnhxk20xt15ay" path="res://assets/sprites/cards/blue_door.png" id="1_by7ci"]
 [ext_resource type="Script" uid="uid://bi1yoni0bh1vi" path="res://scenes/doorspanel/doors_panel.gd" id="1_n3ltj"]
@@ -6,24 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://bc8aj5jwkixg1" path="res://assets/sprites/cards/green_door.png" id="2_edn8y"]
 [ext_resource type="Shader" uid="uid://ev2hcn4hhgq2" path="res://shaders/outline.gdshader" id="2_plo07"]
 [ext_resource type="Texture2D" uid="uid://ve0ailn7fsq5" path="res://assets/sprites/cards/yellow_door.png" id="4_6kguw"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bcca8"]
-shader = ExtResource("2_plo07")
-shader_parameter/color = Color(1, 1, 0, 1)
-shader_parameter/width = 5.0
-shader_parameter/pattern = 2
-shader_parameter/inside = true
-shader_parameter/add_margins = false
-shader_parameter/number_of_images = Vector2(1, 1)
-
-[sub_resource type="Gradient" id="Gradient_pfa5x"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(0, 0, 0, 0.00392157)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_7qlxk"]
-gradient = SubResource("Gradient_pfa5x")
-width = 1080
-height = 150
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ldbn4"]
 blend_mode = 3
@@ -39,15 +21,17 @@ height = 150
 fill = 2
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_plo07"]
+shader = ExtResource("2_plo07")
+shader_parameter/color = Color(1, 1, 0, 1)
+shader_parameter/width = 20.0
+shader_parameter/pattern = 2
+shader_parameter/inside = true
+shader_parameter/add_margins = false
+shader_parameter/number_of_images = Vector2(1, 1)
+
 [node name="DoorsPanel" type="Node2D"]
 script = ExtResource("1_n3ltj")
-
-[node name="Outline" type="Sprite2D" parent="."]
-visible = false
-material = SubResource("ShaderMaterial_bcca8")
-instance_shader_parameters/enabled = true
-texture = SubResource("GradientTexture2D_7qlxk")
-centered = false
 
 [node name="Background" type="Sprite2D" parent="."]
 material = SubResource("CanvasItemMaterial_ldbn4")
@@ -55,99 +39,105 @@ texture = SubResource("GradientTexture2D_c8mwo")
 centered = false
 
 [node name="DoorContainer" type="Node2D" parent="Background"]
-position = Vector2(68, 27)
+position = Vector2(68, 22)
 
 [node name="D1" type="Sprite2D" parent="Background/DoorContainer"]
-visible = false
 self_modulate = Color(0.2, 0.2, 0.2, 1)
-scale = Vector2(0.25, 0.25)
+material = SubResource("ShaderMaterial_plo07")
+scale = Vector2(0.27, 0.27)
 texture = ExtResource("1_qfj76")
 centered = false
 
 [node name="D2" type="Sprite2D" parent="Background/DoorContainer"]
-visible = false
 self_modulate = Color(0.2, 0.2, 0.2, 1)
+material = SubResource("ShaderMaterial_plo07")
 position = Vector2(80, 0)
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.27, 0.27)
 texture = ExtResource("1_qfj76")
 centered = false
 
 [node name="D3" type="Sprite2D" parent="Background/DoorContainer"]
-visible = false
 self_modulate = Color(0.2, 0.2, 0.2, 1)
+material = SubResource("ShaderMaterial_plo07")
+instance_shader_parameters/enabled = false
 position = Vector2(160, 0)
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.27, 0.27)
 texture = ExtResource("1_qfj76")
 centered = false
 
 [node name="D4" type="Sprite2D" parent="Background/DoorContainer"]
-visible = false
 self_modulate = Color(0.2, 0.2, 0.2, 1)
+material = SubResource("ShaderMaterial_plo07")
+instance_shader_parameters/enabled = false
 position = Vector2(240, 0)
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.27, 0.27)
 texture = ExtResource("2_edn8y")
 centered = false
 
 [node name="D5" type="Sprite2D" parent="Background/DoorContainer"]
-visible = false
 self_modulate = Color(0.2, 0.2, 0.2, 1)
+material = SubResource("ShaderMaterial_plo07")
+instance_shader_parameters/enabled = false
 position = Vector2(320, 0)
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.27, 0.27)
 texture = ExtResource("2_edn8y")
 centered = false
 
 [node name="D6" type="Sprite2D" parent="Background/DoorContainer"]
-visible = false
 self_modulate = Color(0.2, 0.2, 0.2, 1)
+material = SubResource("ShaderMaterial_plo07")
+instance_shader_parameters/enabled = false
 position = Vector2(400, 0)
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.27, 0.27)
 texture = ExtResource("2_edn8y")
 centered = false
 
 [node name="D7" type="Sprite2D" parent="Background/DoorContainer"]
-visible = false
 self_modulate = Color(0.2, 0.2, 0.2, 1)
+material = SubResource("ShaderMaterial_plo07")
 position = Vector2(480, 0)
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.27, 0.27)
 texture = ExtResource("1_by7ci")
 centered = false
 
 [node name="D8" type="Sprite2D" parent="Background/DoorContainer"]
-visible = false
 self_modulate = Color(0.2, 0.2, 0.2, 1)
+material = SubResource("ShaderMaterial_plo07")
 position = Vector2(560, 0)
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.27, 0.27)
 texture = ExtResource("1_by7ci")
 centered = false
 
 [node name="D9" type="Sprite2D" parent="Background/DoorContainer"]
-visible = false
 self_modulate = Color(0.2, 0.2, 0.2, 1)
+material = SubResource("ShaderMaterial_plo07")
+instance_shader_parameters/enabled = false
 position = Vector2(640, 0)
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.27, 0.27)
 texture = ExtResource("1_by7ci")
 centered = false
 
 [node name="D10" type="Sprite2D" parent="Background/DoorContainer"]
-visible = false
 self_modulate = Color(0.2, 0.2, 0.2, 1)
+material = SubResource("ShaderMaterial_plo07")
+instance_shader_parameters/enabled = false
 position = Vector2(720, 0)
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.27, 0.27)
 texture = ExtResource("4_6kguw")
 centered = false
 
 [node name="D11" type="Sprite2D" parent="Background/DoorContainer"]
-visible = false
 self_modulate = Color(0.2, 0.2, 0.2, 1)
+material = SubResource("ShaderMaterial_plo07")
 position = Vector2(800, 0)
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.27, 0.27)
 texture = ExtResource("4_6kguw")
 centered = false
 
 [node name="D12" type="Sprite2D" parent="Background/DoorContainer"]
-visible = false
 self_modulate = Color(0.2, 0.2, 0.2, 1)
+material = SubResource("ShaderMaterial_plo07")
 position = Vector2(880, 0)
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.27, 0.27)
 texture = ExtResource("4_6kguw")
 centered = false
