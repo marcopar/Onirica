@@ -18,6 +18,8 @@ func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 		var touch_event: InputEventScreenTouch = event
 		if touch_event.index > 0:
 			return
+		if(not touch_event.pressed):
+			print("touch ", self)
 		get_viewport().set_input_as_handled()
 
 func set_outline(enabled: bool) -> void:

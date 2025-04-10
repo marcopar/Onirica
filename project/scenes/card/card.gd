@@ -8,6 +8,7 @@ const FULL_SIZE: Vector2 = Vector2.ONE
 const LABYRINTH_SIZE: Vector2 = Vector2(0.60, 0.60)
 const DISCARD_SIZE: Vector2 = Vector2(0.50, 0.50)
 const LIMBO_SIZE: Vector2 = Vector2(0.50, 0.50)
+const DEAD_ZONE: float = 20
 
 var front_texture: Texture2D
 var back_texture: Texture2D
@@ -25,6 +26,7 @@ var card_model: CardModel:
 		card_model = value
 		
 var dragging: bool = false
+var drag_start: Vector2 = Vector2.INF
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -53,6 +55,8 @@ func _input(event: InputEvent) -> void:
 		if not get_viewport_rect().has_point(drag_event.position):
 			abort_dragging()
 			return
+		if not drag_start.is_finite():
+			drag_start = drag_event.position
 		z_index = Constants.DRAGGING_BASE_Z
 		position = drag_event.position
 		rotation = 0
@@ -69,22 +73,32 @@ func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 			return
 		dragging = touch_event.pressed and (card_model.can_play or card_model.can_discard)
 		if(not touch_event.pressed):
+			if is_no_movement():
+				print("touch ", self)
+				pass
 			for area in get_overlapping_areas():
 				if area.is_in_group(Constants.GROUP_LABYRINTH) and card_model.can_play:
 					#can't play the same type of an existing card already in the labyrinth
 					if GameManager.labyrinth.size() == 0 or card_model.type != GameManager.labyrinth[GameManager.labyrinth.size()-1].card_model.type:
 						SignalManager.card_added_to_labyrinth.emit(self)
 						get_viewport().set_input_as_handled()
+						dragging = false
 						return
 				elif area.is_in_group(Constants.GROUP_DISCARD) and card_model.can_discard:
 					SignalManager.card_added_to_discard.emit(self)
 					get_viewport().set_input_as_handled()
+					dragging = false
 					return
-			SignalManager.card_return_to_hand.emit(self)
+			abort_dragging()
 		get_viewport().set_input_as_handled()
 
+func is_no_movement() -> bool:
+	var delta: Vector2 = drag_start - position
+	return (not drag_start.is_finite() or delta.length() < DEAD_ZONE) and not dragging
+	
 func abort_dragging() -> void:
 	dragging = false
+	drag_start = Vector2.INF
 	SignalManager.card_return_to_hand.emit(self)
 	
 func set_full_size() -> void:
