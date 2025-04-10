@@ -71,9 +71,11 @@ func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 		if(not touch_event.pressed):
 			for area in get_overlapping_areas():
 				if area.is_in_group(Constants.GROUP_LABYRINTH) and card_model.can_play:
-					SignalManager.card_added_to_labyrinth.emit(self)
-					get_viewport().set_input_as_handled()
-					return
+					#can't play the same type of an existing card already in the labyrinth
+					if GameManager.labyrinth.size() == 0 or card_model.type != GameManager.labyrinth[GameManager.labyrinth.size()-1].card_model.type:
+						SignalManager.card_added_to_labyrinth.emit(self)
+						get_viewport().set_input_as_handled()
+						return
 				elif area.is_in_group(Constants.GROUP_DISCARD) and card_model.can_discard:
 					SignalManager.card_added_to_discard.emit(self)
 					get_viewport().set_input_as_handled()
