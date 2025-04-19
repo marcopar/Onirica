@@ -9,10 +9,6 @@ class_name Discard
 func _ready() -> void:
 	SignalManager.card_return_to_hand.connect(card_return_to_hand)
 	SignalManager.card_added_to_discard.connect(card_added_to_discard)
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 		
 func card_added_to_discard(card: Card) -> void:
 	highlight.enabled = false

@@ -33,12 +33,6 @@ func _ready() -> void:
 	icon.texture = texture
 	enabled = true
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-
 func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if not enabled:
 		return

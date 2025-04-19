@@ -16,11 +16,6 @@ func _ready() -> void:
 	buttons.push_back(button_discard_hand)
 	buttons.push_back(button_discard_key)
 	SignalManager.nightmare_button_selected.connect(nightmare_button_selected)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 	
 func nightmare_button_selected(type: Constants.NIGHTMARE_DISCARD, selected: bool) -> void:
 	#ignore deselect signals

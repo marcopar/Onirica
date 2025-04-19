@@ -9,9 +9,6 @@ const GREEN_DOOR = preload("res://assets/sprites/cards/green_door.png")
 const BLUE_DOOR = preload("res://assets/sprites/cards/blue_door.png")
 const YELLOW_DOOR = preload("res://assets/sprites/cards/yellow_door.png")
 
-const LIGHT_DOOR: float = 1
-const DARK_DOOR: float = 0.2
-
 const DOOR_TEXTURES: Dictionary[CardManager.CARD_COLOR, Resource] = {
 	CardManager.CARD_COLOR.RED: RED_DOOR,
 	CardManager.CARD_COLOR.GREEN: GREEN_DOOR,
@@ -38,55 +35,43 @@ func setup(door_count: int):
 	doors = door_count
 	
 	for i in range(1, MAX_DOORS + 1):
-		var node: Sprite2D = door_container.find_child(str("D", i))
+		var node: DoorsButton = door_container.find_child(str("D", i))
 		node.visible = false
 		
 	if doors == 8:
 		var first_door: int = 3
 		for i in range(first_door, MAX_DOORS - 1):
-			var node: Sprite2D = door_container.find_child(str("D", i))
+			var node: DoorsButton = door_container.find_child(str("D", i))
 			node.visible = true
-			node.texture = DOOR_TEXTURES[DOOR_COLORS_8[i-first_door]]
+			node.set_texture(DOOR_TEXTURES[DOOR_COLORS_8[i-first_door]])
 	
 	if doors == 12:
 		var first_door: int = 1
 		for i in range(first_door, MAX_DOORS + 1):
-			var node: Sprite2D = door_container.find_child(str("D", i))
+			var node: DoorsButton = door_container.find_child(str("D", i))
 			node.visible = true
-			node.texture = DOOR_TEXTURES[DOOR_COLORS_12[i-first_door]]	
+			node.set_texture(DOOR_TEXTURES[DOOR_COLORS_12[i-first_door]])
 		
 func set_doors_found(color: CardManager.CARD_COLOR, door_count: int):
 	if doors == 8:
 		var first_door: int = 3 + DOOR_COLORS_8.find(color)
 		for i in range(first_door, first_door + 2):
-			var node: Sprite2D = door_container.find_child(str("D", i))
+			var node: DoorsButton = door_container.find_child(str("D", i))
 			if i - first_door < door_count:
-				node.self_modulate = Color(LIGHT_DOOR, LIGHT_DOOR, LIGHT_DOOR,1)
+				node.set_light(true)
 			else:
-				node.self_modulate = Color(DARK_DOOR, DARK_DOOR, DARK_DOOR, 1)
+				node.set_light(false)
 	if doors == 12:
 		var first_door: int = 1 + DOOR_COLORS_12.find(color)
 		for i in range(first_door, first_door + 3):
 			var node: Sprite2D = door_container.find_child(str("D", i))
 			if i - first_door < door_count:
-				node.self_modulate = Color(LIGHT_DOOR, LIGHT_DOOR, LIGHT_DOOR,1)
+				node.set_light(true)
 			else:
-				node.self_modulate = Color(DARK_DOOR, DARK_DOOR, DARK_DOOR, 1)
+				node.set_light(false)
 	
 func set_outline(enabled: bool) -> void:
 	for i in range(1, MAX_DOORS + 1):
-		var node: Sprite2D = door_container.find_child(str("D", i))
+		var node: DoorsButton = door_container.find_child(str("D", i))
 		#if the door is light the we should apply the outline
-		if node.self_modulate.r == LIGHT_DOOR:
-			##the shader has an instance parameter to enable it or not on the single card
-			node.set_instance_shader_parameter("enabled", enabled)
-	
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+		node.set_outline(node.is_lighted())

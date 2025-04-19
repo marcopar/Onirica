@@ -35,10 +35,6 @@ func _ready() -> void:
 	set_full_size()
 	set_back_texture()
 	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-	
 func set_outline(enabled: bool) -> void:
 	##the shader has an instance parameter to enable it or not on the single card
 	sprite_2d.set_instance_shader_parameter("enabled", enabled)

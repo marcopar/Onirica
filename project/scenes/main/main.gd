@@ -42,10 +42,6 @@ func _ready() -> void:
 		await empty_limbo()
 	#enable cards to be picked
 	set_hand_pickable(true)
-		
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 	
 func draw_card(empty_limbo_enabled: bool, nightmares_enabled: bool) -> bool:
 	var card_drawn: bool = false

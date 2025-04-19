@@ -16,10 +16,6 @@ func _ready() -> void:
 	initial_global_position = global_position
 	SignalManager.card_added_to_labyrinth.connect(card_added_to_labyrinth)
 	SignalManager.card_return_to_hand.connect(card_return_to_hand)
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 func new_game() -> void:
 	global_position = initial_global_position
