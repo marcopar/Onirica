@@ -58,20 +58,21 @@ func set_doors_found(color: CardManager.CARD_COLOR, door_count: int):
 		for i in range(first_door, first_door + 2):
 			var node: DoorsButton = door_container.find_child(str("D", i))
 			if i - first_door < door_count:
-				node.set_light(true)
+				node.set_lighted(true)
 			else:
-				node.set_light(false)
+				node.set_lighted(false)
 	if doors == 12:
 		var first_door: int = 1 + DOOR_COLORS_12.find(color)
 		for i in range(first_door, first_door + 3):
 			var node: Sprite2D = door_container.find_child(str("D", i))
 			if i - first_door < door_count:
-				node.set_light(true)
+				node.set_lighted(true)
 			else:
-				node.set_light(false)
+				node.set_lighted(false)
 	
 func set_outline(enabled: bool) -> void:
 	for i in range(1, MAX_DOORS + 1):
 		var node: DoorsButton = door_container.find_child(str("D", i))
 		#if the door is light the we should apply the outline
-		node.set_outline(node.is_lighted())
+		if node.is_lighted():
+			node.set_outline(enabled)
