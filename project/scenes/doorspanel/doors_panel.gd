@@ -4,17 +4,6 @@ class_name DoorsPanel
 
 @onready var door_container: Node2D = $Background/DoorContainer
 
-const RED_DOOR = preload("res://assets/sprites/cards/red_door.png")
-const GREEN_DOOR = preload("res://assets/sprites/cards/green_door.png")
-const BLUE_DOOR = preload("res://assets/sprites/cards/blue_door.png")
-const YELLOW_DOOR = preload("res://assets/sprites/cards/yellow_door.png")
-
-const DOOR_TEXTURES: Dictionary[CardManager.CARD_COLOR, Resource] = {
-	CardManager.CARD_COLOR.RED: RED_DOOR,
-	CardManager.CARD_COLOR.GREEN: GREEN_DOOR,
-	CardManager.CARD_COLOR.BLUE: BLUE_DOOR,
-	CardManager.CARD_COLOR.YELLOW: YELLOW_DOOR
-}
 const DOOR_COLORS_8: Array[CardManager.CARD_COLOR] = [
 	CardManager.CARD_COLOR.RED, CardManager.CARD_COLOR.RED, 
 	CardManager.CARD_COLOR.GREEN, CardManager.CARD_COLOR.GREEN, 
@@ -43,14 +32,14 @@ func setup(door_count: int):
 		for i in range(first_door, MAX_DOORS - 1):
 			var node: DoorsButton = door_container.find_child(str("D", i))
 			node.visible = true
-			node.set_texture(DOOR_TEXTURES[DOOR_COLORS_8[i-first_door]])
+			node.set_color(DOOR_COLORS_8[i-first_door])
 	
 	if doors == 12:
 		var first_door: int = 1
 		for i in range(first_door, MAX_DOORS + 1):
 			var node: DoorsButton = door_container.find_child(str("D", i))
 			node.visible = true
-			node.set_texture(DOOR_TEXTURES[DOOR_COLORS_12[i-first_door]])
+			node.set_color(DOOR_COLORS_12[i-first_door])
 		
 func set_doors_found(color: CardManager.CARD_COLOR, door_count: int):
 	if doors == 8:
