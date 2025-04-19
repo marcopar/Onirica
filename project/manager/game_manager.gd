@@ -124,17 +124,20 @@ func check_for_door_combo(last3: Array[Card]) -> bool:
 	
 func card_added_to_discard(card: Card) -> void:
 	var hand_position: int = hand.find(card)
-	hand[hand_position] = null
+	if hand_position != -1:
+		hand[hand_position] = null
 	discard.push_back(card)
 	
 func card_added_to_labyrinth(card: Card) -> void:
 	var hand_position: int = hand.find(card)
-	hand[hand_position] = null
+	if hand_position != -1:
+		hand[hand_position] = null
 	labyrinth.push_back(card)
 
 func card_added_to_limbo(card: Card) -> void:
 	var hand_position: int = hand.find(card)
-	hand[hand_position] = null
+	if hand_position != -1:
+		hand[hand_position] = null
 	limbo.push_back(card)
 
 func check_won_game() -> bool:
