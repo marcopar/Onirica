@@ -25,11 +25,11 @@ var card_model: CardModel:
 	set(value):
 		card_model = value
 
-var can_move: bool:
+var enabled: bool:
 	get:
-		return can_move
+		return enabled
 	set(value):
-		can_move = value
+		enabled = value
 		
 var dragging: bool = false
 var drag_start: Vector2 = Vector2.INF
@@ -73,7 +73,7 @@ func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 		#	return
 		if dragging and touch_event.pressed:
 			return
-		dragging = touch_event.pressed and (card_model.can_play or card_model.can_discard) and can_move
+		dragging = touch_event.pressed and (card_model.can_play or card_model.can_discard) and enabled
 		if(not touch_event.pressed):
 			if is_no_movement():
 				print("touch ", self)
