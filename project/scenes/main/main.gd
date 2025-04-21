@@ -53,8 +53,7 @@ func draw_card(empty_limbo_enabled: bool, nightmares_enabled: bool) -> bool:
 				return false
 			var card_model: CardModel = GameManager.deck_model.get_next_card()
 			var card: Card = CARD.instantiate()
-			#card is not pickable until explicitly enabled at a later stage
-			card.input_pickable = false
+			card.input_pickable = true
 			card.card_model = card_model
 			card_container.add_child(card)
 			if card_model.can_be_in_hand:
@@ -124,7 +123,7 @@ func card_added_to_limbo(card: Card) -> void:
 func set_hand_pickable(enabled: bool) -> void:
 	for child in card_container.get_children():
 		var card: Card = child
-		card.input_pickable = enabled
+		card.can_move = enabled
 
 func door_discarded(color: CardManager.CARD_COLOR) -> void:
 	GameManager.door_discarded(color)

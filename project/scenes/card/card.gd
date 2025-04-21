@@ -24,6 +24,12 @@ var card_model: CardModel:
 		return card_model
 	set(value):
 		card_model = value
+
+var can_move: bool:
+	get:
+		return can_move
+	set(value):
+		can_move = value
 		
 var dragging: bool = false
 var drag_start: Vector2 = Vector2.INF
@@ -44,7 +50,7 @@ func _notification(what : int):
 		abort_dragging()
 
 func _input(event: InputEvent) -> void:
-	if dragging and event is InputEventScreenDrag:
+	if dragging and event is InputEventScreenDrag:		
 		var drag_event: InputEventScreenDrag = event
 		if drag_event.index > 0:
 			return
@@ -63,11 +69,11 @@ func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 		var touch_event: InputEventScreenTouch = event
 		if touch_event.index > 0:
 			return
-		if not dragging and not touch_event.pressed:
-			return
+		#if not dragging and not touch_event.pressed:
+		#	return
 		if dragging and touch_event.pressed:
 			return
-		dragging = touch_event.pressed and (card_model.can_play or card_model.can_discard)
+		dragging = touch_event.pressed and (card_model.can_play or card_model.can_discard) and can_move
 		if(not touch_event.pressed):
 			if is_no_movement():
 				print("touch ", self)
