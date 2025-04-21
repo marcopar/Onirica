@@ -41,7 +41,7 @@ func _ready() -> void:
 	if not GameManager.limbo.is_empty():
 		await empty_limbo()
 	#enable cards to be picked
-	set_hand_enabled(true)
+	set_hand_freezed(false)
 	
 func draw_card(empty_limbo_enabled: bool, nightmares_enabled: bool) -> bool:
 	var card_drawn: bool = false
@@ -67,10 +67,8 @@ func draw_card(empty_limbo_enabled: bool, nightmares_enabled: bool) -> bool:
 				card.hand_position = hand_position
 				await animate_card_draw(card)
 				if nightmares_enabled and card.card_model.type == CardManager.CARD_TYPE.NIGHTMARE:
-					#hard disable inputs on nightmares
-					card.input_pickable = false
 					await animate_nightmare(card)
-					set_hand_enabled(false)
+					set_hand_freezed(true)
 					nightmare_panel.visible = true
 					return true
 				else:					
@@ -123,10 +121,10 @@ func card_added_to_discard(card: Card) -> void:
 func card_added_to_limbo(card: Card) -> void:
 	GameManager.card_added_to_limbo(card)
 
-func set_hand_enabled(enabled: bool) -> void:
+func set_hand_freezed(value: bool) -> void:
 	for child in card_container.get_children():
 		var card: Card = child
-		card.enabled = enabled
+		card.freezed = value
 
 func door_discarded(color: CardManager.CARD_COLOR) -> void:
 	GameManager.door_discarded(color)
@@ -177,17 +175,17 @@ func set_cards_outline(enabled: bool, keys_only: bool) -> void:
 ####################################################
 
 func animate_nightmare(card: Card) -> void:
-	set_hand_enabled(false)
+	set_hand_freezed(true)
 	card.z_index = Constants.DRAGGING_BASE_Z
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(card, "position", nightmare_found_marker.position, 0.2)
 	tween.parallel().tween_property(card, "rotation_degrees", 360, 0.2)
 	tween.parallel().tween_property(card, "scale", Vector2(1.3,1.3), 0.2)
 	await tween.finished
-	set_hand_enabled(true)
+	set_hand_freezed(false)
 	
 func animate_door_found(color: CardManager.CARD_COLOR) -> void:
-	set_hand_enabled(false)
+	set_hand_freezed(true)
 	#just get the first found of the given color
 	var card_model = GameManager.found_doors[color][0]
 	var card: Card = CARD.instantiate()
@@ -207,10 +205,10 @@ func animate_door_found(color: CardManager.CARD_COLOR) -> void:
 	tween.parallel().tween_property(card, "scale", Vector2(0, 0), 0.1)
 	await tween.finished
 	card.queue_free()
-	set_hand_enabled(true)
+	set_hand_freezed(false)
 		
 func animate_shuffle() -> void:
-	set_hand_enabled(false)
+	set_hand_freezed(true)
 	var cards: Array[Card] = [CARD.instantiate(), CARD.instantiate(), CARD.instantiate(), CARD.instantiate()]
 	var tweens: Array[Tween]
 	for card in cards:
@@ -236,10 +234,10 @@ func animate_shuffle() -> void:
 		await tween.finished
 	for card in cards:
 		card.queue_free()
-	set_hand_enabled(true)
+	set_hand_freezed(false)
 	
 func animate_card_draw(card: Card) -> void:
-	set_hand_enabled(false)
+	set_hand_freezed(true)
 	card.z_index = card.hand_position + Constants.HAND_BASE_Z
 	card.position = deck.position
 	card.rotation = hand_markers[card.hand_position].rotation
@@ -249,18 +247,18 @@ func animate_card_draw(card: Card) -> void:
 	tween.tween_callback(card.set_front_texture)
 	tween.tween_property(card, "scale", Vector2(1,1), 0.1)
 	await tween.finished
-	set_hand_enabled(true)
+	set_hand_freezed(false)
 
 func animate_card_to_limbo(card: Card) -> void:
-	set_hand_enabled(false)
+	set_hand_freezed(true)
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(card, "global_position", limbo.global_position, 0.2)
 	tween.parallel().tween_property(card, "scale", Card.LIMBO_SIZE, 0.2)
 	await tween.finished
-	set_hand_enabled(true)
+	set_hand_freezed(false)
 	
 func animate_card_from_limbo_to_deck(card: Card) -> void:
-	set_hand_enabled(false)
+	set_hand_freezed(true)
 	var tween: Tween = get_tree().create_tween()
 	tween.parallel().tween_property(card, "global_position", deck.global_position, 0.2)
 	tween.parallel().tween_property(card, "scale", Vector2(0,1), 0.2)
@@ -268,4 +266,4 @@ func animate_card_from_limbo_to_deck(card: Card) -> void:
 	tween.tween_callback(card.set_back_texture)
 	tween.tween_property(card, "scale", Vector2(1,1), 0.1)
 	await tween.finished
-	set_hand_enabled(true)
+	set_hand_freezed(false)
