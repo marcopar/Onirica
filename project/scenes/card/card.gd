@@ -76,6 +76,7 @@ func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 		if(not touch_event.pressed):
 			if is_no_movement():
 				print("touch ", self)
+				abort_dragging()
 				return
 			for area in get_overlapping_areas():
 				if area.is_in_group(Constants.GROUP_LABYRINTH) and card_model.can_play:
