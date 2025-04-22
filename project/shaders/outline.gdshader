@@ -12,11 +12,12 @@ uniform bool inside = false;
 uniform bool add_margins = true; // only useful when inside is false
 uniform vec2 number_of_images = vec2(1.0); // number of horizontal and vertical images in the sprite sheet
 
-// CUSTOM
 varying flat vec4 modulate;
-// CUSTOM
 
+// CUSTOM
 instance uniform bool enabled = false;
+instance uniform float pulse_frequency : hint_range(0, 100) = 10.0;
+// CUSTOM
 
 void vertex() {
 	// CUSTOM
@@ -83,7 +84,8 @@ void fragment() {
 
 		if ((COLOR.a > 0.0) == inside && hasContraryNeighbour(uv, TEXTURE_PIXEL_SIZE, image_top_left, image_bottom_right, TEXTURE)) {
 			COLOR.rgb = inside ? mix(COLOR.rgb, color.rgb * modulate.rgb, color.a * modulate.a) : color.rgb * modulate.rgb;
-			COLOR.a += (1.0 - COLOR.a) * color.a * modulate.a;
+			//COLOR.a += (1.0 - COLOR.a) * color.a * modulate.a;
+			COLOR.a = clamp(sin(TIME * pulse_frequency)/2.0 + 1.0, 0.0, 1.0);
 		}
 	}
 }

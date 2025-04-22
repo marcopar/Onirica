@@ -25,11 +25,11 @@ var card_model: CardModel:
 	set(value):
 		card_model = value
 
-var enabled: bool:
+var freezed: bool = false:
 	get:
-		return enabled
+		return freezed
 	set(value):
-		enabled = value
+		freezed = value
 		
 var dragging: bool = false
 var drag_start: Vector2 = Vector2.INF
@@ -66,33 +66,29 @@ func _input(event: InputEvent) -> void:
 
 func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventScreenTouch:
+		get_viewport().set_input_as_handled()
 		var touch_event: InputEventScreenTouch = event
 		if touch_event.index > 0:
 			return
-		#if not dragging and not touch_event.pressed:
-		#	return
 		if dragging and touch_event.pressed:
 			return
-		dragging = touch_event.pressed and (card_model.can_play or card_model.can_discard) and enabled
+		dragging = touch_event.pressed and (card_model.can_play or card_model.can_discard) and not freezed
 		if(not touch_event.pressed):
 			if is_no_movement():
 				print("touch ", self)
-				pass
+				return
 			for area in get_overlapping_areas():
 				if area.is_in_group(Constants.GROUP_LABYRINTH) and card_model.can_play:
 					#can't play the same type of an existing card already in the labyrinth
 					if GameManager.labyrinth.size() == 0 or card_model.type != GameManager.labyrinth[GameManager.labyrinth.size()-1].card_model.type:
 						SignalManager.card_added_to_labyrinth.emit(self)
-						get_viewport().set_input_as_handled()
 						dragging = false
 						return
 				elif area.is_in_group(Constants.GROUP_DISCARD) and card_model.can_discard:
 					SignalManager.card_added_to_discard.emit(self)
-					get_viewport().set_input_as_handled()
 					dragging = false
 					return
 			abort_dragging()
-		get_viewport().set_input_as_handled()
 
 func is_no_movement() -> bool:
 	var delta: Vector2 = drag_start - position
