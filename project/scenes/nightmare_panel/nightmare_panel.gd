@@ -27,3 +27,8 @@ func nightmare_button_selected(type: Constants.NIGHTMARE_DISCARD, selected: bool
 		SignalManager.nightmare_action_selected.emit(type)
 	else:
 		SignalManager.nightmare_action_selected.emit(Constants.NIGHTMARE_DISCARD.NONE)
+
+func reset() -> void:
+	SignalManager.nightmare_action_selected.emit(Constants.NIGHTMARE_DISCARD.NONE)
+	for button in buttons:
+		button.selected = false

@@ -75,12 +75,15 @@ func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 		dragging = touch_event.pressed and (card_model.can_play or card_model.can_discard) and not freezed
 		if(not touch_event.pressed):
 			if is_no_movement():
-				print("touch ", self)
-				abort_dragging()
+				if not freezed:
+					# a freezed card is typically the nightmare card currently being resolved
+					# it's not dragging for sure and it should not go back in hand as abort_dragging dose
+					abort_dragging()
+				SignalManager.touch_event.emit(self)
 				return
 			for area in get_overlapping_areas():
 				if area.is_in_group(Constants.GROUP_LABYRINTH) and card_model.can_play:
-					#can't play the same type of an existing card already in the labyrinth
+					#can't play the same type of an existing card already in the labyrinth last position
 					if GameManager.labyrinth.size() == 0 or card_model.type != GameManager.labyrinth[GameManager.labyrinth.size()-1].card_model.type:
 						SignalManager.card_added_to_labyrinth.emit(self)
 						dragging = false
@@ -98,6 +101,7 @@ func is_no_movement() -> bool:
 func abort_dragging() -> void:
 	dragging = false
 	drag_start = Vector2.INF
+	#this resets the card to its hand position
 	SignalManager.card_return_to_hand.emit(self)
 	
 func set_full_size() -> void:

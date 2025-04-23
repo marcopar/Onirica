@@ -105,6 +105,7 @@ func check_door_found() -> CardManager.CARD_COLOR:
 			
 func door_discarded(color: CardManager.CARD_COLOR) -> void:
 	var door: CardModel = found_doors[color].pop_back()
+	#back into the deck
 	deck_model.deck.push_back(door)
 	pass
 	

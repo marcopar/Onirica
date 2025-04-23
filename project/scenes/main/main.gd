@@ -12,10 +12,13 @@ extends Node2D
 @onready var door_found_marker: Marker2D = $DoorFoundMarker
 @onready var nightmare_found_marker: Marker2D = $NightmareFoundMarker
 @onready var nightmare_panel: Node2D = $NightmarePanel
+@onready var discard: Discard = $Discard
 
 const CARD = preload("res://scenes/card/card.tscn")
 
 var hand_markers: Array[Marker2D]
+
+var nightmare_action_discard_selected: Constants.NIGHTMARE_DISCARD = Constants.NIGHTMARE_DISCARD.NONE
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -25,7 +28,8 @@ func _ready() -> void:
 	SignalManager.card_added_to_limbo.connect(card_added_to_limbo)
 	SignalManager.door_discarded.connect(door_discarded)
 	SignalManager.nightmare_action_selected.connect(nightmare_action_selected)
-	SignalManager.nightmare_action_activated.connect(nightmare_action_activated)
+	SignalManager.touch_event.connect(touch_event)
+	
 	hand_markers.push_back(hand_marker_1)
 	hand_markers.push_back(hand_marker_2)
 	hand_markers.push_back(hand_marker_3)
@@ -131,6 +135,7 @@ func door_discarded(color: CardManager.CARD_COLOR) -> void:
 	doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
 
 func nightmare_action_selected(type: Constants.NIGHTMARE_DISCARD) -> void:
+	nightmare_action_discard_selected = type
 	match(type):
 		Constants.NIGHTMARE_DISCARD.NONE:
 			deck.set_outline(false)
@@ -154,8 +159,51 @@ func nightmare_action_selected(type: Constants.NIGHTMARE_DISCARD) -> void:
 			doors_panel.set_outline(false)
 			set_hand_outline(true)
 
-func nightmare_action_activated(type: Constants.NIGHTMARE_DISCARD) -> void:
+func touch_event(object: Variant) -> void:
+	if nightmare_action_discard_selected != Constants.NIGHTMARE_DISCARD.NONE:
+		# nightmare action was selected so we check if we should activate the action
+		handle_nightmare_action(nightmare_action_discard_selected, object)
+		return
 	pass
+
+func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant) -> void:
+	
+	if type == Constants.NIGHTMARE_DISCARD.HAND and object is Card:
+		print("discard hand ", object)
+		discard_nightmare_card()
+	if type == Constants.NIGHTMARE_DISCARD.KEY and object is Card:
+		var card: Card = object
+		if card.card_model.type == CardManager.CARD_TYPE.KEY:
+			print("discard key ", object)
+			#TODO discard and animate key
+			discard_nightmare_card()
+	if type == Constants.NIGHTMARE_DISCARD.DECK and object is Deck:
+		print("discard deck ", object)
+		discard_nightmare_card()
+	if type == Constants.NIGHTMARE_DISCARD.DOOR and object is DoorsButton:
+		print("discard door ", object)
+		var doors_button: DoorsButton = object
+		var color: CardManager.CARD_COLOR = doors_button.color
+		if doors_button.is_lighted() and GameManager.found_doors[color].size() > 0:
+			GameManager.door_discarded(color)
+			doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
+			#TODO animate door back to deck
+			discard_nightmare_card()
+	pass
+
+func find_nightmare_card() -> Card:
+	for child in card_container.get_children():
+		var card: Card = child
+		if card.card_model.type == CardManager.CARD_TYPE.NIGHTMARE:
+			return card
+	return null
+
+func discard_nightmare_card() -> void:
+	nightmare_panel.reset()
+	nightmare_panel.visible = false	
+	var card: Card = find_nightmare_card()
+	await animate_card_to_discard(card)
+	SignalManager.card_added_to_discard.emit(card)
 	
 func set_hand_outline(enabled: bool) -> void:
 	set_cards_outline(enabled, false)
@@ -254,6 +302,14 @@ func animate_card_to_limbo(card: Card) -> void:
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(card, "global_position", limbo.global_position, 0.2)
 	tween.parallel().tween_property(card, "scale", Card.LIMBO_SIZE, 0.2)
+	await tween.finished
+	set_hand_freezed(false)
+
+func animate_card_to_discard(card: Card) -> void:
+	set_hand_freezed(true)
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property(card, "global_position", discard.global_position, 0.2)
+	tween.parallel().tween_property(card, "scale", Card.DISCARD_SIZE, 0.2)
 	await tween.finished
 	set_hand_freezed(false)
 	
