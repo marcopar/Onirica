@@ -89,7 +89,7 @@ func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 						dragging = false
 						return
 				elif area.is_in_group(Constants.GROUP_DISCARD) and card_model.can_discard:
-					SignalManager.card_added_to_discard.emit(self)
+					SignalManager.card_added_to_discard.emit(self, true)
 					dragging = false
 					return
 			abort_dragging()

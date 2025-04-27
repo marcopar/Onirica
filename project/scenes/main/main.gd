@@ -40,10 +40,7 @@ func _ready() -> void:
 	GameManager.new_game()		
 	SignalManager.new_game.emit()
 	doors_panel.setup(GameManager.deck_model.get_number_of(CardManager.CARD_TYPE.DOOR))
-	while await draw_card(false, false):
-		pass
-	if not GameManager.limbo.is_empty():
-		await empty_limbo()
+	draw_full_hand(true)
 	#enable cards to be picked
 	set_hand_freezed(false)
 	
@@ -83,6 +80,10 @@ func draw_card(empty_limbo_enabled: bool, nightmares_enabled: bool) -> bool:
 		return card_drawn
 	return false
 
+func draw_full_hand(empty_limbo_enabled: bool):
+	while await draw_card(empty_limbo_enabled, false):
+		pass
+		
 func empty_limbo() -> void:
 	var limbo_copy: Array[Card]
 	limbo_copy.append_array(GameManager.limbo)
@@ -118,9 +119,10 @@ func card_added_to_labyrinth(card: Card) -> void:
 	else:
 		await draw_card(true, true)
 	
-func card_added_to_discard(card: Card) -> void:
+func card_added_to_discard(card: Card, draw_card: bool) -> void:
 	GameManager.card_added_to_discard(card)
-	await draw_card(true, true)
+	if draw_card:
+		await draw_card(true, true)
 
 func card_added_to_limbo(card: Card) -> void:
 	GameManager.card_added_to_limbo(card)
@@ -167,21 +169,26 @@ func touch_event(object: Variant) -> void:
 	pass
 
 func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant) -> void:
-	
 	if type == Constants.NIGHTMARE_DISCARD.HAND and object is Card:
 		print("discard hand ", object)
-		#TODO discard and animate hand
-		discard_nightmare_card()
+		for card in GameManager.hand:			
+			if card != null:
+				await animate_card_to_discard(card)
+				SignalManager.card_added_to_discard.emit(card, false)
+		await discard_nightmare_card()
+		draw_full_hand(true)
 	if type == Constants.NIGHTMARE_DISCARD.KEY and object is Card:
 		var card: Card = object
 		if card.card_model.type == CardManager.CARD_TYPE.KEY:
 			print("discard key ", object)
 			#TODO discard and animate key
-			discard_nightmare_card()
+			await discard_nightmare_card()
+			draw_card(true, false)
 	if type == Constants.NIGHTMARE_DISCARD.DECK and object is Deck:
 		print("discard deck ", object)
 		#TODO discard and animate deck
-		discard_nightmare_card()
+		await discard_nightmare_card()
+		draw_card(true, false)
 	if type == Constants.NIGHTMARE_DISCARD.DOOR and object is DoorsButton:
 		var doors_button: DoorsButton = object
 		var color: CardManager.CARD_COLOR = doors_button.color
@@ -191,7 +198,8 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 			GameManager.door_discarded(color)
 			doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
 			await animate_door_discarded(color)
-			discard_nightmare_card()
+			await discard_nightmare_card()
+			draw_card(true, false)
 	pass
 
 func find_nightmare_card() -> Card:
@@ -207,7 +215,8 @@ func discard_nightmare_card() -> void:
 	nightmare_panel.visible = false	
 	var card: Card = find_nightmare_card()
 	await animate_card_to_discard(card)
-	SignalManager.card_added_to_discard.emit(card)
+	SignalManager.card_added_to_discard.emit(card, false)
+	
 	
 func set_hand_outline(enabled: bool) -> void:
 	set_cards_outline(enabled, false)
@@ -238,7 +247,7 @@ func animate_nightmare(card: Card) -> void:
 	
 func animate_door_found(color: CardManager.CARD_COLOR) -> void:
 	set_hand_freezed(true)
-	#just get the first found of the given color
+	#just get the first found of the given color, assuming the door has been put there before this call
 	var card_model = GameManager.found_doors[color][0]
 	var card: Card = CARD.instantiate()
 	card.card_model = card_model
@@ -287,7 +296,7 @@ func animate_shuffle() -> void:
 	var tweens: Array[Tween]
 	for card in cards:
 		card.card_model = GameManager.deck_model.deck[0]
-		deck.add_child(card)		
+		deck.add_child(card)
 		card.set_back_texture()
 		card.set_full_size()
 		card.z_index = 1

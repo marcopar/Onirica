@@ -128,6 +128,7 @@ func card_added_to_discard(card: Card) -> void:
 	if hand_position != -1:
 		hand[hand_position] = null
 	discard.push_back(card)
+	card.set_outline(false)
 	
 func card_added_to_labyrinth(card: Card) -> void:
 	var hand_position: int = hand.find(card)
