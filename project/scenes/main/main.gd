@@ -170,6 +170,7 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 	
 	if type == Constants.NIGHTMARE_DISCARD.HAND and object is Card:
 		print("discard hand ", object)
+		#TODO discard and animate hand
 		discard_nightmare_card()
 	if type == Constants.NIGHTMARE_DISCARD.KEY and object is Card:
 		var card: Card = object
@@ -179,15 +180,17 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 			discard_nightmare_card()
 	if type == Constants.NIGHTMARE_DISCARD.DECK and object is Deck:
 		print("discard deck ", object)
+		#TODO discard and animate deck
 		discard_nightmare_card()
 	if type == Constants.NIGHTMARE_DISCARD.DOOR and object is DoorsButton:
 		var doors_button: DoorsButton = object
 		var color: CardManager.CARD_COLOR = doors_button.color
 		if doors_button.is_lighted() and GameManager.found_doors[color].size() > 0:
 			print("discard door ", object)
+			#put back the door in deck
 			GameManager.door_discarded(color)
 			doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
-			#TODO animate door back to deck
+			await animate_door_discarded(color)
 			discard_nightmare_card()
 	pass
 
@@ -251,6 +254,28 @@ func animate_door_found(color: CardManager.CARD_COLOR) -> void:
 	tween.tween_property(card, "scale", Vector2(1.5,1.5), 0.1)
 	tween.tween_interval(0.5)
 	tween.tween_property(card, "position", Vector2(door_found_marker.position.x, doors_panel.position.y), 0.1)
+	tween.parallel().tween_property(card, "scale", Vector2(0, 0), 0.1)
+	await tween.finished
+	card.queue_free()
+	set_hand_freezed(false)
+
+func animate_door_discarded(color: CardManager.CARD_COLOR) -> void:
+	set_hand_freezed(true)
+	#assuming the card model is back on the deck
+	var card_model = GameManager.deck_model.search(CardManager.CARD_TYPE.DOOR, color)
+	var card: Card = CARD.instantiate()
+	card.card_model = card_model
+	card.input_pickable = false
+	card_container.add_child(card)
+	card.z_index = Constants.DRAGGING_BASE_Z
+	card.position = Vector2(door_found_marker.position.x, doors_panel.position.y)
+	card.scale = Vector2(0, 0)
+	card.set_front_texture()
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property(card, "position", door_found_marker.position, 0.1)
+	tween.parallel().tween_property(card, "scale", Vector2(1.5,1.5), 0.1)
+	tween.tween_interval(0.5)
+	tween.tween_property(card, "position", deck.position, 0.1)
 	tween.parallel().tween_property(card, "scale", Vector2(0, 0), 0.1)
 	await tween.finished
 	card.queue_free()
