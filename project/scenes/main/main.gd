@@ -181,10 +181,10 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 		print("discard deck ", object)
 		discard_nightmare_card()
 	if type == Constants.NIGHTMARE_DISCARD.DOOR and object is DoorsButton:
-		print("discard door ", object)
 		var doors_button: DoorsButton = object
 		var color: CardManager.CARD_COLOR = doors_button.color
 		if doors_button.is_lighted() and GameManager.found_doors[color].size() > 0:
+			print("discard door ", object)
 			GameManager.door_discarded(color)
 			doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
 			#TODO animate door back to deck
@@ -199,6 +199,7 @@ func find_nightmare_card() -> Card:
 	return null
 
 func discard_nightmare_card() -> void:
+	doors_panel.set_outline(false)
 	nightmare_panel.reset()
 	nightmare_panel.visible = false	
 	var card: Card = find_nightmare_card()

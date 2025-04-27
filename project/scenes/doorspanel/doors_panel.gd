@@ -63,5 +63,7 @@ func set_outline(enabled: bool) -> void:
 	for i in range(1, MAX_DOORS + 1):
 		var node: DoorsButton = door_container.find_child(str("D", i))
 		#if the door is light the we should apply the outline
+		#reset outline on doors that have been discarder and for that reason are not "lighted"
+		node.set_outline(false)
 		if node.is_lighted():
 			node.set_outline(enabled)
