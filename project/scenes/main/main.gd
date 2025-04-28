@@ -40,7 +40,11 @@ func _ready() -> void:
 	GameManager.new_game()		
 	SignalManager.new_game.emit()
 	doors_panel.setup(GameManager.deck_model.get_number_of(CardManager.CARD_TYPE.DOOR))
-	draw_full_hand(true)
+	#draw full hand without empty limbo and then empty limbo
+	while await draw_card(false, false):
+		pass
+	if not GameManager.limbo.is_empty():
+		await empty_limbo()
 	#enable cards to be picked
 	set_hand_freezed(false)
 	
@@ -170,7 +174,6 @@ func touch_event(object: Variant) -> void:
 
 func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant) -> void:
 	if type == Constants.NIGHTMARE_DISCARD.HAND and object is Card:
-		print("discard hand ", object)
 		for card in GameManager.hand:			
 			if card != null:
 				await animate_card_to_discard(card)
@@ -180,26 +183,25 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 	if type == Constants.NIGHTMARE_DISCARD.KEY and object is Card:
 		var card: Card = object
 		if card.card_model.type == CardManager.CARD_TYPE.KEY:
-			print("discard key ", object)
-			#TODO discard and animate key
+			await animate_card_to_discard(card)
+			SignalManager.card_added_to_discard.emit(card, false)
 			await discard_nightmare_card()
-			draw_card(true, false)
+			draw_full_hand(true)
 	if type == Constants.NIGHTMARE_DISCARD.DECK and object is Deck:
 		print("discard deck ", object)
 		#TODO discard and animate deck
 		await discard_nightmare_card()
-		draw_card(true, false)
+		draw_full_hand(true)
 	if type == Constants.NIGHTMARE_DISCARD.DOOR and object is DoorsButton:
 		var doors_button: DoorsButton = object
 		var color: CardManager.CARD_COLOR = doors_button.color
 		if doors_button.is_lighted() and GameManager.found_doors[color].size() > 0:
-			print("discard door ", object)
 			#put back the door in deck
 			GameManager.door_discarded(color)
 			doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
 			await animate_door_discarded(color)
 			await discard_nightmare_card()
-			draw_card(true, false)
+			draw_full_hand(true)
 	pass
 
 func find_nightmare_card() -> Card:
