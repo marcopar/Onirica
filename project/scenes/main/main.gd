@@ -172,11 +172,12 @@ func touch_event(object: Variant) -> void:
 
 func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant) -> void:
 	if type == Constants.NIGHTMARE_DISCARD.HAND and object is Card:
-		for card in GameManager.hand:			
+		for card in GameManager.hand:
 			if card != null:
 				await animate_card_to_discard(card)
-				SignalManager.card_added_to_discard.emit(card, false)
+				SignalManager.card_added_to_discard.emit(card, false)				
 		await discard_nightmare_card()
+		#FIXME nightmares drawn must be resolved
 		draw_full_hand()
 	if type == Constants.NIGHTMARE_DISCARD.KEY and object is Card:
 		var card: Card = object
@@ -184,6 +185,7 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 			await animate_card_to_discard(card)
 			SignalManager.card_added_to_discard.emit(card, false)
 			await discard_nightmare_card()
+			#FIXME nightmares drawn must be resolved
 			draw_full_hand()
 	if type == Constants.NIGHTMARE_DISCARD.DECK and object is Deck:
 		for i in range(0, 5):
@@ -205,16 +207,19 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 				await animate_card_to_limbo(card)
 				SignalManager.card_added_to_limbo.emit(card)
 		await discard_nightmare_card()
+		#FIXME nightmares drawn must be resolved
 		draw_full_hand()
 	if type == Constants.NIGHTMARE_DISCARD.DOOR and object is DoorsButton:
 		var doors_button: DoorsButton = object
 		var color: CardManager.CARD_COLOR = doors_button.color
 		if doors_button.is_lighted() and GameManager.found_doors[color].size() > 0:
+			#FIXME the door must go to the limbo
 			#put back the door in deck
 			GameManager.door_discarded(color)
 			doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
 			await animate_door_discarded(color)
 			await discard_nightmare_card()
+			#draw with the same logic as starting the game (nightmares are not resolved, doors are not open)
 			draw_full_hand()
 	pass
 
