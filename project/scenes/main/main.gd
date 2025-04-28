@@ -40,11 +40,7 @@ func _ready() -> void:
 	GameManager.new_game()		
 	SignalManager.new_game.emit()
 	doors_panel.setup(GameManager.deck_model.get_number_of(CardManager.CARD_TYPE.DOOR))
-	#draw full hand without empty limbo and then empty limbo
-	while await draw_card(false, false):
-		pass
-	if not GameManager.limbo.is_empty():
-		await empty_limbo()
+	draw_full_hand()
 	#enable cards to be picked
 	set_hand_freezed(false)
 	
@@ -84,9 +80,11 @@ func draw_card(empty_limbo_enabled: bool, nightmares_enabled: bool) -> bool:
 		return card_drawn
 	return false
 
-func draw_full_hand(empty_limbo_enabled: bool):
-	while await draw_card(empty_limbo_enabled, false):
+func draw_full_hand():
+	while await draw_card(false, false):
 		pass
+	if not GameManager.limbo.is_empty():
+		await empty_limbo()
 		
 func empty_limbo() -> void:
 	var limbo_copy: Array[Card]
@@ -179,19 +177,35 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 				await animate_card_to_discard(card)
 				SignalManager.card_added_to_discard.emit(card, false)
 		await discard_nightmare_card()
-		draw_full_hand(true)
+		draw_full_hand()
 	if type == Constants.NIGHTMARE_DISCARD.KEY and object is Card:
 		var card: Card = object
 		if card.card_model.type == CardManager.CARD_TYPE.KEY:
 			await animate_card_to_discard(card)
 			SignalManager.card_added_to_discard.emit(card, false)
 			await discard_nightmare_card()
-			draw_full_hand(true)
+			draw_full_hand()
 	if type == Constants.NIGHTMARE_DISCARD.DECK and object is Deck:
-		print("discard deck ", object)
-		#TODO discard and animate deck
+		for i in range(0, 5):
+			if GameManager.deck_model.get_number_of_cards() == 0:
+				#TODO game over
+				pass
+			var card_model: CardModel = GameManager.deck_model.get_next_card()
+			var card: Card = CARD.instantiate()
+			card.card_model = card_model
+			card.input_pickable = false
+			card_container.add_child(card)
+			card.z_index = Constants.DRAGGING_BASE_Z
+			card.position = deck.position
+			card.set_front_texture()
+			if card_model.can_be_in_hand:
+				await animate_card_to_discard(card)
+				SignalManager.card_added_to_discard.emit(card, false)
+			else:
+				await animate_card_to_limbo(card)
+				SignalManager.card_added_to_limbo.emit(card)
 		await discard_nightmare_card()
-		draw_full_hand(true)
+		draw_full_hand()
 	if type == Constants.NIGHTMARE_DISCARD.DOOR and object is DoorsButton:
 		var doors_button: DoorsButton = object
 		var color: CardManager.CARD_COLOR = doors_button.color
@@ -201,7 +215,7 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 			doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
 			await animate_door_discarded(color)
 			await discard_nightmare_card()
-			draw_full_hand(true)
+			draw_full_hand()
 	pass
 
 func find_nightmare_card() -> Card:
@@ -286,6 +300,7 @@ func animate_door_discarded(color: CardManager.CARD_COLOR) -> void:
 	tween.tween_property(card, "position", door_found_marker.position, 0.1)
 	tween.parallel().tween_property(card, "scale", Vector2(1.5,1.5), 0.1)
 	tween.tween_interval(0.5)
+	#disappear into the deck
 	tween.tween_property(card, "position", deck.position, 0.1)
 	tween.parallel().tween_property(card, "scale", Vector2(0, 0), 0.1)
 	await tween.finished
