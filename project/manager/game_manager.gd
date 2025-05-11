@@ -40,6 +40,7 @@ var discard: Array[Card]:
 		
 var doors_to_be_found: int
 		
+#Variant because  we want to have an  Array as value
 var found_doors: Dictionary[CardManager.CARD_COLOR, Variant] = {
 	CardManager.CARD_COLOR.RED: [],
 	CardManager.CARD_COLOR.GREEN: [],
@@ -80,7 +81,7 @@ func shuffle() -> void:
 	deck_model.shuffle()
 
 #checks the whole lanyrinth every time but doesn't need to store extra flags
-func check_door_found() -> CardManager.CARD_COLOR:
+func check_door_found() -> CardModel:
 	var last3: Array[Card] = []
 	for card in labyrinth:
 		last3.push_back(card)
@@ -95,13 +96,13 @@ func check_door_found() -> CardManager.CARD_COLOR:
 					#remove the door (model) from the deck and add it to the found doors
 					deck_model.deck.erase(door)
 					found_doors[door.color].push_back(door)
-					return card.card_model.color
+					return card.card_model
 			#we found an old combo, clear the last3 and start from scratch
 			last3.clear()
 		else:
 			#remove the first card as we didn't find a combo (slide forward one step)
 			last3.pop_front()
-	return CardManager.CARD_COLOR.NONE
+	return null
 	
 func check_for_door_combo(last3: Array[Card]) -> bool:
 	var colors: Dictionary[CardManager.CARD_COLOR, bool] = {}

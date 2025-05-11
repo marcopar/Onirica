@@ -113,10 +113,18 @@ func card_return_to_hand(card: Card) -> void:
 
 func card_added_to_labyrinth(card: Card) -> void:
 	GameManager.card_added_to_labyrinth(card)
-	var color: CardManager.CARD_COLOR = GameManager.check_door_found()
-	if color != CardManager.CARD_COLOR.NONE:
-		await animate_door_found(color)
-		doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
+	var card_model: CardModel = GameManager.check_door_found()
+	if card_model != null:
+		var door_card: Card = CARD.instantiate()
+		door_card.card_model = card_model
+		door_card.input_pickable = false
+		card_container.add_child(door_card)
+		door_card.z_index = Constants.DRAGGING_BASE_Z
+		door_card.position = deck.position
+		door_card.scale = Vector2(1, 1)
+		door_card.set_front_texture()
+		await animate_door_found(door_card)
+		doors_panel.set_doors_found(door_card.card_model.color, GameManager.found_doors[door_card.card_model.color].size())
 		if GameManager.check_won_game():
 			print("game won")
 			pass
@@ -219,11 +227,7 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 		var doors_button: DoorsButton = object
 		var color: CardManager.CARD_COLOR = doors_button.color
 		if doors_button.is_lighted() and GameManager.found_doors[color].size() > 0:
-			#assuming the card model is back on the deck
-			#FIXME wroing assumption when 2 doors are found there aren't  any  in the deck
-			#solution: stock the  model in the door found instead of using the enum
-			var card_model = GameManager.deck_model.search(CardManager.CARD_TYPE.DOOR, color)
-			GameManager.found_doors[color].pop_back()
+			var card_model = GameManager.found_doors[color].pop_back()
 			var card: Card = CARD.instantiate()
 			card.card_model = card_model
 			card.input_pickable = false
@@ -283,17 +287,8 @@ func animate_nightmare(card: Card) -> void:
 	await tween.finished
 	set_hand_freezed(false)
 	
-func animate_door_found(color: CardManager.CARD_COLOR) -> void:
+func animate_door_found(card: Card) -> void:
 	set_hand_freezed(true)
-	#just get the first found of the given color, assuming the door has been put there before this call
-	var card_model = GameManager.found_doors[color][0]
-	var card: Card = CARD.instantiate()
-	card.card_model = card_model
-	card.input_pickable = false
-	card_container.add_child(card)
-	card.z_index = Constants.DRAGGING_BASE_Z
-	card.position = deck.position
-	card.set_back_texture()
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(card, "position", door_found_marker.position, 0.5)
 	tween.tween_property(card, "scale", Vector2(0,1), 0.2)
