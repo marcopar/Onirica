@@ -20,6 +20,12 @@ var hand_markers: Array[Marker2D]
 
 var nightmare_action_discard_selected: Constants.NIGHTMARE_DISCARD = Constants.NIGHTMARE_DISCARD.NONE
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey:
+		var e: InputEventKey = event
+		if e.as_text_keycode() == "D" and e.is_pressed():
+			GameManager.dump()
+		
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	SignalManager.card_return_to_hand.connect(card_return_to_hand)
@@ -213,11 +219,22 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 		var doors_button: DoorsButton = object
 		var color: CardManager.CARD_COLOR = doors_button.color
 		if doors_button.is_lighted() and GameManager.found_doors[color].size() > 0:
-			#FIXME the door must go to the limbo
-			#put back the door in deck
-			GameManager.door_discarded(color)
+			#assuming the card model is back on the deck
+			#FIXME wroing assumption when 2 doors are found there aren't  any  in the deck
+			#solution: stock the  model in the door found instead of using the enum
+			var card_model = GameManager.deck_model.search(CardManager.CARD_TYPE.DOOR, color)
+			GameManager.found_doors[color].pop_back()
+			var card: Card = CARD.instantiate()
+			card.card_model = card_model
+			card.input_pickable = false
+			card_container.add_child(card)
+			card.z_index = Constants.DRAGGING_BASE_Z
+			card.position = Vector2(door_found_marker.position.x, doors_panel.position.y)
+			card.scale = Vector2(0, 0)
+			card.set_front_texture()
+			await animate_door_discarded(card)
+			SignalManager.card_added_to_limbo.emit(card)
 			doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
-			await animate_door_discarded(color)
 			await discard_nightmare_card()
 			#draw with the same logic as starting the game (nightmares are not resolved, doors are not open)
 			draw_full_hand()
@@ -289,27 +306,14 @@ func animate_door_found(color: CardManager.CARD_COLOR) -> void:
 	card.queue_free()
 	set_hand_freezed(false)
 
-func animate_door_discarded(color: CardManager.CARD_COLOR) -> void:
-	set_hand_freezed(true)
-	#assuming the card model is back on the deck
-	var card_model = GameManager.deck_model.search(CardManager.CARD_TYPE.DOOR, color)
-	var card: Card = CARD.instantiate()
-	card.card_model = card_model
-	card.input_pickable = false
-	card_container.add_child(card)
-	card.z_index = Constants.DRAGGING_BASE_Z
-	card.position = Vector2(door_found_marker.position.x, doors_panel.position.y)
-	card.scale = Vector2(0, 0)
-	card.set_front_texture()
+func animate_door_discarded(card: Card) -> void:
+	set_hand_freezed(true)	
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(card, "position", door_found_marker.position, 0.1)
 	tween.parallel().tween_property(card, "scale", Vector2(1.5,1.5), 0.1)
 	tween.tween_interval(0.5)
-	#disappear into the deck
-	tween.tween_property(card, "position", deck.position, 0.1)
-	tween.parallel().tween_property(card, "scale", Vector2(0, 0), 0.1)
 	await tween.finished
-	card.queue_free()
+	await animate_card_to_limbo(card)
 	set_hand_freezed(false)
 		
 func animate_shuffle() -> void:

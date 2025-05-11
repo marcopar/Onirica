@@ -102,12 +102,6 @@ func check_door_found() -> CardManager.CARD_COLOR:
 			#remove the first card as we didn't find a combo (slide forward one step)
 			last3.pop_front()
 	return CardManager.CARD_COLOR.NONE
-			
-func door_discarded(color: CardManager.CARD_COLOR) -> void:
-	var door: CardModel = found_doors[color].pop_back()
-	#back into the deck
-	deck_model.deck.push_back(door)
-	pass
 	
 func check_for_door_combo(last3: Array[Card]) -> bool:
 	var colors: Dictionary[CardManager.CARD_COLOR, bool] = {}
@@ -147,3 +141,38 @@ func check_won_game() -> bool:
 	for color in found_doors.keys():
 		found_doors_count += found_doors[color].size()
 	return found_doors_count == doors_to_be_found
+
+
+func dump() -> void:
+	print("######################################################################")
+	print("== HAND ==")
+	for card in hand:
+		if card !=  null:
+			print(card.card_model)
+	print("\n")
+	
+	print("== LIMBO %d ==" % [limbo.size()])
+	for card in limbo:
+		print(card.card_model)
+	print("\n")
+	
+	print("== DISCARD %d ==" % [discard.size()])
+	for card in discard:
+		print(card.card_model)
+	print("\n")
+	
+	print("== LABYRINTH %d ==" % [labyrinth.size()])
+	for card in labyrinth:
+		print(card.card_model)
+	print("\n")
+
+	print("== DECK %d ==" % [deck_model.deck.size()])
+	for card_model in deck_model.deck:
+		print(card_model)
+	print("\n")
+	
+	print("== FOUND DOORS ==")
+	for color in found_doors.keys():
+		print(CardManager.CARD_COLOR.keys()[color],  " = ", found_doors[color].size())
+	print("\n")
+	

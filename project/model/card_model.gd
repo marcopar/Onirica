@@ -35,3 +35,6 @@ var sprite_name: String:
 		return sprite_name
 	set(value):
 		sprite_name = value
+		
+func _to_string() -> String:
+	return "%s %s" % [CardManager.CARD_COLOR.keys()[color], CardManager.CARD_TYPE.keys()[type]]

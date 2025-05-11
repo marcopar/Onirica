@@ -121,6 +121,3 @@ func set_front_texture():
 
 func set_back_texture():
 	sprite_2d.texture = back_texture
-		
-func _to_string() -> String:
-	return "Card[%s]" % [card_model.sprite_name]
