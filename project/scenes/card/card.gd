@@ -4,6 +4,7 @@ class_name Card
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
 
+const NO_SIZE: Vector2 = Vector2.ZERO
 const FULL_SIZE: Vector2 = Vector2.ONE
 const LABYRINTH_SIZE: Vector2 = Vector2(0.60, 0.60)
 const DISCARD_SIZE: Vector2 = Vector2(0.50, 0.50)
