@@ -11,14 +11,14 @@
 blend_mode = 3
 
 [sub_resource type="Gradient" id="Gradient_t1ikr"]
-offsets = PackedFloat32Array(0.323718, 0.74359, 1)
+offsets = PackedFloat32Array(0.403846, 0.625, 0.695513)
 colors = PackedColorArray(0, 0, 0, 1, 0.625, 0.625, 0.625, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ru42g"]
 gradient = SubResource("Gradient_t1ikr")
-width = 1000
+width = 1080
 height = 300
-fill = 2
+fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 1)
 metadata/_snap_enabled = true
@@ -28,23 +28,23 @@ script = ExtResource("1_fdyaw")
 
 [node name="Shade" type="Sprite2D" parent="."]
 material = SubResource("CanvasItemMaterial_fdyaw")
-position = Vector2(330, 0)
 texture = SubResource("GradientTexture2D_ru42g")
 
 [node name="ButtonDiscardDeck" parent="." instance=ExtResource("1_habke")]
+position = Vector2(-300, 0)
 texture = ExtResource("1_uyndy")
 type = 1
 
 [node name="ButtonDiscardDoor" parent="." instance=ExtResource("1_habke")]
-position = Vector2(220, 0)
+position = Vector2(-100, 0)
 texture = ExtResource("2_t4lxu")
 type = 2
 
 [node name="ButtonDiscardHand" parent="." instance=ExtResource("1_habke")]
-position = Vector2(440, 0)
+position = Vector2(100, 0)
 texture = ExtResource("3_fl2d7")
 
 [node name="ButtonDiscardKey" parent="." instance=ExtResource("1_habke")]
-position = Vector2(660, 0)
+position = Vector2(300, 0)
 texture = ExtResource("4_3ai2i")
 type = 3
