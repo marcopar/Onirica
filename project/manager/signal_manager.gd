@@ -1,7 +1,6 @@
 extends Node
 
 signal new_game
-signal card_drawed(card: Card)
 signal card_added_to_labyrinth(card: Card)
 signal card_added_to_discard(card: Card, draw_card: bool)
 signal card_added_to_limbo(card: Card)
