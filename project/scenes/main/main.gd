@@ -46,41 +46,39 @@ func _ready() -> void:
 	GameManager.new_game()		
 	SignalManager.new_game.emit()
 	doors_panel.setup(GameManager.deck_model.get_number_of(CardManager.CARD_TYPE.DOOR))
-	draw_full_hand()
+	draw_full_hand(false)
 	#enable cards to be picked
 	set_hand_freezed(false)
 	
-func draw_card(empty_limbo_enabled: bool, nightmares_enabled: bool) -> bool:
-	var card_drawn: bool = false
+func draw_card(empty_limbo_enabled: bool, nightmares_enabled: bool) -> Card:
+	var card: Card = null
 	for hand_position in range(0, GameManager.HAND_SIZE):
 		if not GameManager.hand[hand_position] == null:
 			continue
 		while GameManager.hand[hand_position] == null:
 			if GameManager.deck_model.get_number_of_cards() == 0:
-				return false
+				return null
 			var card_model: CardModel = GameManager.deck_model.get_next_card()
-			var card: Card = create_card(card_model, card_container, deck.position, Card.FULL_SIZE, true, Constants.DRAGGING_BASE_Z)
+			card = create_card(card_model, card_container, deck.position, Card.FULL_SIZE, true, Constants.DRAGGING_BASE_Z)
 			card.set_back_texture()
 			card.hand_position = hand_position	
 			await animate_card_draw(card)
 			if card_model.can_be_in_hand:
 				GameManager.hand[hand_position] = card
-				SignalManager.card_drawed.emit(card)
-				card_drawn = true
 				break
 			else:
 				if nightmares_enabled and card.card_model.type == CardManager.CARD_TYPE.NIGHTMARE:
 					await animate_nightmare(card)
 					set_hand_freezed(true)
 					nightmare_panel.visible = true
-					return true
+					return card
 				else:					
 					await animate_card_to_limbo(card)
 					SignalManager.card_added_to_limbo.emit(card)
 		if empty_limbo_enabled and not GameManager.limbo.is_empty():
 			await empty_limbo()
-		return card_drawn
-	return false
+		return card
+	return null
 
 func create_card(model: CardModel, parent: Node2D, position: Vector2, scale: Vector2, pickable: bool, z_index: int) -> Card:
 	var card: Card = CARD.instantiate()	
@@ -92,9 +90,13 @@ func create_card(model: CardModel, parent: Node2D, position: Vector2, scale: Vec
 	parent.add_child(card)
 	return card
 
-func draw_full_hand():
-	while await draw_card(false, false):
-		pass
+func draw_full_hand(nightmares_enabled: bool):
+	while true:
+		var card: Card = await draw_card(false, nightmares_enabled)
+		if card == null:
+			break
+		if nightmares_enabled and card.card_model.type == CardManager.CARD_TYPE.NIGHTMARE:
+			return
 	if not GameManager.limbo.is_empty():
 		await empty_limbo()
 		
@@ -191,16 +193,15 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 				await animate_card_to_discard(card)
 				SignalManager.card_added_to_discard.emit(card, false)				
 		await discard_nightmare_card()
-		#FIXME nightmares drawn must be resolved
-		draw_full_hand()
+		#draw with the same logic as starting the game (nightmares are not resolved, doors are not open)
+		draw_full_hand(false)
 	if type == Constants.NIGHTMARE_DISCARD.KEY and object is Card:
 		var card: Card = object
 		if card.card_model.type == CardManager.CARD_TYPE.KEY:
 			await animate_card_to_discard(card)
 			SignalManager.card_added_to_discard.emit(card, false)
 			await discard_nightmare_card()
-			#FIXME nightmares drawn must be resolved
-			draw_full_hand()
+			draw_full_hand(true)
 	if type == Constants.NIGHTMARE_DISCARD.DECK and object is Deck:
 		for i in range(0, 5):
 			if GameManager.deck_model.get_number_of_cards() == 0:
@@ -216,8 +217,7 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 				await animate_card_to_limbo(card)
 				SignalManager.card_added_to_limbo.emit(card)
 		await discard_nightmare_card()
-		#FIXME nightmares drawn must be resolved
-		draw_full_hand()
+		draw_full_hand(true)
 	if type == Constants.NIGHTMARE_DISCARD.DOOR and object is DoorsButton:
 		var doors_button: DoorsButton = object
 		var color: CardManager.CARD_COLOR = doors_button.color
@@ -228,9 +228,8 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 			await animate_door_discarded(card)
 			SignalManager.card_added_to_limbo.emit(card)
 			doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
-			await discard_nightmare_card()
-			#draw with the same logic as starting the game (nightmares are not resolved, doors are not open)
-			draw_full_hand()
+			await discard_nightmare_card()			
+			draw_full_hand(true)
 	pass
 
 func find_nightmare_card() -> Card:
