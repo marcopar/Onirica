@@ -78,7 +78,8 @@ func draw_card(empty_limbo_enabled: bool, nightmares_enabled: bool, doors_enable
 						print("key found! ", card)
 						await animate_card_to_discard(key)
 						SignalManager.card_added_to_discard.emit(key, false)
-						await animate_door_found(card)
+						card.z_index = Constants.DRAGGING_BASE_Z
+						await animate_door_found(card, false)
 						GameManager.set_door_as_found(card.card_model)
 						doors_panel.set_doors_found(card.card_model.color, GameManager.found_doors[card.card_model.color].size())
 						if GameManager.check_won_game():
@@ -148,8 +149,8 @@ func card_added_to_labyrinth(card: Card) -> void:
 	var card_model: CardModel = GameManager.check_door_found()
 	if card_model != null:
 		var door_card: Card = create_card(card_model, card_container, deck.position, Card.FULL_SIZE, false, Constants.DRAGGING_BASE_Z)
-		door_card.set_back_texture()
-		await animate_door_found(door_card)
+		door_card.set_back_texture()		
+		await animate_door_found(door_card, true)
 		doors_panel.set_doors_found(door_card.card_model.color, GameManager.found_doors[door_card.card_model.color].size())
 		if GameManager.check_won_game():
 			print("game won")
@@ -299,11 +300,14 @@ func animate_nightmare(card: Card) -> void:
 	await tween.finished
 	set_hand_freezed(false)
 	
-func animate_door_found(card: Card) -> void:
+func animate_door_found(card: Card, from_deck: bool) -> void:
 	set_hand_freezed(true)
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(card, "position", door_found_marker.position, 0.5)
-	tween.tween_property(card, "scale", Vector2(0,1), 0.2)
+	if from_deck:
+		tween.tween_property(card, "scale", Vector2(0,1), 0.2)
+	if not from_deck:
+		tween.parallel().tween_property(card, "rotation_degrees", 0, 0.2)
 	tween.tween_callback(card.set_front_texture)
 	tween.tween_property(card, "scale", Vector2(1.5,1.5), 0.1)
 	tween.tween_interval(0.5)
