@@ -89,9 +89,9 @@ func create_card(model: CardModel, parent: Node2D, position: Vector2, scale: Vec
 	parent.add_child(card)
 	return card
 
-func draw_full_hand(empty_limbo__for_each_card: bool, nightmares_enabled: bool, doors_enabled: bool):
+func draw_full_hand(empty_limbo_for_each_card: bool, nightmares_enabled: bool, doors_enabled: bool):
 	while true:
-		var card: Card = await draw_card(empty_limbo__for_each_card, nightmares_enabled, doors_enabled)
+		var card: Card = await draw_card(empty_limbo_for_each_card, nightmares_enabled, doors_enabled)
 		if card == null:
 			break
 		if nightmares_enabled and card.card_model.type == CardManager.CARD_TYPE.NIGHTMARE:
