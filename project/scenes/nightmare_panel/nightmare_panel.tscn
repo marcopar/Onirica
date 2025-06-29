@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://dtcl11a05xwoe"]
 
 [ext_resource type="Script" uid="uid://lgunxy87r4b5" path="res://scenes/nightmare_panel/nightmare_panel.gd" id="1_fdyaw"]
-[ext_resource type="PackedScene" uid="uid://cnvk7ds1on5x1" path="res://scenes/nightmare_panel/nightmare_button.tscn" id="1_habke"]
+[ext_resource type="PackedScene" uid="uid://cnvk7ds1on5x1" path="res://scenes/onirica_round_button/round_button.tscn" id="1_habke"]
 [ext_resource type="Texture2D" uid="uid://c38rjp8p3aj6j" path="res://assets/sprites/icons/discard_5.png" id="1_uyndy"]
 [ext_resource type="Texture2D" uid="uid://b58m2hj6f7hau" path="res://assets/sprites/icons/door.png" id="2_t4lxu"]
 [ext_resource type="Texture2D" uid="uid://c5qu3i2sl286a" path="res://assets/sprites/icons/hand.png" id="3_fl2d7"]

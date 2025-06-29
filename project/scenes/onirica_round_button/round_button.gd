@@ -1,6 +1,6 @@
 extends Node2D
 
-class_name NightmareButton
+class_name RoundButton
 
 @onready var icon: Sprite2D = $Icon
 @onready var background: Sprite2D = $Background

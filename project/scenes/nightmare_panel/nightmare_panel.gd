@@ -2,12 +2,12 @@ extends Node2D
 
 class_name NightmarePanel
 
-@onready var button_discard_deck: NightmareButton = $ButtonDiscardDeck
-@onready var button_discard_door: NightmareButton = $ButtonDiscardDoor
-@onready var button_discard_hand: NightmareButton = $ButtonDiscardHand
-@onready var button_discard_key: NightmareButton = $ButtonDiscardKey
+@onready var button_discard_deck: RoundButton = $ButtonDiscardDeck
+@onready var button_discard_door: RoundButton = $ButtonDiscardDoor
+@onready var button_discard_hand: RoundButton = $ButtonDiscardHand
+@onready var button_discard_key: RoundButton = $ButtonDiscardKey
 
-var buttons: Array[NightmareButton] = []
+var buttons: Array[RoundButton] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
