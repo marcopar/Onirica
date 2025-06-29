@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://drgp2lfyxaoi5"
-path="res://.godot/imported/open_door_limbo.png-1296aa5cf52a36ed3a32cec3ede88e75.ctex"
+uid="uid://c38rjp8p3aj6j"
+path="res://.godot/imported/discard_5.png-14e6c9b1c9543e2da94f343e3250b849.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/icons/open_door_limbo.png"
-dest_files=["res://.godot/imported/open_door_limbo.png-1296aa5cf52a36ed3a32cec3ede88e75.ctex"]
+source_file="res://assets/sprites/icons/discard_5.png"
+dest_files=["res://.godot/imported/discard_5.png-14e6c9b1c9543e2da94f343e3250b849.ctex"]
 
 [params]
 
