@@ -2,12 +2,12 @@ extends Node2D
 
 class_name NightmarePanel
 
-@onready var button_discard_deck: RoundButton = $ButtonDiscardDeck
-@onready var button_discard_door: RoundButton = $ButtonDiscardDoor
-@onready var button_discard_hand: RoundButton = $ButtonDiscardHand
-@onready var button_discard_key: RoundButton = $ButtonDiscardKey
+@onready var button_discard_deck: NightmareButton = $ButtonDiscardDeck
+@onready var button_discard_door: NightmareButton = $ButtonDiscardDoor
+@onready var button_discard_hand: NightmareButton = $ButtonDiscardHand
+@onready var button_discard_key: NightmareButton = $ButtonDiscardKey
 
-var buttons: Array[RoundButton] = []
+var buttons: Array[NightmareButton] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -32,3 +32,7 @@ func reset() -> void:
 	SignalManager.nightmare_action_selected.emit(Constants.NIGHTMARE_DISCARD.NONE)
 	for button in buttons:
 		button.selected = false
+
+
+func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	pass # Replace with function body.

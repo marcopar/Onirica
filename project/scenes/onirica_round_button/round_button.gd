@@ -6,7 +6,6 @@ class_name RoundButton
 @onready var background: Sprite2D = $Background
 
 @export var texture: Texture2D
-@export var type: Constants.NIGHTMARE_DISCARD
 
 var selected: bool = false:
 	get:
@@ -42,4 +41,3 @@ func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 				selected = false
 			else:
 				selected = true
-			SignalManager.nightmare_button_selected.emit(type, selected)

@@ -1,0 +1,21 @@
+[gd_scene load_steps=6 format=3 uid="uid://cymsolbakuem"]
+
+[ext_resource type="PackedScene" uid="uid://cnvk7ds1on5x1" path="res://scenes/onirica_round_button/round_button.tscn" id="1_85b4l"]
+[ext_resource type="Script" uid="uid://7ilbna5m2nat" path="res://scenes/open_door_panel/open_door_panel.gd" id="1_nt4qj"]
+[ext_resource type="Texture2D" uid="uid://drgp2lfyxaoi5" path="res://assets/sprites/icons/limbo.png" id="1_tw2cc"]
+[ext_resource type="Texture2D" uid="uid://b58m2hj6f7hau" path="res://assets/sprites/icons/door.png" id="2_85b4l"]
+[ext_resource type="Texture2D" uid="uid://8rv57y1q14fg" path="res://assets/sprites/icons/key.png" id="3_nt4qj"]
+
+[node name="OpenDoorPanel" type="Node2D"]
+script = ExtResource("1_nt4qj")
+
+[node name="Door" parent="." instance=ExtResource("1_85b4l")]
+position = Vector2(300, 0)
+texture = ExtResource("2_85b4l")
+
+[node name="Limbo" parent="." instance=ExtResource("1_85b4l")]
+position = Vector2(-300, 0)
+texture = ExtResource("1_tw2cc")
+
+[node name="Key" parent="." instance=ExtResource("1_85b4l")]
+texture = ExtResource("3_nt4qj")
