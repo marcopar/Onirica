@@ -1,13 +1,47 @@
-[gd_scene load_steps=6 format=3 uid="uid://cymsolbakuem"]
+[gd_scene load_steps=12 format=3 uid="uid://cymsolbakuem"]
 
 [ext_resource type="PackedScene" uid="uid://cnvk7ds1on5x1" path="res://scenes/onirica_round_button/round_button.tscn" id="1_85b4l"]
 [ext_resource type="Script" uid="uid://7ilbna5m2nat" path="res://scenes/open_door_panel/open_door_panel.gd" id="1_nt4qj"]
 [ext_resource type="Texture2D" uid="uid://drgp2lfyxaoi5" path="res://assets/sprites/icons/limbo.png" id="1_tw2cc"]
 [ext_resource type="Texture2D" uid="uid://b58m2hj6f7hau" path="res://assets/sprites/icons/door.png" id="2_85b4l"]
 [ext_resource type="Texture2D" uid="uid://8rv57y1q14fg" path="res://assets/sprites/icons/key.png" id="3_nt4qj"]
+[ext_resource type="Shader" uid="uid://ev2hcn4hhgq2" path="res://shaders/outline.gdshader" id="5_m7vp2"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_m7vp2"]
+blend_mode = 3
+
+[sub_resource type="Gradient" id="Gradient_t1ikr"]
+offsets = PackedFloat32Array(0.403846, 0.625, 0.695513)
+colors = PackedColorArray(0, 0, 0, 1, 0.625, 0.625, 0.625, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rmh13"]
+gradient = SubResource("Gradient_t1ikr")
+width = 1080
+height = 300
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rmh13"]
+shader = ExtResource("5_m7vp2")
+shader_parameter/color = Color(1, 1, 0, 1)
+shader_parameter/width = 5.0
+shader_parameter/pattern = 0
+shader_parameter/inside = false
+shader_parameter/add_margins = false
+shader_parameter/number_of_images = Vector2(1, 1)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m7vp2"]
+radius = 31.0408
+height = 120.0
 
 [node name="OpenDoorPanel" type="Node2D"]
 script = ExtResource("1_nt4qj")
+
+[node name="Shade" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_m7vp2")
+texture = SubResource("GradientTexture2D_rmh13")
 
 [node name="Door" parent="." instance=ExtResource("1_85b4l")]
 position = Vector2(300, 0)
@@ -17,5 +51,18 @@ texture = ExtResource("2_85b4l")
 position = Vector2(-300, 0)
 texture = ExtResource("1_tw2cc")
 
-[node name="Key" parent="." instance=ExtResource("1_85b4l")]
+[node name="Key" type="Area2D" parent="."]
+position = Vector2(2, 2)
+rotation = 0.872665
+scale = Vector2(1.5, 1.5)
+
+[node name="Sprite2D" type="Sprite2D" parent="Key"]
+material = SubResource("ShaderMaterial_rmh13")
+instance_shader_parameters/enabled = true
+instance_shader_parameters/pulse_frequency = 10.0
+position = Vector2(-1.87844, 0.164342)
+rotation = -0.872665
 texture = ExtResource("3_nt4qj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Key"]
+shape = SubResource("CapsuleShape2D_m7vp2")

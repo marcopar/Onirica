@@ -10,12 +10,12 @@
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fdyaw"]
 blend_mode = 3
 
-[sub_resource type="Gradient" id="Gradient_t1ikr"]
+[sub_resource type="Gradient" id="Gradient_fdyaw"]
 offsets = PackedFloat32Array(0.403846, 0.625, 0.695513)
 colors = PackedColorArray(0, 0, 0, 1, 0.625, 0.625, 0.625, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ru42g"]
-gradient = SubResource("Gradient_t1ikr")
+gradient = SubResource("Gradient_fdyaw")
 width = 1080
 height = 300
 fill = 1
@@ -42,7 +42,6 @@ texture = ExtResource("2_t4lxu")
 
 [node name="ButtonDiscardHand" parent="." instance=ExtResource("1_habke")]
 position = Vector2(100, 0)
-type = null
 texture = ExtResource("3_fl2d7")
 
 [node name="ButtonDiscardKey" parent="." instance=ExtResource("1_habke")]
