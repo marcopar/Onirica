@@ -36,3 +36,11 @@ func reset() -> void:
 
 func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	pass # Replace with function body.
+
+
+func set_panel_enabled(enabled: bool):
+	visible = enabled
+	if visible:
+		process_mode = Node.PROCESS_MODE_INHERIT
+	else:
+		process_mode = Node.PROCESS_MODE_DISABLED

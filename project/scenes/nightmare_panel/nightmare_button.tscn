@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://lxy2bi2qt2tk"]
 
 [ext_resource type="Script" uid="uid://bjupbj7t6aq2l" path="res://scenes/nightmare_panel/nightmare_button.gd" id="1_mtt20"]
-[ext_resource type="PackedScene" uid="uid://cnvk7ds1on5x1" path="res://scenes/onirica_round_button/round_button.tscn" id="1_wtg56"]
+[ext_resource type="PackedScene" uid="uid://cnvk7ds1on5x1" path="res://scenes/common/round_button.tscn" id="1_wtg56"]
 
 [node name="NightmareButton" instance=ExtResource("1_wtg56")]
 script = ExtResource("1_mtt20")

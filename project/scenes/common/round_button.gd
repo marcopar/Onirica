@@ -16,7 +16,7 @@ var selected: bool = false:
 			background.self_modulate = Color(1, 1, 0, 1)
 		else:
 			background.self_modulate = Color(1, 1, 1, 1)
-
+			
 var enabled: bool = true:
 	get:
 		return enabled

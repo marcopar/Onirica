@@ -13,6 +13,7 @@ extends Node2D
 @onready var nightmare_found_marker: Marker2D = $NightmareFoundMarker
 @onready var nightmare_panel: Node2D = $NightmarePanel
 @onready var discard: Discard = $Discard
+@onready var open_door_panel: OpenDoorPanel = $OpenDoorPanel
 
 const CARD = preload("res://scenes/card/card.tscn")
 
@@ -35,6 +36,7 @@ func _ready() -> void:
 	SignalManager.door_discarded.connect(door_discarded)
 	SignalManager.nightmare_action_selected.connect(nightmare_action_selected)
 	SignalManager.touch_event.connect(touch_event)
+	SignalManager.key_open_door_selected.connect(key_open_door_selected)
 	
 	hand_markers.push_back(hand_marker_1)
 	hand_markers.push_back(hand_marker_2)
@@ -97,22 +99,15 @@ func draw_full_hand(empty_limbo_for_each_card: bool, nightmares_enabled: bool, d
 		if nightmares_enabled and card.card_model.type == CardManager.CARD_TYPE.NIGHTMARE:
 			await animate_nightmare(card)
 			set_hand_freezed(true)
-			nightmare_panel.visible = true
+			nightmare_panel.set_panel_enabled(true)
 			return
 		if doors_enabled and card.card_model.type == CardManager.CARD_TYPE.DOOR:
 			var key: Card = check_door_against_hand_keys(card)
 			if key != null:
-				print("key found! ", card.card_model)
-				await animate_card_to_discard(key)
-				SignalManager.card_added_to_discard.emit(key, false)
-				card.z_index = Constants.DRAGGING_BASE_Z
-				await animate_door_found(card, false)
-				GameManager.set_door_as_found(card.card_model)
-				doors_panel.set_doors_found(card.card_model.color, GameManager.found_doors[card.card_model.color].size())
-				if GameManager.check_won_game():
-					print("game won")
-					pass
-				draw_full_hand(false, false, false)
+				set_hand_freezed(true)
+				open_door_panel.key_card = key
+				open_door_panel.door_card = card
+				open_door_panel.set_panel_enabled(true)
 				#TODO
 				#if choice is limbo move to limbo and return null
 				#if choice is key open door
@@ -268,11 +263,11 @@ func find_nightmare_card() -> Card:
 func discard_nightmare_card() -> void:
 	doors_panel.set_outline(false)
 	nightmare_panel.reset()
-	nightmare_panel.visible = false	
+	nightmare_panel.set_panel_enabled(false)
+	
 	var card: Card = find_nightmare_card()
 	await animate_card_to_discard(card)
 	SignalManager.card_added_to_discard.emit(card, false)
-	
 	
 func set_hand_outline(enabled: bool) -> void:
 	set_cards_outline(enabled, false)
@@ -285,7 +280,29 @@ func set_cards_outline(enabled: bool, keys_only: bool) -> void:
 		if card != null:
 			if not keys_only or card.card_model.type == CardManager.CARD_TYPE.KEY:
 				card.set_outline(enabled)
-			
+
+func key_open_door_selected(type: Constants.KEY_OPEN_DOOR, key: Card, door: Card) -> void:
+	open_door_panel.reset()
+	open_door_panel.set_panel_enabled(false)
+	if type == Constants.KEY_OPEN_DOOR.DOOR:
+		await animate_card_to_discard(key)
+		SignalManager.card_added_to_discard.emit(key, false)
+		door.z_index = Constants.DRAGGING_BASE_Z
+		await animate_door_found(door, false)
+		GameManager.set_door_as_found(door.card_model)
+		doors_panel.set_doors_found(door.card_model.color, GameManager.found_doors[door.card_model.color].size())
+		if GameManager.check_won_game():
+			print("game won")
+			pass
+	if type == Constants.KEY_OPEN_DOOR.LIMBO:
+		await animate_card_to_limbo(key)
+		SignalManager.card_added_to_discard.emit(key, false)
+		await animate_card_to_limbo(door)
+		SignalManager.card_added_to_discard.emit(door, false)
+
+	draw_full_hand(false, false, false)
+	set_hand_freezed(false)
+	pass
 
 ####################################################
 ### Animations

@@ -63,11 +63,13 @@ position = Vector2(540, 900)
 position = Vector2(540, 1330)
 
 [node name="NightmarePanel" parent="." instance=ExtResource("8_7jqxr")]
+process_mode = 4
 visible = false
 z_index = 199
 position = Vector2(536, 780)
 
 [node name="OpenDoorPanel" parent="." instance=ExtResource("9_b1x3f")]
+visible = false
 position = Vector2(536, 780)
 
 [connection signal="area_entered" from="Deck" to="Deck" method="_on_area_entered"]

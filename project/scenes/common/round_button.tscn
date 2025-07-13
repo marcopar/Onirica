@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://cnvk7ds1on5x1"]
 
-[ext_resource type="Script" uid="uid://cv7ctqkb2bl5v" path="res://scenes/onirica_round_button/round_button.gd" id="1_03xdq"]
+[ext_resource type="Script" uid="uid://cv7ctqkb2bl5v" path="res://scenes/common/round_button.gd" id="1_03xdq"]
 [ext_resource type="Texture2D" uid="uid://c38rjp8p3aj6j" path="res://assets/sprites/icons/discard_5.png" id="2_0pi4w"]
 [ext_resource type="Gradient" uid="uid://bku5rcu7ieurn" path="res://scenes/limbo_discart_gradient.tres" id="3_kqmhw"]
 
