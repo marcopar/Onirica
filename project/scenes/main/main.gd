@@ -292,8 +292,6 @@ func key_open_door_selected(type: Constants.KEY_OPEN_DOOR, key: Card, door: Card
 			print("game won")
 			pass
 	if type == Constants.KEY_OPEN_DOOR.LIMBO:
-		await animate_card_to_limbo(key)
-		SignalManager.card_added_to_limbo.emit(key)
 		await animate_card_to_limbo(door)
 		SignalManager.card_added_to_limbo.emit(door)
 
