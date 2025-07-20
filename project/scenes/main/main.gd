@@ -108,9 +108,6 @@ func draw_full_hand(empty_limbo_for_each_card: bool, nightmares_enabled: bool, d
 				open_door_panel.key_card = key
 				open_door_panel.door_card = card
 				open_door_panel.set_panel_enabled(true)
-				#TODO
-				#if choice is limbo move to limbo and return null
-				#if choice is key open door
 			return
 	if not GameManager.limbo.is_empty():
 		await empty_limbo()
@@ -296,9 +293,9 @@ func key_open_door_selected(type: Constants.KEY_OPEN_DOOR, key: Card, door: Card
 			pass
 	if type == Constants.KEY_OPEN_DOOR.LIMBO:
 		await animate_card_to_limbo(key)
-		SignalManager.card_added_to_discard.emit(key, false)
+		SignalManager.card_added_to_limbo.emit(key)
 		await animate_card_to_limbo(door)
-		SignalManager.card_added_to_discard.emit(door, false)
+		SignalManager.card_added_to_limbo.emit(door)
 
 	draw_full_hand(false, false, false)
 	set_hand_freezed(false)
