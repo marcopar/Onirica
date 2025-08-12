@@ -97,14 +97,15 @@ func draw_full_hand(empty_limbo_for_each_card: bool, nightmares_enabled: bool, d
 		if card == null:
 			break
 		if nightmares_enabled and card.card_model.type == CardManager.CARD_TYPE.NIGHTMARE:
-			await animate_nightmare(card)
 			set_hand_freezed(true)
+			await animate_nightmare(card)
 			nightmare_panel.set_panel_enabled(true)
 			return
 		if doors_enabled and card.card_model.type == CardManager.CARD_TYPE.DOOR:
 			var key: Card = check_door_against_hand_keys(card)
 			if key != null:
 				set_hand_freezed(true)
+				await animate_door_to_open_decision(card)
 				open_door_panel.key_card = key
 				open_door_panel.door_card = card
 				open_door_panel.set_panel_enabled(true)
@@ -328,6 +329,16 @@ func animate_door_found(card: Card, from_deck: bool) -> void:
 	tween.parallel().tween_property(card, "scale", Vector2(0, 0), 0.1)
 	await tween.finished
 	card.queue_free()
+	set_hand_freezed(false)
+	
+func animate_door_to_open_decision(card: Card) -> void:
+	set_hand_freezed(true)
+	card.z_index = Constants.DRAGGING_BASE_Z
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property(card, "position", nightmare_found_marker.position, 0.3)
+	tween.parallel().tween_property(card, "scale", Vector2(1.2,1.2), 0.3)
+	tween.parallel().tween_property(card, "rotation_degrees", 0, 0.3)
+	await tween.finished
 	set_hand_freezed(false)
 
 func animate_door_discarded(card: Card) -> void:
