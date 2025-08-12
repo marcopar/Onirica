@@ -97,15 +97,15 @@ func draw_full_hand(empty_limbo_for_each_card: bool, nightmares_enabled: bool, d
 		if card == null:
 			break
 		if nightmares_enabled and card.card_model.type == CardManager.CARD_TYPE.NIGHTMARE:
-			set_hand_freezed(true)
 			await animate_nightmare(card)
+			set_hand_freezed(true)
 			nightmare_panel.set_panel_enabled(true)
 			return
 		if doors_enabled and card.card_model.type == CardManager.CARD_TYPE.DOOR:
 			var key: Card = check_door_against_hand_keys(card)
 			if key != null:
-				set_hand_freezed(true)
 				await animate_door_to_open_decision(card)
+				set_hand_freezed(true)
 				open_door_panel.key_card = key
 				open_door_panel.door_card = card
 				open_door_panel.set_panel_enabled(true)
