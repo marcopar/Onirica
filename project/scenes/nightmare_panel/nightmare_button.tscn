@@ -1,48 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cnvk7ds1on5x1"]
+[gd_scene load_steps=3 format=3 uid="uid://lxy2bi2qt2tk"]
 
-[ext_resource type="Script" uid="uid://cv7ctqkb2bl5v" path="res://scenes/nightmare_panel/nightmare_button.gd" id="1_mtt20"]
-[ext_resource type="Texture2D" uid="uid://c38rjp8p3aj6j" path="res://assets/sprites/icons/nightmare_discard_5.png" id="2_6mgsc"]
-[ext_resource type="Gradient" uid="uid://bku5rcu7ieurn" path="res://scenes/limbo_discart_gradient.tres" id="3_exv8q"]
+[ext_resource type="Script" uid="uid://bjupbj7t6aq2l" path="res://scenes/nightmare_panel/nightmare_button.gd" id="1_mtt20"]
+[ext_resource type="PackedScene" uid="uid://cnvk7ds1on5x1" path="res://scenes/common/round_button.tscn" id="1_wtg56"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ljo08"]
-radius = 100.0
-
-[sub_resource type="Gradient" id="Gradient_el3ds"]
-offsets = PackedFloat32Array(0, 0.560897, 0.674138)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.431373, 0, 0, 0, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_krnib"]
-gradient = SubResource("Gradient_el3ds")
-width = 210
-height = 210
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-metadata/_snap_enabled = true
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_e7xj5"]
-blend_mode = 3
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_rjm8w"]
-gradient = ExtResource("3_exv8q")
-width = 200
-height = 200
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-
-[node name="NightmareButton" type="Area2D"]
+[node name="NightmareButton" instance=ExtResource("1_wtg56")]
 script = ExtResource("1_mtt20")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_ljo08")
-
-[node name="Background" type="Sprite2D" parent="."]
-texture = SubResource("GradientTexture2D_krnib")
-
-[node name="Icon" type="Sprite2D" parent="."]
-texture = ExtResource("2_6mgsc")
-
-[node name="Shade" type="Sprite2D" parent="."]
-material = SubResource("CanvasItemMaterial_e7xj5")
-texture = SubResource("GradientTexture2D_rjm8w")
-
-[connection signal="input_event" from="." to="." method="_on_input_event"]
+type = 0

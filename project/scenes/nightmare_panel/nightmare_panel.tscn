@@ -1,21 +1,21 @@
 [gd_scene load_steps=10 format=3 uid="uid://dtcl11a05xwoe"]
 
 [ext_resource type="Script" uid="uid://lgunxy87r4b5" path="res://scenes/nightmare_panel/nightmare_panel.gd" id="1_fdyaw"]
-[ext_resource type="PackedScene" uid="uid://cnvk7ds1on5x1" path="res://scenes/nightmare_panel/nightmare_button.tscn" id="1_habke"]
-[ext_resource type="Texture2D" uid="uid://c38rjp8p3aj6j" path="res://assets/sprites/icons/nightmare_discard_5.png" id="1_uyndy"]
-[ext_resource type="Texture2D" uid="uid://b58m2hj6f7hau" path="res://assets/sprites/icons/nightmare_discard_door.png" id="2_t4lxu"]
-[ext_resource type="Texture2D" uid="uid://c5qu3i2sl286a" path="res://assets/sprites/icons/nightmare_discard_hand.png" id="3_fl2d7"]
-[ext_resource type="Texture2D" uid="uid://8rv57y1q14fg" path="res://assets/sprites/icons/nightmare_discard_key.png" id="4_3ai2i"]
+[ext_resource type="PackedScene" uid="uid://lxy2bi2qt2tk" path="res://scenes/nightmare_panel/nightmare_button.tscn" id="1_habke"]
+[ext_resource type="Texture2D" uid="uid://c38rjp8p3aj6j" path="res://assets/sprites/icons/discard_5.png" id="1_uyndy"]
+[ext_resource type="Texture2D" uid="uid://b58m2hj6f7hau" path="res://assets/sprites/icons/door.png" id="2_t4lxu"]
+[ext_resource type="Texture2D" uid="uid://c5qu3i2sl286a" path="res://assets/sprites/icons/hand.png" id="3_fl2d7"]
+[ext_resource type="Texture2D" uid="uid://8rv57y1q14fg" path="res://assets/sprites/icons/key.png" id="4_3ai2i"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fdyaw"]
 blend_mode = 3
 
-[sub_resource type="Gradient" id="Gradient_t1ikr"]
+[sub_resource type="Gradient" id="Gradient_fdyaw"]
 offsets = PackedFloat32Array(0.403846, 0.625, 0.695513)
 colors = PackedColorArray(0, 0, 0, 1, 0.625, 0.625, 0.625, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ru42g"]
-gradient = SubResource("Gradient_t1ikr")
+gradient = SubResource("Gradient_fdyaw")
 width = 1080
 height = 300
 fill = 1
@@ -32,13 +32,13 @@ texture = SubResource("GradientTexture2D_ru42g")
 
 [node name="ButtonDiscardDeck" parent="." instance=ExtResource("1_habke")]
 position = Vector2(-300, 0)
-texture = ExtResource("1_uyndy")
 type = 1
+texture = ExtResource("1_uyndy")
 
 [node name="ButtonDiscardDoor" parent="." instance=ExtResource("1_habke")]
 position = Vector2(-100, 0)
-texture = ExtResource("2_t4lxu")
 type = 2
+texture = ExtResource("2_t4lxu")
 
 [node name="ButtonDiscardHand" parent="." instance=ExtResource("1_habke")]
 position = Vector2(100, 0)
@@ -46,5 +46,5 @@ texture = ExtResource("3_fl2d7")
 
 [node name="ButtonDiscardKey" parent="." instance=ExtResource("1_habke")]
 position = Vector2(300, 0)
-texture = ExtResource("4_3ai2i")
 type = 3
+texture = ExtResource("4_3ai2i")

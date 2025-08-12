@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bqghirh8g0ov4"]
+[gd_scene load_steps=10 format=3 uid="uid://bqghirh8g0ov4"]
 
 [ext_resource type="Script" uid="uid://dvvxyb2g3i2fx" path="res://scenes/main/main.gd" id="1_xny0v"]
 [ext_resource type="Texture2D" uid="uid://b1gjt3rpk4sc3" path="res://assets/sprites/cards/background.png" id="2_ec000"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dbcm0qgdsw0l7" path="res://scenes/limbo/limbo.tscn" id="6_jqqak"]
 [ext_resource type="PackedScene" uid="uid://bxhxggou0553h" path="res://scenes/doorspanel/doors_panel.tscn" id="7_dlvyq"]
 [ext_resource type="PackedScene" uid="uid://dtcl11a05xwoe" path="res://scenes/nightmare_panel/nightmare_panel.tscn" id="8_7jqxr"]
+[ext_resource type="PackedScene" uid="uid://cymsolbakuem" path="res://scenes/open_door_panel/open_door_panel.tscn" id="9_b1x3f"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_xny0v")
@@ -62,8 +63,14 @@ position = Vector2(540, 900)
 position = Vector2(540, 1330)
 
 [node name="NightmarePanel" parent="." instance=ExtResource("8_7jqxr")]
+process_mode = 4
+visible = false
 z_index = 199
-position = Vector2(536, 779)
+position = Vector2(536, 780)
+
+[node name="OpenDoorPanel" parent="." instance=ExtResource("9_b1x3f")]
+visible = false
+position = Vector2(536, 780)
 
 [connection signal="area_entered" from="Deck" to="Deck" method="_on_area_entered"]
 [connection signal="area_exited" from="Deck" to="Deck" method="_on_area_exited"]

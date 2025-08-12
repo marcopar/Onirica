@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5qu3i2sl286a"
-path="res://.godot/imported/nightmare_discard_hand.png-7e8fff53101087442a75e9549c2555a4.ctex"
+uid="uid://drgp2lfyxaoi5"
+path="res://.godot/imported/limbo.png-ee28efa9e2f24f61463ad8046bd1b420.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/icons/nightmare_discard_hand.png"
-dest_files=["res://.godot/imported/nightmare_discard_hand.png-7e8fff53101087442a75e9549c2555a4.ctex"]
+source_file="res://assets/sprites/icons/limbo.png"
+dest_files=["res://.godot/imported/limbo.png-ee28efa9e2f24f61463ad8046bd1b420.ctex"]
 
 [params]
 

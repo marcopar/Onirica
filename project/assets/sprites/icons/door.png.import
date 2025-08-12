@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8rv57y1q14fg"
-path="res://.godot/imported/nightmare_discard_key.png-e9fa212b997ff6bdde73484824ab3437.ctex"
+uid="uid://b58m2hj6f7hau"
+path="res://.godot/imported/door.png-a52d13f64e63d94145187050f5b4e734.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/icons/nightmare_discard_key.png"
-dest_files=["res://.godot/imported/nightmare_discard_key.png-e9fa212b997ff6bdde73484824ab3437.ctex"]
+source_file="res://assets/sprites/icons/door.png"
+dest_files=["res://.godot/imported/door.png-a52d13f64e63d94145187050f5b4e734.ctex"]
 
 [params]
 

@@ -93,9 +93,7 @@ func check_door_found() -> CardModel:
 				#get the door from the deck
 				var door: CardModel = deck_model.search(CardManager.CARD_TYPE.DOOR, card.card_model.color)
 				if door != null:
-					#remove the door (model) from the deck and add it to the found doors
-					deck_model.deck.erase(door)
-					found_doors[door.color].push_back(door)
+					set_door_as_found(door)
 					return card.card_model
 			#we found an old combo, clear the last3 and start from scratch
 			last3.clear()
@@ -103,7 +101,12 @@ func check_door_found() -> CardModel:
 			#remove the first card as we didn't find a combo (slide forward one step)
 			last3.pop_front()
 	return null
-	
+
+func set_door_as_found(door: CardModel) -> void:
+	#remove the door (model) from the deck and add it to the found doors
+	deck_model.deck.erase(door)
+	found_doors[door.color].push_back(door)
+
 func check_for_door_combo(last3: Array[Card]) -> bool:
 	var colors: Dictionary[CardManager.CARD_COLOR, bool] = {}
 	#count the different colors
