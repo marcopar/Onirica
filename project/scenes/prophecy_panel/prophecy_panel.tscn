@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2ya0la80ijxu"]
+
+[ext_resource type="Script" uid="uid://1i8i2v8uida6" path="res://scenes/prophecy_panel/prophecy_panel.gd" id="1_udjif"]
+[ext_resource type="PackedScene" uid="uid://ce08id5decbqq" path="res://scenes/prophecy_panel/prophecy_card.tscn" id="2_18j78"]
+
+[node name="ProphecyPanel" type="Node2D"]
+script = ExtResource("1_udjif")
+
+[node name="CardPosition1" type="Marker2D" parent="."]
+position = Vector2(110, 150)
+
+[node name="CardPosition2" type="Marker2D" parent="."]
+position = Vector2(320, 150)
+
+[node name="CardPosition3" type="Marker2D" parent="."]
+position = Vector2(530, 150)
+
+[node name="CardPosition4" type="Marker2D" parent="."]
+position = Vector2(740, 150)
+
+[node name="CardPosition5" type="Marker2D" parent="."]
+position = Vector2(960, 200)
+rotation = 0.0872665
+
+[node name="ProphecyCard" parent="." instance=ExtResource("2_18j78")]
+position = Vector2(414, 462)

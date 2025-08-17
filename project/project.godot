@@ -35,8 +35,9 @@ window/vsync/vsync_mode=0
 discard=""
 labyrinth=""
 limbo=""
-cards=""
 deck=""
+cards=""
+prophecy_cards=""
 
 [input_devices]
 

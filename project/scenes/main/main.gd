@@ -10,10 +10,10 @@ extends Node2D
 @onready var card_container: Node2D = $CardContainer
 @onready var doors_panel: DoorsPanel = $DoorsPanel
 @onready var door_found_marker: Marker2D = $DoorFoundMarker
-@onready var nightmare_found_marker: Marker2D = $NightmareFoundMarker
 @onready var nightmare_panel: Node2D = $NightmarePanel
 @onready var discard: Discard = $Discard
 @onready var open_door_panel: OpenDoorPanel = $OpenDoorPanel
+@onready var card_presentation_marker: Marker2D = $CardPresentationMarker
 
 const CARD = preload("res://scenes/card/card.tscn")
 
@@ -308,7 +308,7 @@ func animate_nightmare(card: Card) -> void:
 	set_hand_freezed(true)
 	card.z_index = Constants.DRAGGING_BASE_Z
 	var tween: Tween = get_tree().create_tween()
-	tween.tween_property(card, "position", nightmare_found_marker.position, 0.2)
+	tween.tween_property(card, "position", card_presentation_marker.position, 0.2)
 	tween.parallel().tween_property(card, "rotation_degrees", 360, 0.2)
 	tween.parallel().tween_property(card, "scale", Vector2(1.3,1.3), 0.2)
 	await tween.finished
@@ -335,7 +335,7 @@ func animate_door_to_open_decision(card: Card) -> void:
 	set_hand_freezed(true)
 	card.z_index = Constants.DRAGGING_BASE_Z
 	var tween: Tween = get_tree().create_tween()
-	tween.tween_property(card, "position", nightmare_found_marker.position, 0.3)
+	tween.tween_property(card, "position", card_presentation_marker.position, 0.3)
 	tween.parallel().tween_property(card, "scale", Vector2(1.2,1.2), 0.3)
 	tween.parallel().tween_property(card, "rotation_degrees", 0, 0.3)
 	await tween.finished
