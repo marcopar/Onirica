@@ -11,6 +11,7 @@ var card_model: CardModel:
 		card_model = value
 		
 func _ready() -> void:
+	super._ready()
 	front_texture = load("res://assets/sprites/cards/nightmare.png")
 
 func handle_position_update(drag_event: InputEventScreenDrag) -> void:

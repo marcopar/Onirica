@@ -76,8 +76,6 @@ func touch_action() -> void:
 	return
 
 func handle_overlapping_areas() -> bool:
-	for area in get_overlapping_areas():
-		pass
 	return false
 
 func handle_position_update(drag_event: InputEventScreenDrag) -> void:
