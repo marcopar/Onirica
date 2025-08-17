@@ -37,9 +37,7 @@ func _input(event: InputEvent) -> void:
 			return
 		if not drag_start.is_finite():
 			drag_start = drag_event.position
-		z_index = Constants.DRAGGING_BASE_Z
-		global_position = drag_event.position
-		rotation = 0
+		handle_position_update(drag_event)
 		get_viewport().set_input_as_handled()
 
 func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
@@ -81,3 +79,8 @@ func handle_overlapping_areas() -> bool:
 	for area in get_overlapping_areas():
 		pass
 	return false
+
+func handle_position_update(drag_event: InputEventScreenDrag) -> void:
+	z_index = Constants.DRAGGING_BASE_Z
+	global_position = drag_event.position
+	rotation = 0

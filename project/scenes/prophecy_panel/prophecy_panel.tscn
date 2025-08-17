@@ -23,4 +23,22 @@ position = Vector2(960, 200)
 rotation = 0.0872665
 
 [node name="ProphecyCard" parent="." instance=ExtResource("2_18j78")]
-position = Vector2(414, 462)
+position = Vector2(110, 150)
+scale = Vector2(0.75, 0.75)
+
+[node name="ProphecyCard2" parent="." instance=ExtResource("2_18j78")]
+position = Vector2(320, 150)
+scale = Vector2(0.75, 0.75)
+
+[node name="ProphecyCard3" parent="." instance=ExtResource("2_18j78")]
+position = Vector2(530, 150)
+scale = Vector2(0.75, 0.75)
+
+[node name="ProphecyCard4" parent="." instance=ExtResource("2_18j78")]
+position = Vector2(740, 150)
+scale = Vector2(0.75, 0.75)
+
+[node name="ProphecyCard5" parent="." instance=ExtResource("2_18j78")]
+position = Vector2(960, 200)
+rotation = 0.0872665
+scale = Vector2(0.75, 0.75)
