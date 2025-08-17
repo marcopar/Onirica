@@ -31,15 +31,6 @@ func card_added_to_labyrinth(card: Card) -> void:
 	card_container.add_child(card)
 	if GameManager.labyrinth.size() >= MAX_SIZE:
 		card_container.global_position.x = -CARD_OFFSET * (GameManager.labyrinth.size() - MAX_SIZE)
-
-func _on_fade_rect_gui_input(event: InputEvent) -> void:
-	if event is InputEventScreenTouch:
-		labyrinth_dragging = event.pressed
-		pass
-	if event is InputEventScreenDrag:
-		if labyrinth_dragging:
-			card_container.global_position.x += event.relative.x
-		pass
 	
 func _on_area_entered(area: Area2D) -> void:
 	if area is Card:
@@ -55,3 +46,13 @@ func _on_area_exited(area: Area2D) -> void:
 			
 func card_return_to_hand(card: Card) -> void:
 	highlight.enabled = false
+
+
+func _on_scroll_input_area_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if event is InputEventScreenTouch:
+		labyrinth_dragging = event.pressed
+		pass
+	if event is InputEventScreenDrag:
+		if labyrinth_dragging:
+			card_container.global_position.x += event.relative.x
+		pass
