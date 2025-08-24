@@ -1,44 +1,43 @@
-[gd_scene load_steps=3 format=3 uid="uid://b2ya0la80ijxu"]
+[gd_scene load_steps=5 format=3 uid="uid://b2ya0la80ijxu"]
 
 [ext_resource type="Script" uid="uid://1i8i2v8uida6" path="res://scenes/prophecy_panel/prophecy_panel.gd" id="1_udjif"]
-[ext_resource type="PackedScene" uid="uid://ce08id5decbqq" path="res://scenes/prophecy_panel/prophecy_card.tscn" id="2_18j78"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_udjif"]
+blend_mode = 3
+
+[sub_resource type="Curve" id="Curve_18j78"]
+_data = [Vector2(0, 0.3), 0.0, 0.0, 0, 0]
+point_count = 1
+metadata/_snap_enabled = true
+
+[sub_resource type="CurveTexture" id="CurveTexture_std26"]
+width = 1080
+curve = SubResource("Curve_18j78")
 
 [node name="ProphecyPanel" type="Node2D"]
 script = ExtResource("1_udjif")
 
-[node name="CardPosition1" type="Marker2D" parent="."]
-position = Vector2(110, 150)
+[node name="Shade" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_udjif")
+scale = Vector2(1, 400)
+texture = SubResource("CurveTexture_std26")
+centered = false
 
-[node name="CardPosition2" type="Marker2D" parent="."]
-position = Vector2(320, 150)
+[node name="CardContainer" type="Node2D" parent="."]
+position = Vector2(0, 200)
 
-[node name="CardPosition3" type="Marker2D" parent="."]
-position = Vector2(530, 150)
+[node name="CardPosition1" type="Marker2D" parent="CardContainer"]
+position = Vector2(110, 0)
 
-[node name="CardPosition4" type="Marker2D" parent="."]
-position = Vector2(740, 150)
+[node name="CardPosition2" type="Marker2D" parent="CardContainer"]
+position = Vector2(320, 0)
 
-[node name="CardPosition5" type="Marker2D" parent="."]
-position = Vector2(960, 200)
+[node name="CardPosition3" type="Marker2D" parent="CardContainer"]
+position = Vector2(530, 0)
+
+[node name="CardPosition4" type="Marker2D" parent="CardContainer"]
+position = Vector2(740, 0)
+
+[node name="CardPosition5" type="Marker2D" parent="CardContainer"]
+position = Vector2(960, 50)
 rotation = 0.0872665
-
-[node name="ProphecyCard" parent="." instance=ExtResource("2_18j78")]
-position = Vector2(110, 150)
-scale = Vector2(0.75, 0.75)
-
-[node name="ProphecyCard2" parent="." instance=ExtResource("2_18j78")]
-position = Vector2(320, 150)
-scale = Vector2(0.75, 0.75)
-
-[node name="ProphecyCard3" parent="." instance=ExtResource("2_18j78")]
-position = Vector2(530, 150)
-scale = Vector2(0.75, 0.75)
-
-[node name="ProphecyCard4" parent="." instance=ExtResource("2_18j78")]
-position = Vector2(740, 150)
-scale = Vector2(0.75, 0.75)
-
-[node name="ProphecyCard5" parent="." instance=ExtResource("2_18j78")]
-position = Vector2(960, 200)
-rotation = 0.0872665
-scale = Vector2(0.75, 0.75)

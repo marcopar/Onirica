@@ -2,8 +2,6 @@ extends DraggableSprite
 
 class_name ProphecyCard
 
-var front_texture: Texture2D
-
 var card_model: CardModel:
 	get:
 		return card_model
@@ -12,7 +10,8 @@ var card_model: CardModel:
 		
 func _ready() -> void:
 	super._ready()
-	front_texture = load("res://assets/sprites/cards/nightmare.png")
+	sprite_2d.texture = load(card_model.sprite_name)
+	
 
 func handle_position_update(drag_event: InputEventScreenDrag) -> void:
 	z_index = Constants.DRAGGING_BASE_Z
@@ -22,3 +21,9 @@ func handle_position_update(drag_event: InputEventScreenDrag) -> void:
 func abort_dragging_action() -> void:
 	super.abort_dragging_action()
 	z_index = 0
+
+func handle_overlapping_areas() -> bool:
+	for area in get_overlapping_areas():
+		if area.is_in_group(Constants.GROUP_PROPHECY_CARDS):
+			return false
+	return false

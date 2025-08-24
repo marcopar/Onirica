@@ -14,6 +14,7 @@ extends Node2D
 @onready var discard: Discard = $Discard
 @onready var open_door_panel: OpenDoorPanel = $OpenDoorPanel
 @onready var card_presentation_marker: Marker2D = $CardPresentationMarker
+@onready var prophecy_panel: ProphecyPanel = $ProphecyPanel
 
 const CARD = preload("res://scenes/card/card.tscn")
 
@@ -158,9 +159,17 @@ func card_added_to_labyrinth(card: Card) -> void:
 	
 func card_added_to_discard(card: Card, draw_card: bool) -> void:
 	GameManager.card_added_to_discard(card)
+	if not nightmare_panel.visible and card.card_model.type == CardManager.CARD_TYPE.KEY:
+		open_prophecy_panel()
 	if draw_card:
 		await draw_full_hand(true, true, true)
 
+func open_prophecy_panel() -> void:
+	var first_5_cards: Array[CardModel] =  GameManager.deck_model.deck.slice(0, 5)
+	prophecy_panel.cards = first_5_cards
+	prophecy_panel.set_panel_enabled(true)
+	pass
+	
 func card_added_to_limbo(card: Card) -> void:
 	GameManager.card_added_to_limbo(card)
 

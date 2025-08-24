@@ -75,6 +75,7 @@ z_index = 199
 position = Vector2(536, 780)
 
 [node name="ProphecyPanel" parent="." instance=ExtResource("10_a8run")]
+visible = false
 z_index = 199
 position = Vector2(-3, 1179)
 
