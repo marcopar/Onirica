@@ -23,6 +23,9 @@ var cards: Array[CardModel]:
 		cards = value
 
 func _ready() -> void:
+	SignalManager.swap_prophecy_cards.connect(swap_prophecy_cards)
+	SignalManager.prophecy_cards_reset_position.connect(prophecy_cards_reset_position)
+
 	card_markers.push_back(card_position_1)
 	card_markers.push_back(card_position_2)
 	card_markers.push_back(card_position_3)
@@ -41,6 +44,9 @@ func set_panel_enabled(enabled: bool):
 	else:
 		process_mode = Node.PROCESS_MODE_DISABLED
 
+func reset() -> void:
+	cards.clear()
+		
 func create_prophecy_card(model: CardModel, parent: Node2D, pposition: Vector2, pscale: Vector2, pickable: bool, pz_index: int) -> ProphecyCard:
 	var card: ProphecyCard = PROPHECY_CARD.instantiate()	
 	card.card_model = model
@@ -48,5 +54,29 @@ func create_prophecy_card(model: CardModel, parent: Node2D, pposition: Vector2, 
 	card.scale = pscale
 	card.input_pickable = pickable
 	card.z_index = pz_index
+	card.add_to_group(Constants.GROUP_PROPHECY_CARDS)
 	parent.add_child(card)
 	return card
+	
+
+func swap_prophecy_cards(card1: ProphecyCard, card2: ProphecyCard) -> void:
+	var i1: int = cards.find(card1.card_model)
+	var i2: int = cards.find(card2.card_model)
+	
+	var marker1: Marker2D = card_markers[i1]
+	var marker2: Marker2D = card_markers[i2]
+	
+	card1.position = marker2.position
+	card1.rotation = marker2.rotation	
+	card2.position = marker1.position
+	card2.rotation = marker1.rotation
+	
+	cards[i1] = card2.card_model
+	cards[i2] = card1.card_model
+	
+func prophecy_cards_reset_position(card: ProphecyCard) -> void:
+	var i: int = cards.find(card.card_model)	
+	var marker: Marker2D = card_markers[i]
+	
+	card.position = marker.position
+	card.rotation = marker.rotation	

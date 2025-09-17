@@ -165,6 +165,7 @@ func card_added_to_discard(card: Card, pdraw_card: bool) -> void:
 		await draw_full_hand(true, true, true)
 
 func open_prophecy_panel() -> void:
+	set_hand_freezed(true)
 	var first_5_cards: Array[CardModel] =  GameManager.deck_model.deck.slice(0, 5)
 	prophecy_panel.cards = first_5_cards
 	prophecy_panel.set_panel_enabled(true)
