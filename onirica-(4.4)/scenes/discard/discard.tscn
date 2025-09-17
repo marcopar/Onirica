@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://bnxsoiggcrqk"]
+
+[ext_resource type="Script" uid="uid://df7kpmryjeb8u" path="res://scenes/discard/discard.gd" id="1_h4lno"]
+[ext_resource type="Gradient" uid="uid://bku5rcu7ieurn" path="res://scenes/limbo_discart_gradient.tres" id="2_em7rx"]
+
+[sub_resource type="Gradient" id="Gradient_auh55"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7k0ah"]
+gradient = SubResource("Gradient_auh55")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vbo5n"]
+radius = 145.0
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_qx3m6"]
+blend_mode = 3
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ehpme"]
+gradient = ExtResource("2_em7rx")
+width = 300
+height = 300
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Discard" type="Area2D" groups=["discard"]]
+script = ExtResource("1_h4lno")
+
+[node name="Highlight" type="PointLight2D" parent="."]
+position = Vector2(0.5, 0)
+scale = Vector2(7, 7)
+enabled = false
+color = Color(1, 1, 0, 1)
+energy = 2.0
+range_z_max = 0
+texture = SubResource("GradientTexture2D_7k0ah")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_vbo5n")
+
+[node name="CardContainer" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 198
+material = SubResource("CanvasItemMaterial_qx3m6")
+texture = SubResource("GradientTexture2D_ehpme")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]

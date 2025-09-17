@@ -141,7 +141,7 @@ func card_added_to_limbo(card: Card) -> void:
 	limbo.push_back(card)
 
 func check_won_game() -> bool:
-	var found_doors_count: int
+	var found_doors_count: int = 0
 	for color in found_doors.keys():
 		found_doors_count += found_doors[color].size()
 	return found_doors_count == doors_to_be_found

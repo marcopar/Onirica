@@ -1,0 +1,85 @@
+[gd_scene load_steps=11 format=3 uid="uid://cau3cr0g51h8p"]
+
+[ext_resource type="Script" uid="uid://bt2ppt5mpotk1" path="res://scenes/labyrinth/labyrinth.gd" id="1_ufj7f"]
+
+[sub_resource type="Gradient" id="Gradient_u2po4"]
+offsets = PackedFloat32Array(0, 0.539267, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0.992157, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_d1mfr"]
+gradient = SubResource("Gradient_u2po4")
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wyiyu"]
+size = Vector2(1080, 100)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_72pmk"]
+blend_mode = 3
+
+[sub_resource type="Gradient" id="Gradient_gl1fh"]
+offsets = PackedFloat32Array(0.0157068, 0.0401396)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dv73n"]
+gradient = SubResource("Gradient_gl1fh")
+width = 1080
+height = 230
+
+[sub_resource type="Gradient" id="Gradient_2sdyl"]
+offsets = PackedFloat32Array(0, 0.503448, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wwp6j"]
+gradient = SubResource("Gradient_2sdyl")
+width = 1080
+height = 230
+fill_from = Vector2(0.5, 0)
+fill_to = Vector2(0.5, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gl1fh"]
+size = Vector2(1080, 230)
+
+[node name="Labyrinth" type="Area2D" groups=["labyrinth"]]
+script = ExtResource("1_ufj7f")
+
+[node name="Highlight" type="PointLight2D" parent="."]
+position = Vector2(541, -1.99994)
+scale = Vector2(18, 5)
+enabled = false
+color = Color(1, 1, 0, 1)
+energy = 2.0
+range_z_max = 0
+texture = SubResource("GradientTexture2D_d1mfr")
+
+[node name="CardDetectionCollision" type="CollisionShape2D" parent="."]
+position = Vector2(540, 0)
+shape = SubResource("RectangleShape2D_wyiyu")
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(150, 0)
+
+[node name="CardContainer" type="Node2D" parent="."]
+
+[node name="LeftFading" type="Sprite2D" parent="."]
+z_index = 199
+material = SubResource("CanvasItemMaterial_72pmk")
+position = Vector2(540, 0)
+texture = SubResource("GradientTexture2D_dv73n")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(540, 0)
+texture = SubResource("GradientTexture2D_wwp6j")
+
+[node name="ScrollInputArea" type="Area2D" parent="."]
+
+[node name="ScrollInputCollision" type="CollisionShape2D" parent="ScrollInputArea"]
+z_index = 100
+z_as_relative = false
+position = Vector2(540, 0)
+shape = SubResource("RectangleShape2D_gl1fh")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[connection signal="input_event" from="ScrollInputArea" to="." method="_on_scroll_input_area_input_event"]

@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://fib6nrvub15n"]
+
+[ext_resource type="Script" uid="uid://m62nde2ysxpr" path="res://scenes/card/card.gd" id="1_atepj"]
+[ext_resource type="PackedScene" uid="uid://mnnbxl1vr0ep" path="res://scenes/common/draggable_sprite.tscn" id="1_vtcvk"]
+[ext_resource type="Texture2D" uid="uid://c5jkms2sw4amx" path="res://assets/sprites/cards/nightmare.png" id="2_toevi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g65cd"]
+size = Vector2(236, 364)
+
+[node name="Card" instance=ExtResource("1_vtcvk")]
+script = ExtResource("1_atepj")
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_toevi")
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("RectangleShape2D_g65cd")

@@ -41,12 +41,12 @@ func set_panel_enabled(enabled: bool):
 	else:
 		process_mode = Node.PROCESS_MODE_DISABLED
 
-func create_prophecy_card(model: CardModel, parent: Node2D, position: Vector2, scale: Vector2, pickable: bool, z_index: int) -> ProphecyCard:
+func create_prophecy_card(model: CardModel, parent: Node2D, pposition: Vector2, pscale: Vector2, pickable: bool, pz_index: int) -> ProphecyCard:
 	var card: ProphecyCard = PROPHECY_CARD.instantiate()	
 	card.card_model = model
-	card.position = position
-	card.scale = scale
+	card.position = pposition
+	card.scale = pscale
 	card.input_pickable = pickable
-	card.z_index = z_index
+	card.z_index = pz_index
 	parent.add_child(card)
 	return card

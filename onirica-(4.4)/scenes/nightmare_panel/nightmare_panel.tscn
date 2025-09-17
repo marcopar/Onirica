@@ -1,0 +1,47 @@
+[gd_scene load_steps=10 format=3 uid="uid://dtcl11a05xwoe"]
+
+[ext_resource type="Script" uid="uid://lgunxy87r4b5" path="res://scenes/nightmare_panel/nightmare_panel.gd" id="1_fdyaw"]
+[ext_resource type="PackedScene" uid="uid://lxy2bi2qt2tk" path="res://scenes/nightmare_panel/nightmare_button.tscn" id="1_habke"]
+[ext_resource type="Texture2D" uid="uid://c38rjp8p3aj6j" path="res://assets/sprites/icons/discard_5.png" id="1_uyndy"]
+[ext_resource type="Texture2D" uid="uid://b58m2hj6f7hau" path="res://assets/sprites/icons/door.png" id="2_t4lxu"]
+[ext_resource type="Texture2D" uid="uid://c5qu3i2sl286a" path="res://assets/sprites/icons/hand.png" id="3_fl2d7"]
+[ext_resource type="Texture2D" uid="uid://8rv57y1q14fg" path="res://assets/sprites/icons/key.png" id="4_3ai2i"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fdyaw"]
+blend_mode = 3
+
+[sub_resource type="Curve" id="Curve_fdyaw"]
+_data = [Vector2(0, 0.3), 0.0, 0.0, 0, 0]
+point_count = 1
+metadata/_snap_enabled = true
+
+[sub_resource type="CurveTexture" id="CurveTexture_t1ikr"]
+width = 1080
+curve = SubResource("Curve_fdyaw")
+
+[node name="NightmarePanel" type="Node2D"]
+script = ExtResource("1_fdyaw")
+
+[node name="Shade" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_fdyaw")
+scale = Vector2(1, 300)
+texture = SubResource("CurveTexture_t1ikr")
+
+[node name="ButtonDiscardDeck" parent="." instance=ExtResource("1_habke")]
+position = Vector2(-300, 0)
+type = 1
+texture = ExtResource("1_uyndy")
+
+[node name="ButtonDiscardDoor" parent="." instance=ExtResource("1_habke")]
+position = Vector2(-100, 0)
+type = 2
+texture = ExtResource("2_t4lxu")
+
+[node name="ButtonDiscardHand" parent="." instance=ExtResource("1_habke")]
+position = Vector2(100, 0)
+texture = ExtResource("3_fl2d7")
+
+[node name="ButtonDiscardKey" parent="." instance=ExtResource("1_habke")]
+position = Vector2(300, 0)
+type = 3
+texture = ExtResource("4_3ai2i")

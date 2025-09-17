@@ -82,13 +82,13 @@ func draw_card(empty_limbo_enabled: bool, nightmares_enabled: bool, doors_enable
 		return card
 	return null
 
-func create_card(model: CardModel, parent: Node2D, position: Vector2, scale: Vector2, pickable: bool, z_index: int) -> Card:
+func create_card(model: CardModel, parent: Node2D, pposition: Vector2, pscale: Vector2, pickable: bool, pz_index: int) -> Card:
 	var card: Card = CARD.instantiate()	
 	card.card_model = model
-	card.position = position
-	card.scale = scale
+	card.position = pposition
+	card.scale = pscale
 	card.input_pickable = pickable
-	card.z_index = z_index
+	card.z_index = pz_index
 	parent.add_child(card)
 	return card
 
@@ -157,11 +157,11 @@ func card_added_to_labyrinth(card: Card) -> void:
 	else:
 		await draw_full_hand(true, true, true)
 	
-func card_added_to_discard(card: Card, draw_card: bool) -> void:
+func card_added_to_discard(card: Card, pdraw_card: bool) -> void:
 	GameManager.card_added_to_discard(card)
 	if not nightmare_panel.visible and card.card_model.type == CardManager.CARD_TYPE.KEY:
 		open_prophecy_panel()
-	if draw_card:
+	if pdraw_card:
 		await draw_full_hand(true, true, true)
 
 func open_prophecy_panel() -> void:
