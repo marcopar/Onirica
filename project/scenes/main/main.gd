@@ -159,7 +159,7 @@ func card_added_to_labyrinth(card: Card) -> void:
 	
 func card_added_to_discard(card: Card, pdraw_card: bool) -> void:
 	GameManager.card_added_to_discard(card)
-	if not nightmare_panel.visible and card.card_model.type == CardManager.CARD_TYPE.KEY:
+	if not open_door_panel.visible and not nightmare_panel.visible and card.card_model.type == CardManager.CARD_TYPE.KEY:
 		open_prophecy_panel()
 	if pdraw_card:
 		await draw_full_hand(true, true, true)
@@ -289,8 +289,6 @@ func set_cards_outline(enabled: bool, keys_only: bool) -> void:
 				card.set_outline(enabled)
 
 func key_open_door_selected(type: Constants.KEY_OPEN_DOOR, key: Card, door: Card) -> void:
-	open_door_panel.reset()
-	open_door_panel.set_panel_enabled(false)
 	if type == Constants.KEY_OPEN_DOOR.DOOR:
 		await animate_card_to_discard(key)
 		SignalManager.card_added_to_discard.emit(key, false)
@@ -305,6 +303,8 @@ func key_open_door_selected(type: Constants.KEY_OPEN_DOOR, key: Card, door: Card
 		await animate_card_to_limbo(door)
 		SignalManager.card_added_to_limbo.emit(door)
 
+	open_door_panel.reset()
+	open_door_panel.set_panel_enabled(false)
 	draw_full_hand(false, false, false)
 	set_hand_freezed(false)
 	pass
