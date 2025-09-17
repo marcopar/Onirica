@@ -161,6 +161,7 @@ func card_added_to_discard(card: Card, pdraw_card: bool) -> void:
 	GameManager.card_added_to_discard(card)
 	if not open_door_panel.visible and not nightmare_panel.visible and card.card_model.type == CardManager.CARD_TYPE.KEY:
 		open_prophecy_panel()
+		return
 	if pdraw_card:
 		await draw_full_hand(true, true, true)
 
@@ -169,6 +170,7 @@ func open_prophecy_panel() -> void:
 	var first_5_cards: Array[CardModel] =  GameManager.deck_model.deck.slice(0, 5)
 	prophecy_panel.cards = first_5_cards
 	prophecy_panel.set_panel_enabled(true)
+	deck.set_outline(true)
 	pass
 	
 func card_added_to_limbo(card: Card) -> void:
@@ -209,9 +211,35 @@ func nightmare_action_selected(type: Constants.NIGHTMARE_DISCARD) -> void:
 			set_hand_outline(true)
 
 func touch_event(object: Variant) -> void:
-	if nightmare_action_discard_selected != Constants.NIGHTMARE_DISCARD.NONE:
+	if nightmare_panel.visible and nightmare_action_discard_selected != Constants.NIGHTMARE_DISCARD.NONE:
 		# nightmare action was selected so we check if we should activate the action
 		handle_nightmare_action(nightmare_action_discard_selected, object)
+		return
+	if prophecy_panel.visible and object is Deck:
+		#reorder cards and close the prophecy panel
+		var cards: Array[CardModel] = prophecy_panel.cards
+		#can't discard doors and deadends
+		if not cards[4].can_discard:
+			return
+		#remove the first 5 cards from the deck
+		GameManager.deck_model.deck.pop_front()
+		GameManager.deck_model.deck.pop_front()
+		GameManager.deck_model.deck.pop_front()
+		GameManager.deck_model.deck.pop_front()
+		GameManager.deck_model.deck.pop_front()
+
+		#fifth card is to be discarded
+		var to_discard = cards.pop_at(4)
+		#TODO create card and animate to discard
+		
+		#add them back in the selected order in the panel
+		cards.reverse()
+		for card in cards:
+			GameManager.deck_model.deck.push_front(card)
+		prophecy_panel.reset()
+		prophecy_panel.set_panel_enabled(false)
+		deck.set_outline(false)
+		draw_full_hand(false, true, true)
 		return
 	pass
 

@@ -25,6 +25,7 @@ func abort_dragging_action() -> void:
 func handle_overlapping_areas() -> bool:
 	for area in get_overlapping_areas():
 		if area.is_in_group(Constants.GROUP_PROPHECY_CARDS):
+			self.z_index = 0
 			SignalManager.swap_prophecy_cards.emit(self, area)
 			return true
 	return false

@@ -21,6 +21,7 @@ var cards: Array[CardModel]:
 		return cards
 	set(value):
 		cards = value
+		#TODO send signal to enable/disable deck outline if last card canm be discarded
 
 func _ready() -> void:
 	SignalManager.swap_prophecy_cards.connect(swap_prophecy_cards)
@@ -45,6 +46,9 @@ func set_panel_enabled(enabled: bool):
 		process_mode = Node.PROCESS_MODE_DISABLED
 
 func reset() -> void:
+	for object in card_container.get_children():
+		if object is ProphecyCard:
+			object.queue_free()
 	cards.clear()
 		
 func create_prophecy_card(model: CardModel, parent: Node2D, pposition: Vector2, pscale: Vector2, pickable: bool, pz_index: int) -> ProphecyCard:
@@ -73,6 +77,8 @@ func swap_prophecy_cards(card1: ProphecyCard, card2: ProphecyCard) -> void:
 	
 	cards[i1] = card2.card_model
 	cards[i2] = card1.card_model
+	
+	#TODO send signal to enable/disable deck outline if last card can be discarded
 	
 func prophecy_cards_reset_position(card: ProphecyCard) -> void:
 	var i: int = cards.find(card.card_model)	

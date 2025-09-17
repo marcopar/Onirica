@@ -28,7 +28,7 @@ var can_play: bool:
 var can_discard: bool:
 	get:
 		return type == CardManager.CARD_TYPE.SUN or type == CardManager.CARD_TYPE.MOON or \
-			type == CardManager.CARD_TYPE.KEY or type == CardManager.CARD_TYPE.GLYPH
+			type == CardManager.CARD_TYPE.KEY or type == CardManager.CARD_TYPE.GLYPH or type == CardManager.CARD_TYPE.NIGHTMARE
 		
 var sprite_name: String:
 	get:
