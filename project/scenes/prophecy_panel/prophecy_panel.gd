@@ -16,13 +16,17 @@ const PROPHECY_SIZE: Vector2 = Vector2(0.70, 0.70)
 
 var card_markers: Array[Marker2D]
 
-var cards: Array[CardModel]:
+var card_models: Array[CardModel]:
 	get:
-		return cards
+		return card_models
 	set(value):
-		cards = value
+		card_models = value
 		#TODO send signal to enable/disable deck outline if last card canm be discarded
 
+var prophecy_cards: Array[ProphecyCard]:
+	get:
+		return prophecy_cards
+		
 func _ready() -> void:
 	SignalManager.swap_prophecy_cards.connect(swap_prophecy_cards)
 	SignalManager.prophecy_cards_reset_position.connect(prophecy_cards_reset_position)
@@ -37,10 +41,11 @@ func set_panel_enabled(enabled: bool):
 	visible = enabled
 	if visible:
 		process_mode = Node.PROCESS_MODE_INHERIT
-		for card_model in cards:
-			var marker: Marker2D = card_markers[cards.find(card_model)]
+		for card_model in card_models:
+			var marker: Marker2D = card_markers[card_models.find(card_model)]
 			var prophecy_card: ProphecyCard = create_prophecy_card(card_model, card_container, marker.position, PROPHECY_SIZE, true, 0)
 			prophecy_card.rotation = marker.rotation
+			prophecy_cards.push_back(prophecy_card)
 			pass
 	else:
 		process_mode = Node.PROCESS_MODE_DISABLED
@@ -49,7 +54,8 @@ func reset() -> void:
 	for object in card_container.get_children():
 		if object is ProphecyCard:
 			object.queue_free()
-	cards.clear()
+	card_models.clear()
+	prophecy_cards.clear()
 		
 func create_prophecy_card(model: CardModel, parent: Node2D, pposition: Vector2, pscale: Vector2, pickable: bool, pz_index: int) -> ProphecyCard:
 	var card: ProphecyCard = PROPHECY_CARD.instantiate()	
@@ -64,8 +70,8 @@ func create_prophecy_card(model: CardModel, parent: Node2D, pposition: Vector2, 
 	
 
 func swap_prophecy_cards(card1: ProphecyCard, card2: ProphecyCard) -> void:
-	var i1: int = cards.find(card1.card_model)
-	var i2: int = cards.find(card2.card_model)
+	var i1: int = card_models.find(card1.card_model)
+	var i2: int = card_models.find(card2.card_model)
 	
 	var marker1: Marker2D = card_markers[i1]
 	var marker2: Marker2D = card_markers[i2]
@@ -75,13 +81,17 @@ func swap_prophecy_cards(card1: ProphecyCard, card2: ProphecyCard) -> void:
 	card2.position = marker1.position
 	card2.rotation = marker1.rotation
 	
-	cards[i1] = card2.card_model
-	cards[i2] = card1.card_model
+	card_models[i1] = card2.card_model
+	card_models[i2] = card1.card_model
+	
+	var prophecy_card: ProphecyCard = prophecy_cards[i1]
+	prophecy_cards[i1] = prophecy_cards[i2]
+	prophecy_cards[i2] = prophecy_card
 	
 	#TODO send signal to enable/disable deck outline if last card can be discarded
 	
 func prophecy_cards_reset_position(card: ProphecyCard) -> void:
-	var i: int = cards.find(card.card_model)	
+	var i: int = card_models.find(card.card_model)	
 	var marker: Marker2D = card_markers[i]
 	
 	card.position = marker.position

@@ -159,7 +159,7 @@ func card_added_to_labyrinth(card: Card) -> void:
 	
 func card_added_to_discard(card: Card, pdraw_card: bool) -> void:
 	GameManager.card_added_to_discard(card)
-	if not open_door_panel.visible and not nightmare_panel.visible and card.card_model.type == CardManager.CARD_TYPE.KEY:
+	if not prophecy_panel.visible and not open_door_panel.visible and not nightmare_panel.visible and card.card_model.type == CardManager.CARD_TYPE.KEY:
 		open_prophecy_panel()
 		return
 	if pdraw_card:
@@ -168,7 +168,7 @@ func card_added_to_discard(card: Card, pdraw_card: bool) -> void:
 func open_prophecy_panel() -> void:
 	set_hand_freezed(true)
 	var first_5_cards: Array[CardModel] =  GameManager.deck_model.deck.slice(0, 5)
-	prophecy_panel.cards = first_5_cards
+	prophecy_panel.card_models = first_5_cards
 	prophecy_panel.set_panel_enabled(true)
 	deck.set_outline(true)
 	pass
@@ -217,27 +217,45 @@ func touch_event(object: Variant) -> void:
 		return
 	if prophecy_panel.visible and object is Deck:
 		#reorder cards and close the prophecy panel
-		var cards: Array[CardModel] = prophecy_panel.cards
-		#can't discard doors and deadends
-		if not cards[4].can_discard:
-			return
-		#remove the first 5 cards from the deck
-		GameManager.deck_model.deck.pop_front()
-		GameManager.deck_model.deck.pop_front()
-		GameManager.deck_model.deck.pop_front()
-		GameManager.deck_model.deck.pop_front()
-		GameManager.deck_model.deck.pop_front()
-
-		#fifth card is to be discarded
-		var to_discard = cards.pop_at(4)
-		#TODO create card and animate to discard
+		var card_models: Array[CardModel] = prophecy_panel.card_models
+		var prophecy_cards: Array[ProphecyCard] = prophecy_panel.prophecy_cards
 		
+		#can't discard doors and deadends, etc
+		if not card_models[4].can_discard:
+			return
+			
+		#in this order for animation purposes		
+		for i in [4, 3, 2, 1, 0]:
+			#remove the first 5 cards from the deck
+			GameManager.deck_model.deck.pop_front()
+			#model in the i position as ordered in the panel
+			var card_model: CardModel = card_models[i]
+			#let the placholder card disappear before animation
+			#we don't want to animate prophecy cards that are to be used only in the panel
+			prophecy_cards[i].queue_free()
+			if i < 4:
+				#create a fake card showing the back going back texture to the deck
+				var card: Card = create_card(card_model, card_container, prophecy_panel.card_markers[i].global_position, Card.FULL_SIZE, false, Constants.DRAGGING_BASE_Z)
+				card.set_back_texture()
+				await animate_card_to_deck(card)
+				card.queue_free()
+			else:
+				#fifth card from the panel is to be discarded
+				#we don't queue free because we keep the discarded cards visible
+				var card: Card = create_card(card_model, card_container, prophecy_panel.card_position_5.global_position, Card.FULL_SIZE, false, Constants.DRAGGING_BASE_Z)
+				card.set_front_texture()
+				await animate_card_to_discard(card)
+				SignalManager.card_added_to_discard.emit(card, false)
+		
+		#remove the discarded card from the cards to be added back to the deck
+		card_models.pop_at(4)
 		#add them back in the selected order in the panel
-		cards.reverse()
-		for card in cards:
-			GameManager.deck_model.deck.push_front(card)
-		prophecy_panel.reset()
+		card_models.reverse()
+		for card_model in card_models:
+			GameManager.deck_model.deck.push_front(card_model)
+			
 		prophecy_panel.set_panel_enabled(false)
+		prophecy_panel.reset()
 		deck.set_outline(false)
 		draw_full_hand(false, true, true)
 		return
@@ -458,5 +476,12 @@ func animate_card_from_limbo_to_deck(card: Card) -> void:
 	tween.parallel().tween_property(card, "rotation", 0, 0.2)
 	tween.tween_callback(card.set_back_texture)
 	tween.tween_property(card, "scale", Vector2(1,1), 0.1)
+	await tween.finished
+	set_hand_freezed(false)
+	
+func animate_card_to_deck(card: Card) -> void:
+	set_hand_freezed(true)
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property(card, "global_position", deck.global_position, 0.2)
 	await tween.finished
 	set_hand_freezed(false)
