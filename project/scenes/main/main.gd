@@ -38,6 +38,7 @@ func _ready() -> void:
 	SignalManager.nightmare_action_selected.connect(nightmare_action_selected)
 	SignalManager.touch_event.connect(touch_event)
 	SignalManager.key_open_door_selected.connect(key_open_door_selected)
+	SignalManager.deck_outline_enabled.connect(deck_outline_enabled)
 	
 	hand_markers.push_back(hand_marker_1)
 	hand_markers.push_back(hand_marker_2)
@@ -170,7 +171,6 @@ func open_prophecy_panel() -> void:
 	var first_5_cards: Array[CardModel] =  GameManager.deck_model.deck.slice(0, 5)
 	prophecy_panel.card_models = first_5_cards
 	prophecy_panel.set_panel_enabled(true)
-	deck.set_outline(true)
 	pass
 	
 func card_added_to_limbo(card: Card) -> void:
@@ -224,6 +224,7 @@ func touch_event(object: Variant) -> void:
 		if not card_models[4].can_discard:
 			return
 			
+		#execute the animations
 		#in this order for animation purposes		
 		for i in [4, 3, 2, 1, 0]:
 			#remove the first 5 cards from the deck
@@ -234,7 +235,8 @@ func touch_event(object: Variant) -> void:
 			#we don't want to animate prophecy cards that are to be used only in the panel
 			prophecy_cards[i].queue_free()
 			if i < 4:
-				#create a fake card showing the back going back texture to the deck
+				#thhe first 4 cardds from the panel go to the deck
+				#create a fake card showing the back texturre moving to the deck
 				var card: Card = create_card(card_model, card_container, prophecy_panel.card_markers[i].global_position, Card.FULL_SIZE, false, Constants.DRAGGING_BASE_Z)
 				card.set_back_texture()
 				await animate_card_to_deck(card)
@@ -247,6 +249,7 @@ func touch_event(object: Variant) -> void:
 				await animate_card_to_discard(card)
 				SignalManager.card_added_to_discard.emit(card, false)
 		
+		#execute the actual deck manipulation
 		#remove the discarded card from the cards to be added back to the deck
 		card_models.pop_at(4)
 		#add them back in the selected order in the panel
@@ -355,6 +358,9 @@ func key_open_door_selected(type: Constants.KEY_OPEN_DOOR, key: Card, door: Card
 	draw_full_hand(false, false, false)
 	set_hand_freezed(false)
 	pass
+
+func deck_outline_enabled(enabled: bool) -> void:
+	deck.set_outline(enabled)
 
 ####################################################
 ### Animations

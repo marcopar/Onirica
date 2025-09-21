@@ -26,3 +26,5 @@ signal key_open_door_selected(type: Constants.KEY_OPEN_DOOR, key: Card, door: Ca
 signal swap_prophecy_cards(card1: ProphecyCard, card2: ProphecyCard)
 @warning_ignore("unused_signal")
 signal prophecy_cards_reset_position(card: ProphecyCard)
+@warning_ignore("unused_signal")
+signal deck_outline_enabled(enabled: bool)
