@@ -28,7 +28,13 @@ func _notification(what : int):
 		abort_dragging_action()
 
 func _input(event: InputEvent) -> void:
-	if dragging and event is InputEventScreenDrag:		
+	if dragging and event is InputEventScreenTouch:
+		get_viewport().set_input_as_handled()
+		var touch_event: InputEventScreenTouch = event
+		handle_dragging_touch_event(touch_event)
+		
+	if dragging and event is InputEventScreenDrag:
+		get_viewport().set_input_as_handled()
 		var drag_event: InputEventScreenDrag = event
 		if drag_event.index > 0:
 			return
@@ -38,31 +44,15 @@ func _input(event: InputEvent) -> void:
 		if not drag_start.is_finite():
 			drag_start = drag_event.position
 		handle_position_update(drag_event)
-		get_viewport().set_input_as_handled()
 
 func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventScreenTouch:
 		get_viewport().set_input_as_handled()
 		var touch_event: InputEventScreenTouch = event
-		if touch_event.index > 0:
-			return
-		if dragging and touch_event.pressed:
-			return
-		dragging = touch_event.pressed and can_drag() and not freezed
-		if(not touch_event.pressed):
-			if is_no_movement():
-				if not freezed:
-					# a freezed card is typically the nightmare card currently being resolved
-					# it's not dragging for sure and it should not go back in hand as abort_dragging dose
-					abort_dragging_action()
-				touch_action()
-				return
-			if handle_overlapping_areas():
-				return
-			abort_dragging_action()
+		handle_dragging_touch_event(touch_event)
 
 func is_no_movement() -> bool:
-	var delta: Vector2 = drag_start - position
+	var delta: Vector2 = abs(drag_start - position)
 	return (not drag_start.is_finite() or delta.length() < DEAD_ZONE) and not dragging
 	
 func can_drag() -> bool:
@@ -82,3 +72,21 @@ func handle_position_update(drag_event: InputEventScreenDrag) -> void:
 	z_index = Constants.DRAGGING_BASE_Z
 	global_position = drag_event.position
 	rotation = 0
+
+func handle_dragging_touch_event(touch_event: InputEventScreenTouch) -> void:
+	if touch_event.index > 0:
+		return
+	if dragging and touch_event.pressed:
+		return
+	dragging = touch_event.pressed and can_drag() and not freezed
+	if(not touch_event.pressed):
+		if is_no_movement():
+			if not freezed:
+				# a freezed card is typically the nightmare card currently being resolved
+				# it's not dragging for sure and it should not go back in hand as abort_dragging dose
+				abort_dragging_action()
+			touch_action()
+			return
+		if handle_overlapping_areas():
+			return
+		abort_dragging_action()
