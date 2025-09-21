@@ -21,8 +21,8 @@ const DOOR_TEXTURES: Dictionary[CardManager.CARD_COLOR, Resource] = {
 
 var color: CardManager.CARD_COLOR
 	
-func set_color(color: CardManager.CARD_COLOR) -> void:
-	self.color = color
+func set_color(pcolor: CardManager.CARD_COLOR) -> void:
+	self.color = pcolor
 	sprite_2d.texture = DOOR_TEXTURES[color]
 
 func set_outline(enabled: bool) -> void:

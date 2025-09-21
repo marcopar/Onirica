@@ -10,18 +10,14 @@
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_m7vp2"]
 blend_mode = 3
 
-[sub_resource type="Gradient" id="Gradient_t1ikr"]
-offsets = PackedFloat32Array(0.254777, 0.624204, 0.764331)
-colors = PackedColorArray(0.2484, 0.2484, 0.2484, 1, 0.625, 0.625, 0.625, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_rmh13"]
-gradient = SubResource("Gradient_t1ikr")
-width = 1080
-height = 400
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(1, 1)
+[sub_resource type="Curve" id="Curve_m7vp2"]
+_data = [Vector2(0, 0.3), 0.0, 0.0, 0, 0]
+point_count = 1
 metadata/_snap_enabled = true
+
+[sub_resource type="CurveTexture" id="CurveTexture_rmh13"]
+width = 1080
+curve = SubResource("Curve_m7vp2")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rmh13"]
 shader = ExtResource("5_m7vp2")
@@ -41,7 +37,8 @@ script = ExtResource("1_nt4qj")
 
 [node name="Shade" type="Sprite2D" parent="."]
 material = SubResource("CanvasItemMaterial_m7vp2")
-texture = SubResource("GradientTexture2D_rmh13")
+scale = Vector2(1, 400)
+texture = SubResource("CurveTexture_rmh13")
 
 [node name="Door" parent="." instance=ExtResource("1_85b4l")]
 position = Vector2(300, 0)

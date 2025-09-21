@@ -94,7 +94,7 @@ func check_door_found() -> CardModel:
 				var door: CardModel = deck_model.search(CardManager.CARD_TYPE.DOOR, card.card_model.color)
 				if door != null:
 					set_door_as_found(door)
-					return card.card_model
+					return door
 			#we found an old combo, clear the last3 and start from scratch
 			last3.clear()
 		else:
@@ -141,7 +141,7 @@ func card_added_to_limbo(card: Card) -> void:
 	limbo.push_back(card)
 
 func check_won_game() -> bool:
-	var found_doors_count: int
+	var found_doors_count: int = 0
 	for color in found_doors.keys():
 		found_doors_count += found_doors[color].size()
 	return found_doors_count == doors_to_be_found

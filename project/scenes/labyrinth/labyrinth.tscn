@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cau3cr0g51h8p"]
+[gd_scene load_steps=11 format=3 uid="uid://cau3cr0g51h8p"]
 
 [ext_resource type="Script" uid="uid://bt2ppt5mpotk1" path="res://scenes/labyrinth/labyrinth.gd" id="1_ufj7f"]
 
@@ -38,6 +38,9 @@ fill_from = Vector2(0.5, 0)
 fill_to = Vector2(0.5, 1)
 metadata/_snap_enabled = true
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gl1fh"]
+size = Vector2(1080, 230)
+
 [node name="Labyrinth" type="Area2D" groups=["labyrinth"]]
 script = ExtResource("1_ufj7f")
 
@@ -50,7 +53,7 @@ energy = 2.0
 range_z_max = 0
 texture = SubResource("GradientTexture2D_d1mfr")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CardDetectionCollision" type="CollisionShape2D" parent="."]
 position = Vector2(540, 0)
 shape = SubResource("RectangleShape2D_wyiyu")
 
@@ -58,15 +61,6 @@ shape = SubResource("RectangleShape2D_wyiyu")
 position = Vector2(150, 0)
 
 [node name="CardContainer" type="Node2D" parent="."]
-
-[node name="ScrollInput" type="Control" parent="."]
-z_index = 100
-z_as_relative = false
-layout_mode = 3
-anchors_preset = 0
-offset_top = -115.0
-offset_right = 1080.0
-offset_bottom = 115.0
 
 [node name="LeftFading" type="Sprite2D" parent="."]
 z_index = 199
@@ -78,6 +72,14 @@ texture = SubResource("GradientTexture2D_dv73n")
 position = Vector2(540, 0)
 texture = SubResource("GradientTexture2D_wwp6j")
 
+[node name="ScrollInputArea" type="Area2D" parent="."]
+
+[node name="ScrollInputCollision" type="CollisionShape2D" parent="ScrollInputArea"]
+z_index = 100
+z_as_relative = false
+position = Vector2(540, 0)
+shape = SubResource("RectangleShape2D_gl1fh")
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_area_exited"]
-[connection signal="gui_input" from="ScrollInput" to="." method="_on_fade_rect_gui_input"]
+[connection signal="input_event" from="ScrollInputArea" to="." method="_on_scroll_input_area_input_event"]

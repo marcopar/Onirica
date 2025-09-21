@@ -10,10 +10,11 @@ extends Node2D
 @onready var card_container: Node2D = $CardContainer
 @onready var doors_panel: DoorsPanel = $DoorsPanel
 @onready var door_found_marker: Marker2D = $DoorFoundMarker
-@onready var nightmare_found_marker: Marker2D = $NightmareFoundMarker
 @onready var nightmare_panel: Node2D = $NightmarePanel
 @onready var discard: Discard = $Discard
 @onready var open_door_panel: OpenDoorPanel = $OpenDoorPanel
+@onready var card_presentation_marker: Marker2D = $CardPresentationMarker
+@onready var prophecy_panel: ProphecyPanel = $ProphecyPanel
 
 const CARD = preload("res://scenes/card/card.tscn")
 
@@ -37,6 +38,7 @@ func _ready() -> void:
 	SignalManager.nightmare_action_selected.connect(nightmare_action_selected)
 	SignalManager.touch_event.connect(touch_event)
 	SignalManager.key_open_door_selected.connect(key_open_door_selected)
+	SignalManager.deck_outline_enabled.connect(deck_outline_enabled)
 	
 	hand_markers.push_back(hand_marker_1)
 	hand_markers.push_back(hand_marker_2)
@@ -81,13 +83,13 @@ func draw_card(empty_limbo_enabled: bool, nightmares_enabled: bool, doors_enable
 		return card
 	return null
 
-func create_card(model: CardModel, parent: Node2D, position: Vector2, scale: Vector2, pickable: bool, z_index: int) -> Card:
+func create_card(model: CardModel, parent: Node2D, pposition: Vector2, pscale: Vector2, pickable: bool, pz_index: int) -> Card:
 	var card: Card = CARD.instantiate()	
 	card.card_model = model
-	card.position = position
-	card.scale = scale
+	card.position = pposition
+	card.scale = pscale
 	card.input_pickable = pickable
-	card.z_index = z_index
+	card.z_index = pz_index
 	parent.add_child(card)
 	return card
 
@@ -156,11 +158,21 @@ func card_added_to_labyrinth(card: Card) -> void:
 	else:
 		await draw_full_hand(true, true, true)
 	
-func card_added_to_discard(card: Card, draw_card: bool) -> void:
+func card_added_to_discard(card: Card, pdraw_card: bool) -> void:
 	GameManager.card_added_to_discard(card)
-	if draw_card:
+	if not prophecy_panel.visible and not open_door_panel.visible and not nightmare_panel.visible and card.card_model.type == CardManager.CARD_TYPE.KEY:
+		open_prophecy_panel()
+		return
+	if pdraw_card:
 		await draw_full_hand(true, true, true)
 
+func open_prophecy_panel() -> void:
+	set_hand_freezed(true)
+	var first_5_cards: Array[CardModel] =  GameManager.deck_model.deck.slice(0, 5)
+	prophecy_panel.card_models = first_5_cards
+	prophecy_panel.set_panel_enabled(true)
+	pass
+	
 func card_added_to_limbo(card: Card) -> void:
 	GameManager.card_added_to_limbo(card)
 
@@ -199,9 +211,56 @@ func nightmare_action_selected(type: Constants.NIGHTMARE_DISCARD) -> void:
 			set_hand_outline(true)
 
 func touch_event(object: Variant) -> void:
-	if nightmare_action_discard_selected != Constants.NIGHTMARE_DISCARD.NONE:
+	if nightmare_panel.visible and nightmare_action_discard_selected != Constants.NIGHTMARE_DISCARD.NONE:
 		# nightmare action was selected so we check if we should activate the action
 		handle_nightmare_action(nightmare_action_discard_selected, object)
+		return
+	if prophecy_panel.visible and object is Deck:
+		#reorder cards and close the prophecy panel
+		var card_models: Array[CardModel] = prophecy_panel.card_models
+		var prophecy_cards: Array[ProphecyCard] = prophecy_panel.prophecy_cards
+		
+		#can't discard doors and deadends, etc
+		if not card_models[4].can_discard:
+			return
+			
+		#execute the animations
+		#in this order for animation purposes		
+		for i in [4, 3, 2, 1, 0]:
+			#remove the first 5 cards from the deck
+			GameManager.deck_model.deck.pop_front()
+			#model in the i position as ordered in the panel
+			var card_model: CardModel = card_models[i]
+			#let the placholder card disappear before animation
+			#we don't want to animate prophecy cards that are to be used only in the panel
+			prophecy_cards[i].queue_free()
+			if i < 4:
+				#thhe first 4 cardds from the panel go to the deck
+				#create a fake card showing the back texturre moving to the deck
+				var card: Card = create_card(card_model, card_container, prophecy_panel.card_markers[i].global_position, Card.FULL_SIZE, false, Constants.DRAGGING_BASE_Z)
+				card.set_back_texture()
+				await animate_card_to_deck(card)
+				card.queue_free()
+			else:
+				#fifth card from the panel is to be discarded
+				#we don't queue free because we keep the discarded cards visible
+				var card: Card = create_card(card_model, card_container, prophecy_panel.card_position_5.global_position, Card.FULL_SIZE, false, Constants.DRAGGING_BASE_Z)
+				card.set_front_texture()
+				await animate_card_to_discard(card)
+				SignalManager.card_added_to_discard.emit(card, false)
+		
+		#execute the actual deck manipulation
+		#remove the discarded card from the cards to be added back to the deck
+		card_models.pop_at(4)
+		#add them back in the selected order in the panel
+		card_models.reverse()
+		for card_model in card_models:
+			GameManager.deck_model.deck.push_front(card_model)
+			
+		prophecy_panel.set_panel_enabled(false)
+		prophecy_panel.reset()
+		deck.set_outline(false)
+		draw_full_hand(false, true, true)
 		return
 	pass
 
@@ -280,8 +339,6 @@ func set_cards_outline(enabled: bool, keys_only: bool) -> void:
 				card.set_outline(enabled)
 
 func key_open_door_selected(type: Constants.KEY_OPEN_DOOR, key: Card, door: Card) -> void:
-	open_door_panel.reset()
-	open_door_panel.set_panel_enabled(false)
 	if type == Constants.KEY_OPEN_DOOR.DOOR:
 		await animate_card_to_discard(key)
 		SignalManager.card_added_to_discard.emit(key, false)
@@ -296,9 +353,14 @@ func key_open_door_selected(type: Constants.KEY_OPEN_DOOR, key: Card, door: Card
 		await animate_card_to_limbo(door)
 		SignalManager.card_added_to_limbo.emit(door)
 
+	open_door_panel.reset()
+	open_door_panel.set_panel_enabled(false)
 	draw_full_hand(false, false, false)
 	set_hand_freezed(false)
 	pass
+
+func deck_outline_enabled(enabled: bool) -> void:
+	deck.set_outline(enabled)
 
 ####################################################
 ### Animations
@@ -308,7 +370,7 @@ func animate_nightmare(card: Card) -> void:
 	set_hand_freezed(true)
 	card.z_index = Constants.DRAGGING_BASE_Z
 	var tween: Tween = get_tree().create_tween()
-	tween.tween_property(card, "position", nightmare_found_marker.position, 0.2)
+	tween.tween_property(card, "position", card_presentation_marker.position, 0.2)
 	tween.parallel().tween_property(card, "rotation_degrees", 360, 0.2)
 	tween.parallel().tween_property(card, "scale", Vector2(1.3,1.3), 0.2)
 	await tween.finished
@@ -335,7 +397,7 @@ func animate_door_to_open_decision(card: Card) -> void:
 	set_hand_freezed(true)
 	card.z_index = Constants.DRAGGING_BASE_Z
 	var tween: Tween = get_tree().create_tween()
-	tween.tween_property(card, "position", nightmare_found_marker.position, 0.3)
+	tween.tween_property(card, "position", card_presentation_marker.position, 0.3)
 	tween.parallel().tween_property(card, "scale", Vector2(1.2,1.2), 0.3)
 	tween.parallel().tween_property(card, "rotation_degrees", 0, 0.3)
 	await tween.finished
@@ -420,5 +482,12 @@ func animate_card_from_limbo_to_deck(card: Card) -> void:
 	tween.parallel().tween_property(card, "rotation", 0, 0.2)
 	tween.tween_callback(card.set_back_texture)
 	tween.tween_property(card, "scale", Vector2(1,1), 0.1)
+	await tween.finished
+	set_hand_freezed(false)
+	
+func animate_card_to_deck(card: Card) -> void:
+	set_hand_freezed(true)
+	var tween: Tween = get_tree().create_tween()
+	tween.tween_property(card, "global_position", deck.global_position, 0.2)
 	await tween.finished
 	set_hand_freezed(false)
