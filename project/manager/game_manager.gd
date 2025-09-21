@@ -94,7 +94,7 @@ func check_door_found() -> CardModel:
 				var door: CardModel = deck_model.search(CardManager.CARD_TYPE.DOOR, card.card_model.color)
 				if door != null:
 					set_door_as_found(door)
-					return card.card_model
+					return door
 			#we found an old combo, clear the last3 and start from scratch
 			last3.clear()
 		else:
