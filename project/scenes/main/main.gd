@@ -52,7 +52,7 @@ func _ready() -> void:
 	doors_panel.setup(GameManager.deck_model.get_number_of(CardManager.CARD_TYPE.DOOR))
 	await draw_full_hand(false, false, false)
 	
-func draw_card(empty_limbo_enabled: bool, nightmares_enabled: bool, doors_enabled: bool) -> Card:
+func draw_card(nightmares_enabled: bool, doors_enabled: bool) -> Card:
 	var card: Card = null
 	for hand_position in range(0, GameManager.HAND_SIZE):
 		if not GameManager.hand[hand_position] == null:
@@ -78,8 +78,6 @@ func draw_card(empty_limbo_enabled: bool, nightmares_enabled: bool, doors_enable
 				else:					
 					await animate_card_to_limbo(card)
 					SignalManager.card_added_to_limbo.emit(card)
-		if empty_limbo_enabled and not GameManager.limbo.is_empty():
-			await empty_limbo()
 		return card
 	return null
 
@@ -96,7 +94,7 @@ func create_card(model: CardModel, parent: Node2D, pposition: Vector2, pscale: V
 func draw_full_hand(empty_limbo_for_each_card: bool, nightmares_enabled: bool, doors_enabled: bool):
 	set_hand_freezed(true)
 	while true:
-		var card: Card = await draw_card(empty_limbo_for_each_card, nightmares_enabled, doors_enabled)
+		var card: Card = await draw_card(nightmares_enabled, doors_enabled)
 		if card == null:
 			break
 		if nightmares_enabled and card.card_model.type == CardManager.CARD_TYPE.NIGHTMARE:
@@ -219,11 +217,9 @@ func touch_event(object: Variant) -> void:
 	if nightmare_panel.visible and nightmare_action_discard_selected != Constants.NIGHTMARE_DISCARD.NONE:
 		# nightmare action was selected so we check if we should activate the action
 		await handle_nightmare_action(nightmare_action_discard_selected, object)
-		set_hand_freezed(false)
 		return
 	if prophecy_panel.visible and object is Deck:
-		await handle_prophecy_action()
-		set_hand_freezed(false)
+		await handle_prophecy_action()		
 		return
 	pass
 
@@ -296,7 +292,7 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 			if GameManager.deck_model.get_number_of_cards() == 0:
 				#TODO game over
 				print("GAME OVER")
-				pass
+				return
 			var card_model: CardModel = GameManager.deck_model.get_next_card()
 			var card: Card = create_card(card_model, card_container, deck.position, Card.NO_SIZE, false, Constants.DRAGGING_BASE_Z)
 			card.set_front_texture()
@@ -320,7 +316,6 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 			doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
 			await discard_nightmare_card()			
 			await draw_full_hand(false, true, true)
-	set_hand_freezed(false)
 
 func find_nightmare_card() -> Card:
 	for child in card_container.get_children():
@@ -368,7 +363,6 @@ func key_open_door_selected(type: Constants.KEY_OPEN_DOOR, key: Card, door: Card
 	open_door_panel.reset()
 	open_door_panel.set_panel_enabled(false)
 	await draw_full_hand(false, false, false)
-	set_hand_freezed(false)
 	pass
 
 func deck_outline_enabled(enabled: bool) -> void:
