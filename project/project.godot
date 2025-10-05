@@ -47,6 +47,11 @@ prophecy_cards=""
 
 pointing/emulate_touch_from_mouse=true
 
+[log_gd]
+
+config/show_timestamps=true
+config/timestamp_type=1
+
 [rendering]
 
 renderer/rendering_method="mobile"
