@@ -29,7 +29,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			GameManager.dump()
 		
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
+func _ready() -> void:	
 	SignalManager.card_return_to_hand.connect(card_return_to_hand)
 	SignalManager.card_added_to_discard.connect(card_added_to_discard)
 	SignalManager.card_added_to_labyrinth.connect(card_added_to_labyrinth)
@@ -148,7 +148,7 @@ func card_added_to_labyrinth(card: Card) -> void:
 		await animate_door_found(door_card, true)
 		doors_panel.set_doors_found(door_card.card_model.color, GameManager.found_doors[door_card.card_model.color].size())
 		if GameManager.check_won_game():
-			print("game won")
+			Log.prn("game won")
 			return
 		else:
 			await animate_shuffle()
@@ -175,11 +175,6 @@ func card_added_to_limbo(card: Card) -> void:
 	GameManager.card_added_to_limbo(card)
 
 func set_hand_freezed(value: bool) -> void:
-	if not value:
-		print_stack()
-		print("<<<< END")
-	else:
-		print(">>> FREEZED")
 	for child in card_container.get_children():
 		var card: Card = child
 		card.freezed = value
@@ -291,7 +286,7 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 		for i in range(0, 5):
 			if GameManager.deck_model.get_number_of_cards() == 0:
 				#TODO game over
-				print("GAME OVER")
+				Log.prn("GAME OVER")
 				return
 			var card_model: CardModel = GameManager.deck_model.get_next_card()
 			var card: Card = create_card(card_model, card_container, deck.position, Card.NO_SIZE, false, Constants.DRAGGING_BASE_Z)
@@ -354,7 +349,7 @@ func key_open_door_selected(type: Constants.KEY_OPEN_DOOR, key: Card, door: Card
 		GameManager.set_door_as_found(door.card_model)
 		doors_panel.set_doors_found(door.card_model.color, GameManager.found_doors[door.card_model.color].size())
 		if GameManager.check_won_game():
-			print("game won")
+			Log.prn("game won")
 			pass
 	if type == Constants.KEY_OPEN_DOOR.LIMBO:
 		await animate_card_to_limbo(door)
