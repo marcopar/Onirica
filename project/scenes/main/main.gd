@@ -98,6 +98,7 @@ func draw_full_hand(empty_limbo_for_each_card: bool, nightmares_enabled: bool, d
 		var card: Card = await draw_card(nightmares_enabled, doors_enabled)
 		if card == null:
 			break
+		SignalManager.deck_updated.emit()
 		if nightmares_enabled and card.card_model.type == CardManager.CARD_TYPE.NIGHTMARE:
 			await animate_nightmare(card)
 			nightmare_panel.set_panel_enabled(true)
@@ -232,7 +233,7 @@ func handle_prophecy_action() -> void:
 	#in this order for animation purposes		
 	for i in [4, 3, 2, 1, 0]:
 		#remove the first 5 cards from the deck
-		GameManager.deck_model.deck.pop_front()
+		GameManager.deck_model.get_next_card()
 		#model in the i position as ordered in the panel
 		var card_model: CardModel = card_models[i]
 		#let the placholder card disappear before animation
@@ -259,7 +260,7 @@ func handle_prophecy_action() -> void:
 	#add them back in the selected order in the panel
 	card_models.reverse()
 	for card_model in card_models:
-		GameManager.deck_model.deck.push_front(card_model)
+		GameManager.deck_model.add_card_front(card_model)
 		
 	prophecy_panel.set_panel_enabled(false)
 	prophecy_panel.reset()

@@ -28,7 +28,8 @@ func get_number_of_cards() -> int:
 	return deck.size()
 
 func get_next_card() -> CardModel:
-	return deck.pop_front()
+	var card_model = deck.pop_front()
+	return card_model
 	
 func add_card_front(card: CardModel):
 	deck.push_front(card)
