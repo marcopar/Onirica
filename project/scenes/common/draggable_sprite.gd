@@ -42,6 +42,7 @@ func _input(event: InputEvent) -> void:
 			abort_dragging_action()
 			return
 		if not drag_start.is_finite():
+			print("drag start")
 			drag_start = drag_event.position
 		handle_position_update(drag_event)
 
