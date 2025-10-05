@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://dpnumcx06ayqk"]
+
+[ext_resource type="Script" uid="uid://dffiof7npgcb1" path="res://scenes/deck_counter/deck_counter.gd" id="1_c1qxh"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_t361b"]
+font_size = 48
+outline_size = 12
+outline_color = Color(0.080783345, 0.080783345, 0.080783345, 1)
+
+[node name="DeckCounter" type="Node2D"]
+script = ExtResource("1_c1qxh")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "  "
+label_settings = SubResource("LabelSettings_t361b")
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -3,6 +3,8 @@ extends Node
 @warning_ignore("unused_signal")
 signal new_game
 @warning_ignore("unused_signal")
+signal deck_updated
+@warning_ignore("unused_signal")
 signal card_added_to_labyrinth(card: Card)
 @warning_ignore("unused_signal")
 signal card_added_to_discard(card: Card, draw_card: bool)

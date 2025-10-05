@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bqghirh8g0ov4"]
+[gd_scene load_steps=12 format=3 uid="uid://bqghirh8g0ov4"]
 
 [ext_resource type="Script" uid="uid://dvvxyb2g3i2fx" path="res://scenes/main/main.gd" id="1_xny0v"]
 [ext_resource type="Texture2D" uid="uid://b1gjt3rpk4sc3" path="res://assets/sprites/cards/background.png" id="2_ec000"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dtcl11a05xwoe" path="res://scenes/nightmare_panel/nightmare_panel.tscn" id="8_7jqxr"]
 [ext_resource type="PackedScene" uid="uid://cymsolbakuem" path="res://scenes/open_door_panel/open_door_panel.tscn" id="9_b1x3f"]
 [ext_resource type="PackedScene" uid="uid://b2ya0la80ijxu" path="res://scenes/prophecy_panel/prophecy_panel.tscn" id="10_a8run"]
+[ext_resource type="PackedScene" uid="uid://dpnumcx06ayqk" path="res://scenes/deck_counter/deck_counter.tscn" id="11_ouso4"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_xny0v")
@@ -78,6 +79,10 @@ position = Vector2(536, 780)
 visible = false
 z_index = 199
 position = Vector2(-3, 1179)
+
+[node name="DeckCounter" parent="." instance=ExtResource("11_ouso4")]
+z_index = 100
+position = Vector2(540, 1772)
 
 [connection signal="area_entered" from="Deck" to="Deck" method="_on_area_entered"]
 [connection signal="area_exited" from="Deck" to="Deck" method="_on_area_exited"]
