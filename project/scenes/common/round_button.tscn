@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cv7ctqkb2bl5v" path="res://scenes/common/round_button.gd" id="1_03xdq"]
 [ext_resource type="Texture2D" uid="uid://c38rjp8p3aj6j" path="res://assets/sprites/icons/discard_5.png" id="2_0pi4w"]
-[ext_resource type="Gradient" uid="uid://bku5rcu7ieurn" path="res://scenes/limbo_discart_gradient.tres" id="3_kqmhw"]
+[ext_resource type="Gradient" uid="uid://bku5rcu7ieurn" path="res://scenes/limbo_discard_gradient.tres" id="3_kqmhw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ljo08"]
 radius = 100.0
