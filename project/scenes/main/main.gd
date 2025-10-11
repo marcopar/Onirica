@@ -16,7 +16,8 @@ extends Node2D
 @onready var card_presentation_marker: Marker2D = $CardPresentationMarker
 @onready var prophecy_panel: ProphecyPanel = $ProphecyPanel
 
-const CARD = preload("res://scenes/card/card.tscn")
+const CARD = preload("uid://fib6nrvub15n")
+const MAIN_MENU = preload("uid://djaj5qaevc02v")
 
 var hand_markers: Array[Marker2D]
 
@@ -481,3 +482,7 @@ func animate_card_to_deck(card: Card) -> void:
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(card, "global_position", deck.global_position, 0.2)
 	await tween.finished
+
+
+func _on_texture_button_pressed() -> void:
+	get_tree().change_scene_to_packed(MAIN_MENU)
