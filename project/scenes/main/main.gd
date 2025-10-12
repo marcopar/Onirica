@@ -15,9 +15,9 @@ extends Node2D
 @onready var open_door_panel: OpenDoorPanel = $OpenDoorPanel
 @onready var card_presentation_marker: Marker2D = $CardPresentationMarker
 @onready var prophecy_panel: ProphecyPanel = $ProphecyPanel
+@onready var exit_button: TextureButton = $Control/MarginContainer/ExitButton
 
 const CARD = preload("uid://fib6nrvub15n")
-const MAIN_MENU = preload("uid://djaj5qaevc02v")
 
 var hand_markers: Array[Marker2D]
 
@@ -99,7 +99,6 @@ func draw_full_hand(empty_limbo_for_each_card: bool, nightmares_enabled: bool, d
 		var card: Card = await draw_card(nightmares_enabled, doors_enabled)
 		if card == null:
 			break
-		SignalManager.deck_updated.emit()
 		if nightmares_enabled and card.card_model.type == CardManager.CARD_TYPE.NIGHTMARE:
 			await animate_nightmare(card)
 			nightmare_panel.set_panel_enabled(true)
@@ -483,6 +482,6 @@ func animate_card_to_deck(card: Card) -> void:
 	tween.tween_property(card, "global_position", deck.global_position, 0.2)
 	await tween.finished
 
-
 func _on_texture_button_pressed() -> void:
-	get_tree().change_scene_to_packed(MAIN_MENU)
+	GameManager.new_game()
+	SceneManager.switch_to_menu()

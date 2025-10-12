@@ -85,22 +85,36 @@ position = Vector2(-3, 1179)
 z_index = 100
 position = Vector2(540, 1772)
 
-[node name="Container" type="Control" parent="."]
+[node name="Control" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = 1080.0
+offset_bottom = 1920.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+mouse_filter = 2
 
-[node name="TextureButton" type="TextureButton" parent="Container"]
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 120.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 0
+
+[node name="ExitButton" type="TextureButton" parent="Control/MarginContainer"]
 modulate = Color(0.5254902, 0.8862745, 1, 1)
-layout_mode = 0
-offset_right = 86.0
-offset_bottom = 87.0
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 0
 texture_normal = ExtResource("12_blune")
 ignore_texture_size = true
 stretch_mode = 4
-flip_h = true
 
 [connection signal="area_entered" from="Deck" to="Deck" method="_on_area_entered"]
 [connection signal="area_exited" from="Deck" to="Deck" method="_on_area_exited"]
-[connection signal="pressed" from="Container/TextureButton" to="." method="_on_texture_button_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/ExitButton" to="." method="_on_texture_button_pressed"]

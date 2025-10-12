@@ -21,6 +21,7 @@ Constants="*res://manager/constants.gd"
 SignalManager="*res://manager/signal_manager.gd"
 CardManager="*res://manager/card_manager.gd"
 GameManager="*res://manager/game_manager.gd"
+SceneManager="*res://manager/scene_manager.gd"
 
 [debug]
 
