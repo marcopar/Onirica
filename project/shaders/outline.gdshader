@@ -84,8 +84,10 @@ void fragment() {
 
 		if ((COLOR.a > 0.0) == inside && hasContraryNeighbour(uv, TEXTURE_PIXEL_SIZE, image_top_left, image_bottom_right, TEXTURE)) {
 			COLOR.rgb = inside ? mix(COLOR.rgb, color.rgb * modulate.rgb, color.a * modulate.a) : color.rgb * modulate.rgb;
+			//CUSTOM
 			//COLOR.a += (1.0 - COLOR.a) * color.a * modulate.a;
 			COLOR.a = clamp(sin(TIME * pulse_frequency)/2.0 + 1.0, 0.0, 1.0);
+			//CUSTOM
 		}
 	}
 }
