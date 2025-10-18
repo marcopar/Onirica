@@ -27,7 +27,7 @@ func set_color(pcolor: CardManager.CARD_COLOR) -> void:
 
 func set_outline(enabled: bool) -> void:
 	##the shader has an instance parameter to enable it or not on the single card
-	sprite_2d.set_instance_shader_parameter("enabled", enabled)
+	sprite_2d.material.set_shader_parameter("enabled", enabled)
 	
 func set_lighted(enabled: bool) -> void:
 	if enabled:
