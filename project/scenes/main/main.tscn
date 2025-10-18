@@ -1,7 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://bqghirh8g0ov4"]
+[gd_scene load_steps=13 format=3 uid="uid://bqghirh8g0ov4"]
 
 [ext_resource type="Script" uid="uid://dvvxyb2g3i2fx" path="res://scenes/main/main.gd" id="1_xny0v"]
-[ext_resource type="Texture2D" uid="uid://b1gjt3rpk4sc3" path="res://assets/sprites/cards/background.png" id="2_ec000"]
+[ext_resource type="Texture2D" uid="uid://b1gjt3rpk4sc3" path="res://assets/sprites/backgrounds/background.png" id="2_ec000"]
 [ext_resource type="PackedScene" uid="uid://kpjmqglw46ry" path="res://scenes/deck/deck.tscn" id="3_25a8g"]
 [ext_resource type="PackedScene" uid="uid://cau3cr0g51h8p" path="res://scenes/labyrinth/labyrinth.tscn" id="4_qul2u"]
 [ext_resource type="PackedScene" uid="uid://bnxsoiggcrqk" path="res://scenes/discard/discard.tscn" id="5_korep"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cymsolbakuem" path="res://scenes/open_door_panel/open_door_panel.tscn" id="9_b1x3f"]
 [ext_resource type="PackedScene" uid="uid://b2ya0la80ijxu" path="res://scenes/prophecy_panel/prophecy_panel.tscn" id="10_a8run"]
 [ext_resource type="PackedScene" uid="uid://dpnumcx06ayqk" path="res://scenes/deck_counter/deck_counter.tscn" id="11_ouso4"]
+[ext_resource type="Texture2D" uid="uid://5ts0q5ytbdy6" path="res://assets/sprites/gui/logout_96dp_FFFFFF_FILL0_wght400_GRAD0_opsz48.svg" id="12_blune"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_xny0v")
@@ -84,5 +85,36 @@ position = Vector2(-3, 1179)
 z_index = 100
 position = Vector2(540, 1772)
 
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = 1080.0
+offset_bottom = 1920.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 120.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 0
+
+[node name="ExitButton" type="TextureButton" parent="Control/MarginContainer"]
+modulate = Color(0.5254902, 0.8862745, 1, 1)
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+texture_normal = ExtResource("12_blune")
+ignore_texture_size = true
+stretch_mode = 4
+
 [connection signal="area_entered" from="Deck" to="Deck" method="_on_area_entered"]
 [connection signal="area_exited" from="Deck" to="Deck" method="_on_area_exited"]
+[connection signal="pressed" from="Control/MarginContainer/ExitButton" to="." method="_on_texture_button_pressed"]

@@ -29,13 +29,16 @@ func get_number_of_cards() -> int:
 
 func get_next_card() -> CardModel:
 	var card_model = deck.pop_front()
+	SignalManager.deck_updated.emit()
 	return card_model
 	
 func add_card_front(card: CardModel):
 	deck.push_front(card)
+	SignalManager.deck_updated.emit()
 
 func add_card_back(card: CardModel):
 	deck.push_back(card)
+	SignalManager.deck_updated.emit()
 	
 func get_number_of(type: CardManager.CARD_TYPE) -> int:
 	var count: int = 0

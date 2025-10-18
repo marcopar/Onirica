@@ -5,13 +5,12 @@
 [ext_resource type="Texture2D" uid="uid://btnkgsntbdm5f" path="res://assets/sprites/cards/red_door.png" id="3_s2eab"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fudy4"]
+resource_local_to_scene = true
 shader = ExtResource("2_kb5p8")
 shader_parameter/color = Color(1, 1, 0, 1)
 shader_parameter/width = 20.0
-shader_parameter/pattern = 2
-shader_parameter/inside = true
-shader_parameter/add_margins = false
-shader_parameter/number_of_images = Vector2(1, 1)
+shader_parameter/enabled = false
+shader_parameter/pulse_frequency = 10.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_32ddj"]
 size = Vector2(256, 384)
@@ -22,7 +21,6 @@ script = ExtResource("1_32ddj")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 self_modulate = Color(0.2, 0.2, 0.2, 1)
 material = SubResource("ShaderMaterial_fudy4")
-instance_shader_parameters/enabled = false
 texture = ExtResource("3_s2eab")
 centered = false
 

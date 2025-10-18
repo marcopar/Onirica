@@ -8,12 +8,6 @@ var deck_model: DeckModel:
 	set(value):
 		deck_model = value
 		
-var game_over: bool:
-	get:
-		return game_over
-	set(value):
-		game_over = value
-		
 var hand: Array[Card]:
 	get:
 		return hand
@@ -76,6 +70,17 @@ func new_game() -> void:
 	for card in limbo:
 		card.queue_free()
 	limbo.clear()
+	
+	for card in discard:
+		card.queue_free()
+	discard.clear()
+	
+	found_doors = {
+		CardManager.CARD_COLOR.RED: [],
+		CardManager.CARD_COLOR.GREEN: [],
+		CardManager.CARD_COLOR.BLUE: [],
+		CardManager.CARD_COLOR.YELLOW: []
+	}
 
 func shuffle() -> void:
 	deck_model.shuffle()
