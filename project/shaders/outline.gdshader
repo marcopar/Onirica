@@ -5,18 +5,16 @@
 
 shader_type canvas_item;
 
+render_mode blend_mix;
+
 uniform vec4 color : source_color = vec4(1.0);
 uniform float width : hint_range(0, 100) = 1.0;
-uniform int pattern : hint_range(0, 2) = 0; // diamond, circle, square
-uniform bool inside = false;
-uniform bool add_margins = true; // only useful when inside is false
-uniform vec2 number_of_images = vec2(1.0); // number of horizontal and vertical images in the sprite sheet
 
 varying flat vec4 modulate;
 
 // CUSTOM
-instance uniform bool enabled = false;
-instance uniform float pulse_frequency : hint_range(0, 100) = 10.0;
+uniform bool enabled = false;
+uniform float pulse_frequency : hint_range(0, 100) = 10.0;
 // CUSTOM
 
 void vertex() {
@@ -24,66 +22,39 @@ void vertex() {
 	if(enabled) {
 	// CUSTOM
 		modulate = COLOR;
-		if (add_margins) {
-			if ((UV.x <= 0.0 || UV.x >= 1.0) && (UV.y <= 0.0 || UV.y >= 1.0)) {
-				VERTEX += (UV * 2.0 - 1.0) * width;
-			} else {
-				VERTEX += sign(VERTEX) * width; // replace sign(VERTEX) by (sign(VERTEX) * 2.0 - 1.0) if your AnimatedSprite2D isn't Centered
-			}
-		}
-	}	
-}
-
-bool hasContraryNeighbour(vec2 uv, vec2 texture_pixel_size, vec2 image_top_left, vec2 image_bottom_right, sampler2D texture) {
-	for (float i = -ceil(width); i <= ceil(width); i++) {
-		float x = abs(i) > width ? width * sign(i) : i;
-		float offset;
-
-		if (pattern == 0) {
-			offset = width - abs(x);
-		} else if (pattern == 1) {
-			offset = floor(sqrt(pow(width + 0.5, 2) - x * x));
-		} else if (pattern == 2) {
-			offset = width;
-		}
-
-		for (float j = -ceil(offset); j <= ceil(offset); j++) {
-			float y = abs(j) > offset ? offset * sign(j) : j;
-			vec2 xy = uv + texture_pixel_size * vec2(x, y);
-
-			if ((xy != clamp(xy, image_top_left, image_bottom_right) || texture(texture, xy).a <= 0.0) == inside) {
-				return true;
-			}
-		}
 	}
-
-	return false;
 }
+
+bool hasContraryNeighbour(vec2 uv, vec2 tex_size, sampler2D tex) {
+    for (int x = -int(width); x <= int(width); x++) {
+        for (int y = -int(width); y <= int(width); y++) {
+            vec2 offset = uv + vec2(float(x), float(y)) * tex_size;
+
+            // If neighbor is outside the texture, treat as transparent
+            if (offset.x < 0.0 || offset.x > 1.0 || offset.y < 0.0 || offset.y > 1.0) {
+                return true;
+            }
+
+            // Otherwise, check alpha
+            if (texture(tex, clamp(offset, 0.0, 1.0)).a <= 0.0) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 
 void fragment() {
 	// CUSTOM
 	if(enabled) {
 	// CUSTOM
 		vec2 uv = UV;
-		vec2 image_top_left = floor(uv * number_of_images) / number_of_images;
-		vec2 image_bottom_right = image_top_left + vec2(1.0) / number_of_images;
 
-		if (add_margins) {
-			vec2 texture_pixel_size = vec2(1.0) / (vec2(1.0) / TEXTURE_PIXEL_SIZE + vec2(width * 2.0) * number_of_images);
+		COLOR = texture(TEXTURE, uv) * modulate;
 
-			uv = (uv - texture_pixel_size * width - image_top_left) * TEXTURE_PIXEL_SIZE / texture_pixel_size + image_top_left;
-
-			if (uv != clamp(uv, image_top_left, image_bottom_right)) {
-				COLOR.a = 0.0;
-			} else {
-				COLOR = texture(TEXTURE, uv) * modulate;
-			}
-		} else {
-			COLOR = texture(TEXTURE, uv) * modulate;
-		}
-
-		if ((COLOR.a > 0.0) == inside && hasContraryNeighbour(uv, TEXTURE_PIXEL_SIZE, image_top_left, image_bottom_right, TEXTURE)) {
-			COLOR.rgb = inside ? mix(COLOR.rgb, color.rgb * modulate.rgb, color.a * modulate.a) : color.rgb * modulate.rgb;
+		if (COLOR.a > 0.0 && hasContraryNeighbour(uv, TEXTURE_PIXEL_SIZE, TEXTURE)) {
+			COLOR.rgb = mix(COLOR.rgb, color.rgb * modulate.rgb, color.a * modulate.a);
 			//CUSTOM
 			//COLOR.a += (1.0 - COLOR.a) * color.a * modulate.a;
 			COLOR.a = clamp(sin(TIME * pulse_frequency)/2.0 + 1.0, 0.0, 1.0);
