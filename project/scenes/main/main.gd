@@ -357,17 +357,18 @@ func key_open_door_selected(type: Constants.KEY_OPEN_DOOR, key: Card, door: Card
 		await animate_door_found(door, false)
 		GameManager.set_door_as_found(door.card_model)
 		doors_panel.set_doors_found(door.card_model.color, GameManager.found_doors[door.card_model.color].size())
+		open_door_panel.reset()
+		open_door_panel.set_panel_enabled(false)
 		if GameManager.check_won_game():
 			Log.prn("game won")
-			pass
+			return
+		await draw_full_hand(false, false, false)
 	if type == Constants.KEY_OPEN_DOOR.LIMBO:
 		await animate_card_to_limbo(door)
 		SignalManager.card_added_to_limbo.emit(door)
-
-	open_door_panel.reset()
-	open_door_panel.set_panel_enabled(false)
-	await draw_full_hand(false, false, false)
-	pass
+		open_door_panel.reset()
+		open_door_panel.set_panel_enabled(false)
+		await draw_full_hand(false, true, true)
 
 func deck_outline_enabled(enabled: bool) -> void:
 	deck.set_outline(enabled)
