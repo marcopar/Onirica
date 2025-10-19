@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bqghirh8g0ov4"]
+[gd_scene load_steps=16 format=3 uid="uid://bqghirh8g0ov4"]
 
 [ext_resource type="Script" uid="uid://dvvxyb2g3i2fx" path="res://scenes/main/main.gd" id="1_xny0v"]
 [ext_resource type="Texture2D" uid="uid://b1gjt3rpk4sc3" path="res://assets/sprites/backgrounds/background.png" id="2_ec000"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://b2ya0la80ijxu" path="res://scenes/prophecy_panel/prophecy_panel.tscn" id="10_a8run"]
 [ext_resource type="PackedScene" uid="uid://dpnumcx06ayqk" path="res://scenes/deck_counter/deck_counter.tscn" id="11_ouso4"]
 [ext_resource type="Texture2D" uid="uid://5ts0q5ytbdy6" path="res://assets/sprites/gui/logout_96dp_FFFFFF_FILL0_wght400_GRAD0_opsz48.svg" id="12_blune"]
+[ext_resource type="PackedScene" uid="uid://e6l72l0k2qmx" path="res://scenes/discard_panel/discard_panel.tscn" id="14_7smn1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7smn1"]
 resource_local_to_scene = true
@@ -104,7 +105,7 @@ visible = false
 z_index = 199
 position = Vector2(-3, 1179)
 
-[node name="Control" type="Control" parent="."]
+[node name="MenuBar" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 10
 anchor_right = 1.0
@@ -114,7 +115,7 @@ grow_horizontal = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Control"]
+[node name="MarginContainer" type="MarginContainer" parent="MenuBar"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -125,7 +126,7 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 0
 
-[node name="ExitButton" type="TextureButton" parent="Control/MarginContainer"]
+[node name="ExitButton" type="TextureButton" parent="MenuBar/MarginContainer"]
 modulate = Color(0.5254902, 0.8862745, 1, 1)
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
@@ -134,6 +135,34 @@ texture_normal = ExtResource("12_blune")
 ignore_texture_size = true
 stretch_mode = 4
 
+[node name="DiscardPanelContainer" type="Control" parent="."]
+visible = false
+custom_minimum_size = Vector2(1080, 1920)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1080.0
+offset_bottom = 1920.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="DiscardPanel" parent="DiscardPanelContainer" instance=ExtResource("14_7smn1")]
+z_index = 1000
+custom_minimum_size = Vector2(900, 1200)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -450.0
+offset_top = -600.0
+offset_right = 450.0
+offset_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+
 [connection signal="area_entered" from="Deck" to="Deck" method="_on_area_entered"]
 [connection signal="area_exited" from="Deck" to="Deck" method="_on_area_exited"]
-[connection signal="pressed" from="Control/MarginContainer/ExitButton" to="." method="_on_texture_button_pressed"]
+[connection signal="input_event" from="Discard" to="." method="_on_discard_input_event"]
+[connection signal="pressed" from="MenuBar/MarginContainer/ExitButton" to="." method="_on_texture_button_pressed"]
