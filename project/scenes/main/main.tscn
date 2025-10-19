@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://bqghirh8g0ov4"]
+[gd_scene load_steps=15 format=3 uid="uid://bqghirh8g0ov4"]
 
 [ext_resource type="Script" uid="uid://dvvxyb2g3i2fx" path="res://scenes/main/main.gd" id="1_xny0v"]
 [ext_resource type="Texture2D" uid="uid://b1gjt3rpk4sc3" path="res://assets/sprites/backgrounds/background.png" id="2_ec000"]
 [ext_resource type="PackedScene" uid="uid://kpjmqglw46ry" path="res://scenes/deck/deck.tscn" id="3_25a8g"]
 [ext_resource type="PackedScene" uid="uid://cau3cr0g51h8p" path="res://scenes/labyrinth/labyrinth.tscn" id="4_qul2u"]
+[ext_resource type="Shader" uid="uid://ev2hcn4hhgq2" path="res://shaders/outline.gdshader" id="4_th5th"]
 [ext_resource type="PackedScene" uid="uid://bnxsoiggcrqk" path="res://scenes/discard/discard.tscn" id="5_korep"]
 [ext_resource type="PackedScene" uid="uid://dbcm0qgdsw0l7" path="res://scenes/limbo/limbo.tscn" id="6_jqqak"]
 [ext_resource type="PackedScene" uid="uid://bxhxggou0553h" path="res://scenes/doorspanel/doors_panel.tscn" id="7_dlvyq"]
@@ -13,6 +14,14 @@
 [ext_resource type="PackedScene" uid="uid://dpnumcx06ayqk" path="res://scenes/deck_counter/deck_counter.tscn" id="11_ouso4"]
 [ext_resource type="Texture2D" uid="uid://5ts0q5ytbdy6" path="res://assets/sprites/gui/logout_96dp_FFFFFF_FILL0_wght400_GRAD0_opsz48.svg" id="12_blune"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7smn1"]
+resource_local_to_scene = true
+shader = ExtResource("4_th5th")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/enabled = false
+shader_parameter/pulse_frequency = 10.0
+
 [node name="Main" type="Node2D"]
 script = ExtResource("1_xny0v")
 
@@ -21,7 +30,21 @@ position = Vector2(540, 960)
 texture = ExtResource("2_ec000")
 
 [node name="Deck" parent="." instance=ExtResource("3_25a8g")]
+material = SubResource("ShaderMaterial_7smn1")
 position = Vector2(540, 1650)
+
+[node name="DeckCounter" parent="Deck" instance=ExtResource("11_ouso4")]
+z_index = 100
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 8
 
 [node name="Labyrinth" parent="." instance=ExtResource("4_qul2u")]
 position = Vector2(0, 540)
@@ -80,10 +103,6 @@ position = Vector2(536, 780)
 visible = false
 z_index = 199
 position = Vector2(-3, 1179)
-
-[node name="DeckCounter" parent="." instance=ExtResource("11_ouso4")]
-z_index = 100
-position = Vector2(540, 1772)
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
