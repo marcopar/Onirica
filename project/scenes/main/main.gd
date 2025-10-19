@@ -15,7 +15,9 @@ extends Node2D
 @onready var open_door_panel: OpenDoorPanel = $OpenDoorPanel
 @onready var card_presentation_marker: Marker2D = $CardPresentationMarker
 @onready var prophecy_panel: ProphecyPanel = $ProphecyPanel
-@onready var exit_button: TextureButton = $Control/MarginContainer/ExitButton
+@onready var exit_button: TextureButton = $MenuBar/MarginContainer/ExitButton
+@onready var discard_panel_container: Control = $DiscardPanelContainer
+@onready var discard_panel: DiscardPanel = $DiscardPanelContainer/DiscardPanel
 
 const CARD = preload("uid://fib6nrvub15n")
 
@@ -41,6 +43,7 @@ func _ready() -> void:
 	SignalManager.touch_event.connect(touch_event)
 	SignalManager.key_open_door_selected.connect(key_open_door_selected)
 	SignalManager.deck_outline_enabled.connect(deck_outline_enabled)
+	SignalManager.discard_panel_closed.connect(discard_panel_closed)
 	
 	hand_markers.push_back(hand_marker_1)
 	hand_markers.push_back(hand_marker_2)
@@ -486,3 +489,12 @@ func animate_card_to_deck(card: Card) -> void:
 func _on_texture_button_pressed() -> void:
 	GameManager.new_game()
 	SceneManager.switch_to_menu()
+
+func _on_discard_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if event is InputEventScreenTouch:
+		discard_panel.clear_counters()
+		discard_panel.setup()
+		discard_panel_container.visible = true
+
+func discard_panel_closed() -> void:
+	discard_panel_container.visible = false
