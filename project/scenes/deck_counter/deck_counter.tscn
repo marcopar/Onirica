@@ -19,6 +19,7 @@ outline_color = Color(0.080783345, 0.080783345, 0.080783345, 1)
 [node name="DeckCounter" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+mouse_filter = 2
 script = ExtResource("1_c1qxh")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -34,6 +35,7 @@ offset_right = 94.0
 offset_bottom = 33.5
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/separation = 30
 
 [node name="CardCount" type="Label" parent="HBoxContainer"]

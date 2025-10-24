@@ -24,7 +24,7 @@ const CARD = preload("uid://fib6nrvub15n")
 var hand_markers: Array[Marker2D]
 
 var nightmare_action_discard_selected: Constants.NIGHTMARE_DISCARD = Constants.NIGHTMARE_DISCARD.NONE
-var ignore_touch_events: bool = false
+var ignore_gui_events: bool = false
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:
@@ -224,12 +224,16 @@ func touch_event(object: Variant) -> void:
 	pass
 
 func handle_prophecy_action() -> void:
+	if ignore_gui_events:
+		return
+	ignore_gui_events = true
 	#reorder cards and close the prophecy panel
 	var card_models: Array[CardModel] = prophecy_panel.card_models
 	var prophecy_cards: Array[ProphecyCard] = prophecy_panel.prophecy_cards
 	
 	#can't discard doors and deadends, etc
 	if not card_models[4].can_discard:
+		ignore_gui_events = false
 		return
 		
 	#execute the animations
@@ -269,12 +273,13 @@ func handle_prophecy_action() -> void:
 	prophecy_panel.reset()
 	deck.set_outline(false)
 	await draw_full_hand(false, true, true)
+	ignore_gui_events = false
 	return
 	
 func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant) -> void:
-	if ignore_touch_events:
+	if ignore_gui_events:
 		return
-	ignore_touch_events = true
+	ignore_gui_events = true
 	if type == Constants.NIGHTMARE_DISCARD.HAND and object is Card:
 		for card in GameManager.hand:
 			if card != null:
@@ -283,7 +288,7 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 		await discard_nightmare_card()
 		#draw with the same logic as starting the game (nightmares are not resolved, doors are not open)
 		await draw_full_hand(false, false, false)
-		ignore_touch_events = false
+		ignore_gui_events = false
 	if type == Constants.NIGHTMARE_DISCARD.KEY and object is Card:
 		var card: Card = object
 		if card.card_model.type == CardManager.CARD_TYPE.KEY:
@@ -291,7 +296,7 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 			SignalManager.card_added_to_discard.emit(card, false)
 			await discard_nightmare_card()
 			await draw_full_hand(false, true, true)
-		ignore_touch_events = false
+		ignore_gui_events = false
 	if type == Constants.NIGHTMARE_DISCARD.DECK and object is Deck:
 		for i in range(0, 5):
 			if GameManager.deck_model.get_number_of_cards() == 0:
@@ -309,7 +314,7 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 				SignalManager.card_added_to_limbo.emit(card)
 		await discard_nightmare_card()
 		await draw_full_hand(false, true, true)
-		ignore_touch_events = false
+		ignore_gui_events = false
 	if type == Constants.NIGHTMARE_DISCARD.DOOR and object is DoorsButton:
 		var doors_button: DoorsButton = object
 		var color: CardManager.CARD_COLOR = doors_button.color
@@ -322,7 +327,7 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 			doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
 			await discard_nightmare_card()			
 			await draw_full_hand(false, true, true)
-		ignore_touch_events = false
+		ignore_gui_events = false
 
 func find_nightmare_card() -> Card:
 	for child in card_container.get_children():
@@ -353,6 +358,9 @@ func set_cards_outline(enabled: bool, keys_only: bool) -> void:
 				card.set_outline(enabled)
 
 func key_open_door_selected(type: Constants.KEY_OPEN_DOOR, key: Card, door: Card) -> void:
+	if ignore_gui_events:
+		return
+	ignore_gui_events = true
 	if type == Constants.KEY_OPEN_DOOR.DOOR:
 		await animate_card_to_discard(key)
 		SignalManager.card_added_to_discard.emit(key, false)
@@ -364,6 +372,7 @@ func key_open_door_selected(type: Constants.KEY_OPEN_DOOR, key: Card, door: Card
 		open_door_panel.set_panel_enabled(false)
 		if GameManager.check_won_game():
 			Log.prn("game won")
+			ignore_gui_events = false
 			return
 		await draw_full_hand(false, false, false)
 	if type == Constants.KEY_OPEN_DOOR.LIMBO:
@@ -372,6 +381,7 @@ func key_open_door_selected(type: Constants.KEY_OPEN_DOOR, key: Card, door: Card
 		open_door_panel.reset()
 		open_door_panel.set_panel_enabled(false)
 		await draw_full_hand(false, true, true)
+	ignore_gui_events = false
 
 func deck_outline_enabled(enabled: bool) -> void:
 	deck.set_outline(enabled)
