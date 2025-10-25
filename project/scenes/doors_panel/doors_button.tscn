@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dc7ok7mwww8fx"]
 
-[ext_resource type="Script" uid="uid://bpsakiro5c8ug" path="res://scenes/doorspanel/doors_button.gd" id="1_32ddj"]
+[ext_resource type="Script" uid="uid://bpsakiro5c8ug" path="res://scenes/doors_panel/doors_button.gd" id="1_32ddj"]
 [ext_resource type="Shader" uid="uid://ev2hcn4hhgq2" path="res://shaders/outline.gdshader" id="2_kb5p8"]
 [ext_resource type="Texture2D" uid="uid://btnkgsntbdm5f" path="res://assets/sprites/cards/red_door.png" id="3_s2eab"]
 

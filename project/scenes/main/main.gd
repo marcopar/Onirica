@@ -18,6 +18,9 @@ extends Node2D
 @onready var exit_button: TextureButton = $MenuBar/MarginContainer/ExitButton
 @onready var discard_panel_container: Control = $DiscardPanelContainer
 @onready var discard_panel: DiscardPanel = $DiscardPanelContainer/DiscardPanel
+@onready var win_lose_panel_container: Control = $WinLosePanelContainer
+@onready var win_panel: Control = $WinLosePanelContainer/WinPanel
+@onready var lose_panel: Control = $WinLosePanelContainer/LosePanel
 
 const CARD = preload("uid://fib6nrvub15n")
 
@@ -52,6 +55,7 @@ func _ready() -> void:
 	hand_markers.push_back(hand_marker_5)
 	#this is to handle overlapping cards properly
 	get_viewport().physics_object_picking_sort = true
+	
 	GameManager.new_game()		
 	SignalManager.new_game.emit()
 	doors_panel.setup(GameManager.deck_model.get_number_of(CardManager.CARD_TYPE.DOOR))
@@ -153,7 +157,7 @@ func card_added_to_labyrinth(card: Card) -> void:
 		await animate_door_found(door_card, true)
 		doors_panel.set_doors_found(door_card.card_model.color, GameManager.found_doors[door_card.card_model.color].size())
 		if GameManager.check_won_game():
-			Log.prn("game won")
+			show_win_panel()
 			return
 		else:
 			await animate_shuffle()
@@ -300,8 +304,7 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 	if type == Constants.NIGHTMARE_DISCARD.DECK and object is Deck:
 		for i in range(0, 5):
 			if GameManager.deck_model.get_number_of_cards() == 0:
-				#TODO game over
-				Log.prn("GAME OVER")
+				show_lose_panel()
 				return
 			var card_model: CardModel = GameManager.deck_model.get_next_card()
 			var card: Card = create_card(card_model, card_container, deck.position, Card.NO_SIZE, false, Constants.DRAGGING_BASE_Z)
@@ -371,7 +374,7 @@ func key_open_door_selected(type: Constants.KEY_OPEN_DOOR, key: Card, door: Card
 		open_door_panel.reset()
 		open_door_panel.set_panel_enabled(false)
 		if GameManager.check_won_game():
-			Log.prn("game won")
+			show_win_panel()
 			ignore_gui_events = false
 			return
 		await draw_full_hand(false, false, false)
@@ -386,8 +389,22 @@ func key_open_door_selected(type: Constants.KEY_OPEN_DOOR, key: Card, door: Card
 func deck_outline_enabled(enabled: bool) -> void:
 	deck.set_outline(enabled)
 
+func show_win_panel() -> void:
+	win_panel.visible = true
+	lose_panel.visible = false
+	win_lose_panel_container.visible = true
+
+func show_lose_panel() -> void:
+	win_panel.visible = false
+	lose_panel.visible = true
+	win_lose_panel_container.visible = true
+	
+####################################################
+####################################################
 ####################################################
 ### Animations
+####################################################
+####################################################
 ####################################################
 
 func animate_nightmare(card: Card) -> void:
