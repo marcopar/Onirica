@@ -15,12 +15,12 @@ extends Node2D
 @onready var open_door_panel: OpenDoorPanel = $OpenDoorPanel
 @onready var card_presentation_marker: Marker2D = $CardPresentationMarker
 @onready var prophecy_panel: ProphecyPanel = $ProphecyPanel
-@onready var exit_button: TextureButton = $MenuBar/MarginContainer/ExitButton
-@onready var discard_panel_container: Control = $DiscardPanelContainer
-@onready var discard_panel: DiscardPanel = $DiscardPanelContainer/DiscardPanel
-@onready var win_lose_panel_container: Control = $WinLosePanelContainer
-@onready var win_panel: Control = $WinLosePanelContainer/WinPanel
-@onready var lose_panel: Control = $WinLosePanelContainer/LosePanel
+@onready var exit_button: TextureButton = $GUI/VBoxContainer/MenuBar/ExitButton
+@onready var discard_panel_container: Control = $GUI/VBoxContainer/MainArea/DiscardPanelContainer
+@onready var discard_panel: DiscardPanel = $GUI/VBoxContainer/MainArea/DiscardPanelContainer/DiscardPanel
+@onready var win_lose_panel_container: Control = $GUI/VBoxContainer/MainArea/WinLosePanelContainer
+@onready var win_panel: Control = $GUI/VBoxContainer/MainArea/WinLosePanelContainer/WinPanel
+@onready var lose_panel: Control = $GUI/VBoxContainer/MainArea/WinLosePanelContainer/LosePanel
 
 const CARD = preload("uid://fib6nrvub15n")
 
@@ -68,6 +68,7 @@ func draw_card(nightmares_enabled: bool, doors_enabled: bool) -> Card:
 			continue
 		while GameManager.hand[hand_position] == null:
 			if GameManager.deck_model.get_number_of_cards() == 0:
+				show_lose_panel()
 				return null
 			var card_model: CardModel = GameManager.deck_model.get_next_card()
 			card = create_card(card_model, card_container, deck.position, Card.FULL_SIZE, true, Constants.DRAGGING_BASE_Z)
@@ -176,9 +177,16 @@ func card_added_to_discard(card: Card, pdraw_card: bool) -> void:
 
 func open_prophecy_panel() -> void:
 	set_hand_freezed(true)
-	var first_5_cards: Array[CardModel] =  GameManager.deck_model.deck.slice(0, 5)
+	var first_5_cards: Array[CardModel] =  GameManager.deck_model.deck.slice(0, min(5,  GameManager.deck_model.get_number_of_cards()))
 	prophecy_panel.card_models = first_5_cards
 	prophecy_panel.set_panel_enabled(true)
+	var all_doors: bool = true
+	for card_model in first_5_cards:
+		if card_model.type != CardManager.CARD_TYPE.DOOR:
+			all_doors = false
+			break
+	if all_doors:
+		show_lose_panel()
 	
 func card_added_to_limbo(card: Card) -> void:
 	GameManager.card_added_to_limbo(card)
