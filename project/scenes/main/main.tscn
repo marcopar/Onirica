@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bqghirh8g0ov4"]
+[gd_scene load_steps=20 format=3 uid="uid://bqghirh8g0ov4"]
 
 [ext_resource type="Script" uid="uid://dvvxyb2g3i2fx" path="res://scenes/main/main.gd" id="1_xny0v"]
 [ext_resource type="Texture2D" uid="uid://b1gjt3rpk4sc3" path="res://assets/sprites/backgrounds/background.png" id="2_ec000"]
@@ -7,13 +7,15 @@
 [ext_resource type="Shader" uid="uid://ev2hcn4hhgq2" path="res://shaders/outline.gdshader" id="4_th5th"]
 [ext_resource type="PackedScene" uid="uid://bnxsoiggcrqk" path="res://scenes/discard/discard.tscn" id="5_korep"]
 [ext_resource type="PackedScene" uid="uid://dbcm0qgdsw0l7" path="res://scenes/limbo/limbo.tscn" id="6_jqqak"]
-[ext_resource type="PackedScene" uid="uid://bxhxggou0553h" path="res://scenes/doorspanel/doors_panel.tscn" id="7_dlvyq"]
+[ext_resource type="PackedScene" uid="uid://bxhxggou0553h" path="res://scenes/doors_panel/doors_panel.tscn" id="7_dlvyq"]
 [ext_resource type="PackedScene" uid="uid://dtcl11a05xwoe" path="res://scenes/nightmare_panel/nightmare_panel.tscn" id="8_7jqxr"]
 [ext_resource type="PackedScene" uid="uid://cymsolbakuem" path="res://scenes/open_door_panel/open_door_panel.tscn" id="9_b1x3f"]
 [ext_resource type="PackedScene" uid="uid://b2ya0la80ijxu" path="res://scenes/prophecy_panel/prophecy_panel.tscn" id="10_a8run"]
 [ext_resource type="PackedScene" uid="uid://dpnumcx06ayqk" path="res://scenes/deck_counter/deck_counter.tscn" id="11_ouso4"]
 [ext_resource type="Texture2D" uid="uid://5ts0q5ytbdy6" path="res://assets/sprites/gui/logout_96dp_FFFFFF_FILL0_wght400_GRAD0_opsz48.svg" id="12_blune"]
 [ext_resource type="PackedScene" uid="uid://e6l72l0k2qmx" path="res://scenes/discard_panel/discard_panel.tscn" id="14_7smn1"]
+[ext_resource type="PackedScene" uid="uid://ddo0ayeeujk0m" path="res://scenes/game_end_panel/game_end_panel.tscn" id="15_raeie"]
+[ext_resource type="FontFile" uid="uid://ocls0l48n0q2" path="res://assets/sprites/gui/Tomorrow-Bold.ttf" id="16_hxu8e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7smn1"]
 resource_local_to_scene = true
@@ -22,6 +24,20 @@ shader_parameter/color = Color(1, 1, 1, 1)
 shader_parameter/width = 1.0
 shader_parameter/enabled = false
 shader_parameter/pulse_frequency = 10.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_nvumn"]
+font = ExtResource("16_hxu8e")
+font_size = 72
+font_color = Color(0, 0.23137255, 0, 1)
+outline_size = 16
+outline_color = Color(0, 0.78431374, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ou6is"]
+font = ExtResource("16_hxu8e")
+font_size = 72
+font_color = Color(0.23, 0, 0, 1)
+outline_size = 16
+outline_color = Color(0.78, 0, 0, 1)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_xny0v")
@@ -105,28 +121,31 @@ visible = false
 z_index = 199
 position = Vector2(-3, 1179)
 
-[node name="MenuBar" type="Control" parent="."]
+[node name="GUI" type="Control" parent="."]
+custom_minimum_size = Vector2(1080, 1920)
 layout_mode = 3
-anchors_preset = 10
-anchor_right = 1.0
+anchors_preset = 0
 offset_right = 1080.0
 offset_bottom = 1920.0
-grow_horizontal = 2
-size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="MenuBar"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI"]
 layout_mode = 1
-anchors_preset = 10
+anchors_preset = 15
 anchor_right = 1.0
-offset_bottom = 120.0
+anchor_bottom = 1.0
 grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MenuBar" type="MarginContainer" parent="GUI/VBoxContainer"]
+layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 0
 
-[node name="ExitButton" type="TextureButton" parent="MenuBar/MarginContainer"]
+[node name="ExitButton" type="TextureButton" parent="GUI/VBoxContainer/MenuBar"]
 modulate = Color(0.5254902, 0.8862745, 1, 1)
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
@@ -135,17 +154,23 @@ texture_normal = ExtResource("12_blune")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="DiscardPanelContainer" type="Control" parent="."]
+[node name="MainArea" type="Control" parent="GUI/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="DiscardPanelContainer" type="Control" parent="GUI/VBoxContainer/MainArea"]
 visible = false
-custom_minimum_size = Vector2(1080, 1920)
-layout_mode = 3
-anchors_preset = 0
-offset_right = 1080.0
-offset_bottom = 1920.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="DiscardPanel" parent="DiscardPanelContainer" instance=ExtResource("14_7smn1")]
+[node name="DiscardPanel" parent="GUI/VBoxContainer/MainArea/DiscardPanelContainer" instance=ExtResource("14_7smn1")]
 z_index = 1000
 custom_minimum_size = Vector2(900, 1200)
 layout_mode = 1
@@ -162,7 +187,61 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 0
 
+[node name="WinLosePanelContainer" type="Control" parent="GUI/VBoxContainer/MainArea"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WinPanel" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer" instance=ExtResource("15_raeie")]
+visible = false
+z_index = 2000
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -150.0
+offset_right = 250.0
+offset_bottom = 150.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer/WinPanel" index="3"]
+label_settings = SubResource("LabelSettings_nvumn")
+
+[node name="LosePanel" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer" instance=ExtResource("15_raeie")]
+visible = false
+z_index = 2000
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -150.0
+offset_right = 250.0
+offset_bottom = 150.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ColorRect" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer/LosePanel/MarginContainer" index="0"]
+color = Color(0.31, 0, 0, 1)
+
+[node name="Label" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer/LosePanel" index="3"]
+text = "Defeat!"
+label_settings = SubResource("LabelSettings_ou6is")
+
 [connection signal="area_entered" from="Deck" to="Deck" method="_on_area_entered"]
 [connection signal="area_exited" from="Deck" to="Deck" method="_on_area_exited"]
 [connection signal="input_event" from="Discard" to="." method="_on_discard_input_event"]
-[connection signal="pressed" from="MenuBar/MarginContainer/ExitButton" to="." method="_on_texture_button_pressed"]
+[connection signal="pressed" from="GUI/VBoxContainer/MenuBar/ExitButton" to="." method="_on_texture_button_pressed"]
+
+[editable path="GUI/VBoxContainer/MainArea/WinLosePanelContainer/WinPanel"]
+[editable path="GUI/VBoxContainer/MainArea/WinLosePanelContainer/LosePanel"]

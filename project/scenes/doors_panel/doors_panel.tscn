@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bxhxggou0553h"]
 
-[ext_resource type="Script" uid="uid://bi1yoni0bh1vi" path="res://scenes/doorspanel/doors_panel.gd" id="1_n3ltj"]
-[ext_resource type="PackedScene" uid="uid://dc7ok7mwww8fx" path="res://scenes/doorspanel/doors_button.tscn" id="2_6jafe"]
+[ext_resource type="Script" uid="uid://bi1yoni0bh1vi" path="res://scenes/doors_panel/doors_panel.gd" id="1_n3ltj"]
+[ext_resource type="PackedScene" uid="uid://dc7ok7mwww8fx" path="res://scenes/doors_panel/doors_button.tscn" id="2_6jafe"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ldbn4"]
 blend_mode = 3
