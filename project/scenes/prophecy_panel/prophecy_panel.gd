@@ -21,7 +21,11 @@ var card_models: Array[CardModel]:
 		return card_models
 	set(value):
 		card_models = value
-		SignalManager.deck_outline_enabled.emit(card_models[4].can_discard)
+		if card_models[4] == null:
+			#no cards for the prophecy
+			SignalManager.deck_outline_enabled.emit(false)
+		else:
+			SignalManager.deck_outline_enabled.emit(card_models[4].can_discard)
 
 var prophecy_cards: Array[ProphecyCard]:
 	get:
@@ -42,6 +46,10 @@ func set_panel_enabled(enabled: bool):
 	if visible:
 		process_mode = Node.PROCESS_MODE_INHERIT
 		for card_model in card_models:
+			if card_model == null:
+				#skip empty slots (less than 5 cards prophecy)
+				prophecy_cards.push_back(null)
+				continue
 			var marker: Marker2D = card_markers[card_models.find(card_model)]
 			var prophecy_card: ProphecyCard = create_prophecy_card(card_model, card_container, marker.position, PROPHECY_SIZE, true, 0)
 			prophecy_card.rotation = marker.rotation

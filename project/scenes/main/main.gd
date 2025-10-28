@@ -177,11 +177,18 @@ func card_added_to_discard(card: Card, pdraw_card: bool) -> void:
 
 func open_prophecy_panel() -> void:
 	set_hand_freezed(true)
-	var first_5_cards: Array[CardModel] =  GameManager.deck_model.deck.slice(0, min(5,  GameManager.deck_model.get_number_of_cards()))
+	
+	#first 5 cards filling with nulls at the beginning if there aren't enough cards
+	var null_cards: Array[CardModel] = [null, null, null, null, null]
+	var first_5_cards: Array[CardModel] = null_cards + GameManager.deck_model.deck.slice(0, min(5,  GameManager.deck_model.get_number_of_cards()))
+	first_5_cards = first_5_cards.slice(first_5_cards.size() - 5, first_5_cards.size())
+	
 	prophecy_panel.card_models = first_5_cards
 	prophecy_panel.set_panel_enabled(true)
 	var all_doors: bool = true
 	for card_model in first_5_cards:
+		if card_model == null:
+			continue
 		if card_model.type != CardManager.CARD_TYPE.DOOR:
 			all_doors = false
 			break
@@ -249,12 +256,15 @@ func handle_prophecy_action() -> void:
 		return
 		
 	#execute the animations
-	#in this order for animation purposes		
-	for i in [4, 3, 2, 1, 0]:
-		#remove the first 5 cards from the deck
-		GameManager.deck_model.get_next_card()
+	#in this order for animation purposes
+	for i in range(4, -1, -1):
 		#model in the i position as ordered in the panel
 		var card_model: CardModel = card_models[i]
+		if card_model == null:
+			#skip the empty slots
+			continue
+		#remove the card from the deck
+		GameManager.deck_model.get_next_card()
 		#let the placholder card disappear before animation
 		#we don't want to animate prophecy cards that are to be used only in the panel
 		prophecy_cards[i].queue_free()
@@ -279,6 +289,8 @@ func handle_prophecy_action() -> void:
 	#add them back in the selected order in the panel
 	card_models.reverse()
 	for card_model in card_models:
+		if card_model == null:
+			continue
 		GameManager.deck_model.add_card_front(card_model)
 		
 	prophecy_panel.set_panel_enabled(false)

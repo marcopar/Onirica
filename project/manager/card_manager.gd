@@ -104,3 +104,22 @@ func create_base_deck() -> Array[CardModel]:
 				deck.push_back(card)
 	return deck
 	
+func create_test_deck() -> Array[CardModel]:
+	var deck: Array[CardModel] = []
+	var card: CardModel = create_card(CardManager.CARD_TYPE.SUN, CardManager.CARD_COLOR.RED)
+	deck.push_back(card)
+	card = create_card(CardManager.CARD_TYPE.SUN, CardManager.CARD_COLOR.RED)
+	deck.push_back(card)
+	card = create_card(CardManager.CARD_TYPE.SUN, CardManager.CARD_COLOR.RED)
+	deck.push_back(card)
+	card = create_card(CardManager.CARD_TYPE.SUN, CardManager.CARD_COLOR.RED)
+	deck.push_back(card)
+	card = create_card(CardManager.CARD_TYPE.KEY, CardManager.CARD_COLOR.RED)
+	deck.push_back(card)
+	card = create_card(CardManager.CARD_TYPE.SUN, CardManager.CARD_COLOR.BLUE)
+	deck.push_back(card)
+	card = create_card(CardManager.CARD_TYPE.SUN, CardManager.CARD_COLOR.BLUE)
+	deck.push_back(card)
+	card = create_card(CardManager.CARD_TYPE.SUN, CardManager.CARD_COLOR.BLUE)
+	deck.push_back(card)
+	return deck
