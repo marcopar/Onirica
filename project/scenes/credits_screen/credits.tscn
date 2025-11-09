@@ -93,7 +93,7 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 bbcode_enabled = true
-text = "[font name=\"res://assets/sprites/gui/Tomorrow-Regular.ttf\" size=48][color=#86e2ff]Made in Italy by [url=https://www.flatworld.eu]Flatworld[/url]
+text = "[font name=\"res://assets/sprites/gui/Tomorrow-Regular.ttf\" size=40][color=#86e2ff]Made in Italy by [url=https://www.flatworld.eu]Flatworld[/url]
 [/color][/font]
 "
 scroll_active = false
