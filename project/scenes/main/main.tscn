@@ -241,7 +241,7 @@ label_settings = SubResource("LabelSettings_ou6is")
 [connection signal="area_entered" from="Deck" to="Deck" method="_on_area_entered"]
 [connection signal="area_exited" from="Deck" to="Deck" method="_on_area_exited"]
 [connection signal="input_event" from="Discard" to="." method="_on_discard_input_event"]
-[connection signal="pressed" from="GUI/VBoxContainer/MenuBar/ExitButton" to="." method="_on_texture_button_pressed"]
+[connection signal="pressed" from="GUI/VBoxContainer/MenuBar/ExitButton" to="." method="_on_exit_button_pressed"]
 
 [editable path="GUI/VBoxContainer/MainArea/WinLosePanelContainer/WinPanel"]
 [editable path="GUI/VBoxContainer/MainArea/WinLosePanelContainer/LosePanel"]

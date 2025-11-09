@@ -5,3 +5,6 @@ func switch_to_game() -> void:
 	
 func switch_to_menu() -> void:
 	get_tree().change_scene_to_file("res://scenes/main_menu/main_menu.tscn")
+
+func switch_to_credits() -> void:
+	get_tree().change_scene_to_file("res://scenes/credits_screen/credits.tscn")

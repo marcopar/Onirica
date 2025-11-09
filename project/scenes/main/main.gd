@@ -533,10 +533,6 @@ func animate_card_to_deck(card: Card) -> void:
 	tween.tween_property(card, "global_position", deck.global_position, 0.2)
 	await tween.finished
 
-func _on_texture_button_pressed() -> void:
-	GameManager.new_game()
-	SceneManager.switch_to_menu()
-
 func _on_discard_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventScreenTouch:
 		discard_panel.clear_counters()
@@ -545,3 +541,7 @@ func _on_discard_input_event(viewport: Node, event: InputEvent, shape_idx: int) 
 
 func discard_panel_closed() -> void:
 	discard_panel_container.visible = false
+
+func _on_exit_button_pressed() -> void:
+	GameManager.new_game()
+	SceneManager.switch_to_menu()
