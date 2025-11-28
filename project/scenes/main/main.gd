@@ -410,11 +410,13 @@ func deck_outline_enabled(enabled: bool) -> void:
 	deck.set_outline(enabled)
 
 func show_win_panel() -> void:
+	SoundManager.play_music(Constants.RAIN_IN_SPACE_LOOP, 1)
 	win_panel.visible = true
 	lose_panel.visible = false
 	win_lose_panel_container.visible = true
 
 func show_lose_panel() -> void:
+	SoundManager.play_music(Constants.DEPTH_OF_DESPAIR, 1)
 	win_panel.visible = false
 	lose_panel.visible = true
 	win_lose_panel_container.visible = true

@@ -22,6 +22,7 @@ SignalManager="*res://manager/signal_manager.gd"
 CardManager="*res://manager/card_manager.gd"
 GameManager="*res://manager/game_manager.gd"
 SceneManager="*res://manager/scene_manager.gd"
+SoundManager="*res://addons/sound_manager/sound_manager.gd"
 
 [debug]
 
@@ -34,6 +35,10 @@ window/size/viewport_height=1920
 window/stretch/mode="canvas_items"
 window/handheld/orientation=1
 window/vsync/vsync_mode=0
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/log/plugin.cfg", "res://addons/sound_manager/plugin.cfg")
 
 [global_group]
 
