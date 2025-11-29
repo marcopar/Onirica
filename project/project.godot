@@ -23,6 +23,7 @@ CardManager="*res://manager/card_manager.gd"
 GameManager="*res://manager/game_manager.gd"
 SceneManager="*res://manager/scene_manager.gd"
 SoundManager="*res://addons/sound_manager/sound_manager.gd"
+AudioManager="*res://manager/audio_manager.gd"
 
 [debug]
 

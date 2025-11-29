@@ -75,24 +75,42 @@ size_flags_vertical = 3
 bbcode_enabled = true
 text = "[font name=\"res://assets/sprites/gui/Tomorrow-SemiBold.ttf\"]
 [color=#86e2ff]
+[font size=46]
+Made in Italy by [url=https://www.flatworld.eu]
+Flatworld[/url]
+
+
+Music by
+[url=https://linktr.ee/tsorthangrove]Tsorthan Grove[/url]
+
+
+
+About the game
+[/font]
 [font size=36]
 Onirica is an unofficial (and partial) implementation of the card game Onirim by Shadi Torbey.
 
-The original game includes more ways to play, more expansions and beautiful artwork. You should definetly consider to buy it.
+The original game includes more ways to play, more expansions and beautiful artwork.
+You should definetly consider to buy it.
 
 More informations can be found here: 
 [url=https://boardgamegeek.com/boardgame/156336/onirim-second-edition]Onirim on BoardGameGeek[/url]
 [url=https://inpatience.com/en/Our_Games-7-ONIRIM]Onirim on inPatience[/url]
+
+
+
+
+
+
+
+
+
+This project has no connection with the designer and the publishers of the original game. 
 [/font]
-[font size=46]
 
 
-Made in Italy by [url=https://www.flatworld.eu]
-Flatworld[/url]
 
-Music by
-[url=https://linktr.ee/tsorthangrove]Tsorthan Grove[/url]
-[/font]
+
 
 
 
