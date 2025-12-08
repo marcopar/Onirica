@@ -62,8 +62,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_right = 50
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 50
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GUI/VBoxContainer/MainArea/MarginContainer"]
@@ -76,12 +76,14 @@ bbcode_enabled = true
 text = "[font name=\"res://assets/sprites/gui/Tomorrow-SemiBold.ttf\"]
 [color=#86e2ff]
 [font size=46]
-Made in Italy by [url=https://www.flatworld.eu]
-Flatworld[/url]
+Made in Italy by [url=https://www.flatworld.eu]Flatworld[/url]
 
-
-Music by
+Music
 [url=https://linktr.ee/tsorthangrove]Tsorthan Grove[/url]
+
+Sound Effects
+[url=https://kenney.nl/]Kenney.nl[/url]
+[url=https://opengameart.org/users/p0ss]p0ss[/url]
 
 
 
@@ -96,12 +98,6 @@ You should definetly consider to buy it.
 More informations can be found here: 
 [url=https://boardgamegeek.com/boardgame/156336/onirim-second-edition]Onirim on BoardGameGeek[/url]
 [url=https://inpatience.com/en/Our_Games-7-ONIRIM]Onirim on inPatience[/url]
-
-
-
-
-
-
 
 
 
