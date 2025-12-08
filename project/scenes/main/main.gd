@@ -146,7 +146,7 @@ func empty_limbo() -> void:
 		SignalManager.card_removed_from_limbo.emit(card)
 		GameManager.limbo.erase(card)
 		card.queue_free()
-	shuffle()
+	await shuffle()
 	
 func card_return_to_hand(card: Card) -> void:
 	card.position = hand_markers[card.hand_position].global_position
@@ -164,13 +164,13 @@ func card_added_to_labyrinth(card: Card) -> void:
 		set_hand_freezed(true)
 		var door_card: Card = create_card(card_model, card_container, deck.position, Card.FULL_SIZE, false, Constants.DRAGGING_BASE_Z)
 		door_card.set_back_texture()		
-		door_found(door_card)
+		await door_found(door_card)
 		doors_panel.set_doors_found(door_card.card_model.color, GameManager.found_doors[door_card.card_model.color].size())
 		if GameManager.check_won_game():
 			show_win_panel()
 			return
 		else:
-			shuffle()
+			await shuffle()
 			await draw_full_hand(true, true, true)
 	else:
 		await draw_full_hand(true, true, true)
@@ -396,7 +396,7 @@ func key_open_door_selected(type: Constants.KEY_OPEN_DOOR, key: Card, door: Card
 		await animate_card_to_discard(key)
 		SignalManager.card_added_to_discard.emit(key, false)
 		door.z_index = Constants.DRAGGING_BASE_Z
-		door_found(door)
+		await door_found(door)
 		GameManager.set_door_as_found(door.card_model)
 		doors_panel.set_doors_found(door.card_model.color, GameManager.found_doors[door.card_model.color].size())
 		open_door_panel.reset()
