@@ -108,6 +108,7 @@ func draw_full_hand(empty_limbo_for_each_card: bool, nightmares_enabled: bool, d
 		if card == null:
 			break
 		if nightmares_enabled and card.card_model.type == CardManager.CARD_TYPE.NIGHTMARE:
+			AudioManager.play_nightmare_sound()
 			await animate_nightmare(card)
 			nightmare_panel.set_panel_enabled(true)
 			return
@@ -129,6 +130,11 @@ func check_door_against_hand_keys(door: Card) -> Card:
 			return card
 	return null
 
+func shuffle() -> void:
+	AudioManager.play_shuffle_sound()
+	await animate_shuffle()
+	GameManager.shuffle()
+	
 func empty_limbo() -> void:
 	var limbo_copy: Array[Card]
 	limbo_copy.append_array(GameManager.limbo)
@@ -140,14 +146,17 @@ func empty_limbo() -> void:
 		SignalManager.card_removed_from_limbo.emit(card)
 		GameManager.limbo.erase(card)
 		card.queue_free()
-	await animate_shuffle()
-	GameManager.shuffle()
+	await shuffle()
 	
 func card_return_to_hand(card: Card) -> void:
 	card.position = hand_markers[card.hand_position].global_position
 	card.rotation = hand_markers[card.hand_position].rotation
 	card.z_index = card.hand_position + Constants.HAND_BASE_Z
 
+func door_found(door_card: Card) -> void:
+	AudioManager.play_door_sound()
+	await animate_door_found(door_card, true)
+	
 func card_added_to_labyrinth(card: Card) -> void:
 	GameManager.card_added_to_labyrinth(card)
 	var card_model: CardModel = GameManager.check_door_found()
@@ -155,14 +164,13 @@ func card_added_to_labyrinth(card: Card) -> void:
 		set_hand_freezed(true)
 		var door_card: Card = create_card(card_model, card_container, deck.position, Card.FULL_SIZE, false, Constants.DRAGGING_BASE_Z)
 		door_card.set_back_texture()		
-		await animate_door_found(door_card, true)
+		await door_found(door_card)
 		doors_panel.set_doors_found(door_card.card_model.color, GameManager.found_doors[door_card.card_model.color].size())
 		if GameManager.check_won_game():
 			show_win_panel()
 			return
 		else:
-			await animate_shuffle()
-			GameManager.shuffle()
+			await shuffle()
 			await draw_full_hand(true, true, true)
 	else:
 		await draw_full_hand(true, true, true)
@@ -388,7 +396,7 @@ func key_open_door_selected(type: Constants.KEY_OPEN_DOOR, key: Card, door: Card
 		await animate_card_to_discard(key)
 		SignalManager.card_added_to_discard.emit(key, false)
 		door.z_index = Constants.DRAGGING_BASE_Z
-		await animate_door_found(door, false)
+		await door_found(door)
 		GameManager.set_door_as_found(door.card_model)
 		doors_panel.set_doors_found(door.card_model.color, GameManager.found_doors[door.card_model.color].size())
 		open_door_panel.reset()
@@ -410,11 +418,13 @@ func deck_outline_enabled(enabled: bool) -> void:
 	deck.set_outline(enabled)
 
 func show_win_panel() -> void:
+	AudioManager.play_game_victory_music()
 	win_panel.visible = true
 	lose_panel.visible = false
 	win_lose_panel_container.visible = true
 
 func show_lose_panel() -> void:
+	AudioManager.play_game_defeat_music()
 	win_panel.visible = false
 	lose_panel.visible = true
 	win_lose_panel_container.visible = true
@@ -481,6 +491,7 @@ func animate_shuffle() -> void:
 		var offset: int = 50
 		var duration: float = 0.05
 		var tween: Tween = get_tree().create_tween()
+		tween.tween_property(card, "position", Vector2(randf_range(-offset,offset),randf_range(-offset,offset)), duration)
 		tween.tween_property(card, "position", Vector2(randf_range(-offset,offset),randf_range(-offset,offset)), duration)
 		tween.tween_property(card, "position", Vector2(randf_range(-offset,offset),randf_range(-offset,offset)), duration)
 		tween.tween_property(card, "position", Vector2(randf_range(-offset,offset),randf_range(-offset,offset)), duration)

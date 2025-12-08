@@ -62,8 +62,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_right = 50
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 50
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GUI/VBoxContainer/MainArea/MarginContainer"]
@@ -73,33 +73,73 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 bbcode_enabled = true
-text = "[font name=\"res://assets/sprites/gui/Tomorrow-SemiBold.ttf\" size=42][color=#86e2ff]
-Onirica is an unofficial (and partial) implementation of the card game Onirim by Shadi Torbey.
+text = "[font name=\"res://assets/sprites/gui/Tomorrow-SemiBold.ttf\"]
+[color=#86e2ff]
+[font size=46]
+Made in Italy by [url=https://www.flatworld.eu]Flatworld[/url]
 
-This project has no connection with the designer and the publishers of the original game. 
+Music
+[url=https://linktr.ee/tsorthangrove]Tsorthan Grove[/url]
+
+Sound Effects
+[url=https://kenney.nl/]Kenney.nl[/url]
+[url=https://opengameart.org/users/p0ss]p0ss[/url]
+
+
+
+About the game
+[/font]
+[font size=36]
+Onirica is an unofficial (and partial) implementation of the card game Onirim by Shadi Torbey.
 
 The original game includes more ways to play, more expansions and beautiful artwork.
 You should definetly consider to buy it.
 
-More informations about the original game can be found here: 
+More informations can be found here: 
 [url=https://boardgamegeek.com/boardgame/156336/onirim-second-edition]Onirim on BoardGameGeek[/url]
 [url=https://inpatience.com/en/Our_Games-7-ONIRIM]Onirim on inPatience[/url]
-[/color][/font]"
+
+
+
+This project has no connection with the designer and the publishers of the original game. 
+[/font]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[font size=32]
+This project has no connection with the designer and the publishers of the original game.
+[/font]
+[/color]
+[/font]"
 scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MadeBy" type="RichTextLabel" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-bbcode_enabled = true
-text = "[font name=\"res://assets/sprites/gui/Tomorrow-Regular.ttf\" size=40][color=#86e2ff]Made in Italy by [url=https://www.flatworld.eu]Flatworld[/url]
-[/color][/font]
-"
-scroll_active = false
-horizontal_alignment = 1
-vertical_alignment = 2
-
 [connection signal="pressed" from="GUI/VBoxContainer/MenuBar/ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="meta_clicked" from="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/AboutTheGame" to="." method="_on_rich_text_label_meta_clicked"]
-[connection signal="meta_clicked" from="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/MadeBy" to="." method="_on_rich_text_label_meta_clicked"]
