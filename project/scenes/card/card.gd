@@ -2,6 +2,8 @@ extends DraggableSprite
 
 class_name Card
 
+@onready var label: Label = $Label
+
 const NO_SIZE: Vector2 = Vector2.ZERO
 const FULL_SIZE: Vector2 = Vector2.ONE
 const LABYRINTH_SIZE: Vector2 = Vector2(0.60, 0.60)
@@ -30,6 +32,22 @@ func _ready() -> void:
 	back_texture = load("res://assets/sprites/cards/back.png")
 	set_full_size()
 	set_back_texture()
+	set_label()
+
+func set_label() -> void:
+	match card_model.color:
+		CardManager.CARD_COLOR.RED:
+			label.text = "R"
+		CardManager.CARD_COLOR.GREEN:
+			label.text = "G"
+		CardManager.CARD_COLOR.BLUE:
+			label.text = "B"
+		CardManager.CARD_COLOR.YELLOW:
+			label.text = "Y"
+		CardManager.CARD_COLOR.MULTI:
+			label.text = "M"
+		_:
+			label.text = ""
 
 func can_drag() -> bool:
 	return card_model.can_play or card_model.can_discard

@@ -18,12 +18,26 @@ const DOOR_TEXTURES: Dictionary[CardManager.CARD_COLOR, Resource] = {
 }
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var label: Label = $Label
 
 var color: CardManager.CARD_COLOR
 	
 func set_color(pcolor: CardManager.CARD_COLOR) -> void:
 	self.color = pcolor
 	sprite_2d.texture = DOOR_TEXTURES[color]
+	match color:
+		CardManager.CARD_COLOR.RED:
+			label.text = "R"
+		CardManager.CARD_COLOR.GREEN:
+			label.text = "G"
+		CardManager.CARD_COLOR.BLUE:
+			label.text = "B"
+		CardManager.CARD_COLOR.YELLOW:
+			label.text = "Y"
+		CardManager.CARD_COLOR.MULTI:
+			label.text = "M"
+		_:
+			label.text = ""
 
 func set_outline(enabled: bool) -> void:
 	##the shader has an instance parameter to enable it or not on the single card
