@@ -554,5 +554,6 @@ func discard_panel_closed() -> void:
 	discard_panel_container.visible = false
 
 func _on_exit_button_pressed() -> void:
+	AudioManager.play_uiclick_sound()
 	GameManager.new_game()
 	SceneManager.switch_to_menu()

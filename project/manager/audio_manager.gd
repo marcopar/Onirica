@@ -8,14 +8,31 @@ const CARD_SHUFFLE_FAST: AudioStream = preload("uid://d2ln1tkxv7o6y")
 const CARD_PLAYED_CUT: AudioStream = preload("uid://8632hhr20814")
 const NIGHTMARE_FOUND_SPELL: AudioStream = preload("uid://dw8v2hohco6w5")
 const DOOR_FOUND_HEAL: AudioStream = preload("uid://dv7i3551q7tvh")
+const UI_CLICK_7: AudioStream = preload("uid://dhnx31h21lc1g")
 
 
 func _ready() -> void:
+	SoundManager.set_default_music_bus("Music")
+	SoundManager.set_default_sound_bus("Sound")
+	SoundManager.set_default_ambient_sound_bus("Sound")
+	SoundManager.set_default_ui_sound_bus("Sound")
 	SignalManager.card_added_to_labyrinth.connect(card_added_to_labyrinth)
 	SignalManager.card_added_to_discard.connect(card_added_to_discard)
 	SignalManager.card_added_to_limbo.connect(card_added_to_limbo)
 	pass
 	
+func set_music_volume(value: float) -> void:
+	SoundManager.set_music_volume(value)
+
+func get_music_volume() -> float:
+	return SoundManager.get_music_volume()
+	
+func set_sound_volume(value: float) -> void:
+	SoundManager.set_sound_volume(value)
+
+func get_sound_volume() -> float:
+	return SoundManager.get_sound_volume()
+
 func play_menu_music() -> void:
 	SoundManager.play_music(A_FRIENDLY_GHOST_MINIMAL_LOOP, 1)
 	
@@ -39,6 +56,9 @@ func play_nightmare_sound() -> void:
 
 func play_door_sound() -> void:
 	SoundManager.play_sound(DOOR_FOUND_HEAL)
+	
+func play_uiclick_sound() -> void:
+	SoundManager.play_sound(UI_CLICK_7)
 
 func card_added_to_labyrinth(card: Card) -> void:
 	play_card_played_sound()

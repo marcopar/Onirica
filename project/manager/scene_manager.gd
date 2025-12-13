@@ -8,3 +8,6 @@ func switch_to_menu() -> void:
 
 func switch_to_credits() -> void:
 	get_tree().change_scene_to_file("res://scenes/credits_screen/credits.tscn")
+	
+func switch_to_settings() -> void:
+	get_tree().change_scene_to_file("res://scenes/settings_screen/settings.tscn")

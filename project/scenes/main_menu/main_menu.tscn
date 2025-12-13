@@ -16,7 +16,7 @@ outline_color = Color(0.52647823, 0.88617295, 0.9999998, 1)
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wem23"]
 blend_mode = 3
 
-[sub_resource type="Gradient" id="Gradient_3ovsr"]
+[sub_resource type="Gradient" id="Gradient_wem23"]
 interpolation_mode = 2
 offsets = PackedFloat32Array(0, 0.2, 0.8, 1)
 colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0.9797255, 0.9797255, 0.9797255, 1, 0, 0, 0, 1)
@@ -24,7 +24,7 @@ metadata/_snap_enabled = true
 metadata/_snap_count = 5
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_5seab"]
-gradient = SubResource("Gradient_3ovsr")
+gradient = SubResource("Gradient_wem23")
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -48,7 +48,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 40
+theme_override_constants/separation = 50
 
 [node name="Title" type="Label" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 700)
@@ -77,6 +77,35 @@ theme_override_styles/focus = ExtResource("5_wem23")
 text = "NEW GAME"
 
 [node name="Shade" type="TextureRect" parent="VBoxContainer/NewGame"]
+material = SubResource("CanvasItemMaterial_wem23")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_5seab")
+
+[node name="Settings" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_focus_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_hover_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_fonts/font = ExtResource("4_uqeha")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = ExtResource("5_wem23")
+theme_override_styles/pressed = ExtResource("5_wem23")
+theme_override_styles/hover = ExtResource("5_wem23")
+theme_override_styles/disabled = ExtResource("5_wem23")
+theme_override_styles/focus = ExtResource("5_wem23")
+text = "SETTINGS"
+
+[node name="Shade" type="TextureRect" parent="VBoxContainer/Settings"]
 material = SubResource("CanvasItemMaterial_wem23")
 layout_mode = 1
 anchors_preset = 15
@@ -117,4 +146,5 @@ mouse_filter = 2
 texture = SubResource("GradientTexture2D_5seab")
 
 [connection signal="pressed" from="VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_credits_pressed"]
