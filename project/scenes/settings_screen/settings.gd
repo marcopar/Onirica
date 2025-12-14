@@ -54,7 +54,7 @@ func update_labels() -> void:
 		sound_effects.text = "SOUND EFFECTS ON"
 
 	if SettingsManager.color_blind_on == false:
-		color_blind.text = "COLOR BLIND OFF"
+		color_blind.text = "COLOR BLIND AID OFF"
 	else:
-		color_blind.text = "COLOR BLIND ON"
+		color_blind.text = "COLOR BLIND AID ON"
 		

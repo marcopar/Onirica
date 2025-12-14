@@ -20,7 +20,6 @@ func _ready() -> void:
 	SignalManager.card_added_to_discard.connect(card_added_to_discard)
 	SignalManager.card_added_to_limbo.connect(card_added_to_limbo)
 	
-	SettingsManager.load_config()
 	if SettingsManager.music_on:
 		set_music_volume(1)
 	else:

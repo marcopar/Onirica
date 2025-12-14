@@ -158,7 +158,7 @@ theme_override_styles/pressed = ExtResource("4_h6son")
 theme_override_styles/hover = ExtResource("4_h6son")
 theme_override_styles/disabled = ExtResource("4_h6son")
 theme_override_styles/focus = ExtResource("4_h6son")
-text = "COLOR BLIND ON"
+text = "COLOR BLIND AID ON"
 
 [node name="Shade" type="TextureRect" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/ColorBlind"]
 material = SubResource("CanvasItemMaterial_vimye")
