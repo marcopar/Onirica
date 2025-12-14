@@ -32,22 +32,6 @@ func _ready() -> void:
 	back_texture = load("res://assets/sprites/cards/back.png")
 	set_full_size()
 	set_back_texture()
-	set_label()
-
-func set_label() -> void:
-	match card_model.color:
-		CardManager.CARD_COLOR.RED:
-			label.text = "R"
-		CardManager.CARD_COLOR.GREEN:
-			label.text = "G"
-		CardManager.CARD_COLOR.BLUE:
-			label.text = "B"
-		CardManager.CARD_COLOR.YELLOW:
-			label.text = "Y"
-		CardManager.CARD_COLOR.MULTI:
-			label.text = "M"
-		_:
-			label.text = ""
 
 func can_drag() -> bool:
 	return card_model.can_play or card_model.can_discard
@@ -88,6 +72,28 @@ func set_limbo_size() -> void:
 	
 func set_front_texture():
 	sprite_2d.texture = front_texture
+	match card_model.type:
+		CardManager.CARD_TYPE.DOOR:
+			label.position.x = -25
+			label.position.y = 100
+		_:
+			label.position.x = -96
+			label.position.y = -100
+	match card_model.color:
+		CardManager.CARD_COLOR.RED:
+			label.text = "R"
+		CardManager.CARD_COLOR.GREEN:
+			label.text = "G"
+		CardManager.CARD_COLOR.BLUE:
+			label.text = "B"
+		CardManager.CARD_COLOR.YELLOW:
+			label.text = "Y"
+		CardManager.CARD_COLOR.MULTI:
+			label.text = "M"
+		_:
+			label.text = ""
 
 func set_back_texture():
 	sprite_2d.texture = back_texture
+	label.text = ""
+	
