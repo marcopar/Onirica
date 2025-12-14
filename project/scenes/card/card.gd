@@ -72,26 +72,7 @@ func set_limbo_size() -> void:
 	
 func set_front_texture():
 	sprite_2d.texture = front_texture
-	match card_model.type:
-		CardManager.CARD_TYPE.DOOR:
-			label.position.x = -25
-			label.position.y = 100
-		_:
-			label.position.x = -96
-			label.position.y = -100
-	match card_model.color:
-		CardManager.CARD_COLOR.RED:
-			label.text = "R"
-		CardManager.CARD_COLOR.GREEN:
-			label.text = "G"
-		CardManager.CARD_COLOR.BLUE:
-			label.text = "B"
-		CardManager.CARD_COLOR.YELLOW:
-			label.text = "Y"
-		CardManager.CARD_COLOR.MULTI:
-			label.text = "M"
-		_:
-			label.text = ""
+	Commons.set_card_colorblind_label(label, card_model)
 
 func set_back_texture():
 	sprite_2d.texture = back_texture

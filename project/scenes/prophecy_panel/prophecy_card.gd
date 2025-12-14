@@ -1,6 +1,7 @@
 extends DraggableSprite
 
 class_name ProphecyCard
+@onready var label: Label = $Label
 
 var card_model: CardModel:
 	get:
@@ -11,6 +12,7 @@ var card_model: CardModel:
 func _ready() -> void:
 	super._ready()
 	sprite_2d.texture = load(card_model.sprite_name)
+	Commons.set_card_colorblind_label(label, card_model)
 
 func handle_position_update(drag_event: InputEventScreenDrag) -> void:
 	z_index = Constants.DRAGGING_BASE_Z

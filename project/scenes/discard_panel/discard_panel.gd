@@ -22,9 +22,19 @@ class_name DiscardPanel
 @onready var multi_moon: DiscardPanelCounter = $VBoxContainer/Multi/MultiMoon
 @onready var multi_key: DiscardPanelCounter = $VBoxContainer/Multi/MultiKey
 
+@onready var multi: HBoxContainer = $VBoxContainer/Multi
+
+@onready var red_label: Label = $VBoxContainer/Red/RedLabel
+@onready var green_label: Label = $VBoxContainer/Green/GreenLabel
+@onready var blue_label: Label = $VBoxContainer/Blue/BlueLabel
+@onready var yellowlabel: Label = $VBoxContainer/Yellow/Yellowlabel
+@onready var multi_label: Label = $VBoxContainer/Multi/MultiLabel
 
 var counters: Dictionary[CardManager.CARD_TYPE, Variant]
 
+func _ready() -> void:
+	pass
+	
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
 		SignalManager.discard_panel_closed.emit()

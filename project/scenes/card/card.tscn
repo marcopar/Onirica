@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://m62nde2ysxpr" path="res://scenes/card/card.gd" id="1_atepj"]
 [ext_resource type="PackedScene" uid="uid://mnnbxl1vr0ep" path="res://scenes/common/draggable_sprite.tscn" id="1_vtcvk"]
 [ext_resource type="Shader" uid="uid://ev2hcn4hhgq2" path="res://shaders/outline.gdshader" id="3_g65cd"]
-[ext_resource type="Texture2D" uid="uid://cnhxk20xt15ay" path="res://assets/sprites/cards/blue_door.png" id="4_2ufkr"]
+[ext_resource type="Texture2D" uid="uid://ok8mw4sjpg74" path="res://assets/sprites/cards/green_key.png" id="4_2ufkr"]
 [ext_resource type="FontFile" uid="uid://c6ajo7m7m2p0g" path="res://assets/sprites/gui/Tomorrow-SemiBold.ttf" id="5_2ufkr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2ufkr"]
@@ -35,9 +35,11 @@ texture = ExtResource("4_2ufkr")
 shape = SubResource("RectangleShape2D_g65cd")
 
 [node name="Label" type="Label" parent="." index="2"]
-offset_left = -96.0
+offset_left = -98.0
 offset_top = -100.0
-offset_right = -46.0
+offset_right = -48.0
 offset_bottom = -28.0
 text = "R"
 label_settings = SubResource("LabelSettings_kaf1t")
+horizontal_alignment = 1
+vertical_alignment = 1

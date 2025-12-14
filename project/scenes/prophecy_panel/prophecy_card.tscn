@@ -1,11 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://ce08id5decbqq"]
+[gd_scene load_steps=7 format=3 uid="uid://ce08id5decbqq"]
 
 [ext_resource type="PackedScene" uid="uid://mnnbxl1vr0ep" path="res://scenes/common/draggable_sprite.tscn" id="1_33eyq"]
 [ext_resource type="Script" uid="uid://n6ncncvi88f6" path="res://scenes/prophecy_panel/prophecy_card.gd" id="2_wwmfv"]
 [ext_resource type="Texture2D" uid="uid://c5jkms2sw4amx" path="res://assets/sprites/cards/nightmare.png" id="3_gn51o"]
+[ext_resource type="FontFile" uid="uid://c6ajo7m7m2p0g" path="res://assets/sprites/gui/Tomorrow-SemiBold.ttf" id="4_ib5bh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ib5bh"]
 size = Vector2(236, 364)
+
+[sub_resource type="LabelSettings" id="LabelSettings_86jov"]
+font = ExtResource("4_ib5bh")
+font_size = 60
+font_color = Color(1, 1, 1, 0)
+outline_size = 8
+outline_color = Color(0, 0, 0, 0.78431374)
 
 [node name="ProphecyCard" instance=ExtResource("1_33eyq")]
 script = ExtResource("2_wwmfv")
@@ -15,3 +23,13 @@ texture = ExtResource("3_gn51o")
 
 [node name="CollisionShape2D" parent="." index="1"]
 shape = SubResource("RectangleShape2D_ib5bh")
+
+[node name="Label" type="Label" parent="." index="2"]
+offset_left = -96.0
+offset_top = -100.0
+offset_right = -46.0
+offset_bottom = -28.0
+text = "R"
+label_settings = SubResource("LabelSettings_86jov")
+horizontal_alignment = 1
+vertical_alignment = 1
