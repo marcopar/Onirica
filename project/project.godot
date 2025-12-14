@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Constants="*res://manager/constants.gd"
 Commons="*res://manager/commons.gd"
+SettingsManager="*res://manager/settings_manager.gd"
 SignalManager="*res://manager/signal_manager.gd"
 CardManager="*res://manager/card_manager.gd"
 GameManager="*res://manager/game_manager.gd"

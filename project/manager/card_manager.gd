@@ -10,7 +10,7 @@ var CARD_COLOR_TEXT: Dictionary[CardManager.CARD_COLOR, String] = {
 		CARD_COLOR.NONE: "none"
 }
 
-enum CARD_TYPE {SUN, MOON, KEY, GLYPH, DOOR, NIGHTMARE, DEADEND}
+enum CARD_TYPE {SUN, MOON, KEY, GLYPH, DOOR, NIGHTMARE, DEADEND, NONE}
 var CARD_TYPE_TEXT: Dictionary[CardManager.CARD_TYPE, String] = {
 		CARD_TYPE.SUN: "sun",
 		CARD_TYPE.MOON: "moon",
@@ -18,7 +18,8 @@ var CARD_TYPE_TEXT: Dictionary[CardManager.CARD_TYPE, String] = {
 		CARD_TYPE.GLYPH: "glyph",
 		CARD_TYPE.DOOR: "door",
 		CARD_TYPE.NIGHTMARE: "nightmare",
-		CARD_TYPE.DEADEND: "deadend"
+		CARD_TYPE.DEADEND: "deadend",
+		CARD_TYPE.NONE: "none"
 }
 
 const BASE_DECK: Dictionary[CardManager.CARD_TYPE, Variant] = {

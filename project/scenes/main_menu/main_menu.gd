@@ -2,7 +2,7 @@ extends Control
 
 class_name MainMenu
 
-func _ready() -> void:
+func _ready() -> void:	
 	AudioManager.play_menu_music()
 			
 func _on_new_game_pressed() -> void:

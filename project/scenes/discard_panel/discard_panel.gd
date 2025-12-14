@@ -33,7 +33,11 @@ class_name DiscardPanel
 var counters: Dictionary[CardManager.CARD_TYPE, Variant]
 
 func _ready() -> void:
-	pass
+	red_label.visible = SettingsManager.color_blind_on
+	green_label.visible = SettingsManager.color_blind_on
+	blue_label.visible = SettingsManager.color_blind_on
+	yellowlabel.visible = SettingsManager.color_blind_on
+
 	
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
