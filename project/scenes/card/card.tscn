@@ -20,9 +20,8 @@ size = Vector2(236, 364)
 [sub_resource type="LabelSettings" id="LabelSettings_kaf1t"]
 font = ExtResource("5_2ufkr")
 font_size = 60
-font_color = Color(1, 1, 1, 0)
-outline_size = 8
-outline_color = Color(0, 0, 0, 0.78431374)
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Card" instance=ExtResource("1_vtcvk")]
 script = ExtResource("1_atepj")
