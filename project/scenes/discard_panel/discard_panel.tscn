@@ -224,6 +224,7 @@ size_flags_vertical = 6
 texture = ExtResource("5_bs7hk")
 
 [node name="Multi" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
