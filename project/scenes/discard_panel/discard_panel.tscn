@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://e6l72l0k2qmx"]
+[gd_scene load_steps=13 format=3 uid="uid://e6l72l0k2qmx"]
 
 [ext_resource type="PackedScene" uid="uid://8t2tuwn2eo6g" path="res://scenes/discard_panel/discard_panel_counter.tscn" id="1_lvojv"]
 [ext_resource type="Script" uid="uid://b8vc6a88uwxde" path="res://scenes/discard_panel/discard_panel.gd" id="1_vgxtx"]
@@ -20,6 +20,14 @@ curve = SubResource("Curve_vgxtx")
 [sub_resource type="LabelSettings" id="LabelSettings_bs7hk"]
 font = ExtResource("2_0h65k")
 font_size = 50
+
+[sub_resource type="LabelSettings" id="LabelSettings_0h65k"]
+font = ExtResource("2_0h65k")
+font_size = 60
+
+[sub_resource type="LabelSettings" id="LabelSettings_uqxqe"]
+font = ExtResource("2_0h65k")
+font_size = 60
 
 [node name="DiscardPanel" type="TextureRect"]
 material = SubResource("CanvasItemMaterial_lvojv")
@@ -185,7 +193,7 @@ size_flags_vertical = 3
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 text = "Y"
-label_settings = SubResource("LabelSettings_bs7hk")
+label_settings = SubResource("LabelSettings_0h65k")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -224,7 +232,6 @@ size_flags_vertical = 6
 texture = ExtResource("5_bs7hk")
 
 [node name="Multi" type="HBoxContainer" parent="VBoxContainer"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
@@ -232,7 +239,7 @@ size_flags_vertical = 3
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 text = "M"
-label_settings = SubResource("LabelSettings_bs7hk")
+label_settings = SubResource("LabelSettings_uqxqe")
 horizontal_alignment = 1
 vertical_alignment = 1
 
