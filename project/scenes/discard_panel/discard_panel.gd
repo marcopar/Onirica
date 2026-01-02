@@ -27,7 +27,7 @@ class_name DiscardPanel
 @onready var red_label: Label = $VBoxContainer/Red/RedLabel
 @onready var green_label: Label = $VBoxContainer/Green/GreenLabel
 @onready var blue_label: Label = $VBoxContainer/Blue/BlueLabel
-@onready var yellowlabel: Label = $VBoxContainer/Yellow/Yellowlabel
+@onready var yellow_label: Label = $VBoxContainer/Yellow/YellowLabel
 @onready var multi_label: Label = $VBoxContainer/Multi/MultiLabel
 
 var counters: Dictionary[CardManager.CARD_TYPE, Variant]
@@ -36,7 +36,15 @@ func _ready() -> void:
 	red_label.visible = SettingsManager.color_blind_on
 	green_label.visible = SettingsManager.color_blind_on
 	blue_label.visible = SettingsManager.color_blind_on
-	yellowlabel.visible = SettingsManager.color_blind_on
+	yellow_label.visible = SettingsManager.color_blind_on
+	multi_label.visible = SettingsManager.color_blind_on
+	
+	red_label.text = Commons.get_colorblid_symbol(CardManager.CARD_COLOR.RED)
+	green_label.text = Commons.get_colorblid_symbol(CardManager.CARD_COLOR.GREEN)
+	blue_label.text = Commons.get_colorblid_symbol(CardManager.CARD_COLOR.BLUE)
+	yellow_label.text = Commons.get_colorblid_symbol(CardManager.CARD_COLOR.YELLOW)
+	multi_label.text = Commons.get_colorblid_symbol(CardManager.CARD_COLOR.MULTI)
+	
 
 	
 func _on_gui_input(event: InputEvent) -> void:

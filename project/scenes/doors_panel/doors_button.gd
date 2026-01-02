@@ -25,7 +25,8 @@ var color: CardManager.CARD_COLOR
 func set_color(pcolor: CardManager.CARD_COLOR) -> void:
 	self.color = pcolor
 	sprite_2d.texture = DOOR_TEXTURES[color]
-	Commons.set_card_colorblind_label_text(label, color, CardManager.CARD_TYPE.NONE)
+	Commons.set_colorblind_text(label, color, CardManager.CARD_TYPE.NONE)
+	Commons.set_doors_button_colorblind_properties(label, color, CardManager.CARD_TYPE.NONE)
 
 func set_outline(enabled: bool) -> void:
 	##the shader has an instance parameter to enable it or not on the single card

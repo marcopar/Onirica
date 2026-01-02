@@ -72,8 +72,8 @@ func set_limbo_size() -> void:
 	
 func set_front_texture():
 	sprite_2d.texture = front_texture
-	Commons.set_card_colorblind_label_text(label, card_model.color, card_model.type)
-	Commons.set_card_colorblind_label_position(label, card_model.color, card_model.type)
+	Commons.set_colorblind_text(label, card_model.color, card_model.type)
+	Commons.set_card_colorblind_properties(label, card_model.color, card_model.type)
 
 func set_back_texture():
 	sprite_2d.texture = back_texture

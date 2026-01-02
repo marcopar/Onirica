@@ -18,6 +18,7 @@ shader_parameter/pulse_frequency = 10.0
 size = Vector2(236, 364)
 
 [sub_resource type="LabelSettings" id="LabelSettings_kaf1t"]
+resource_local_to_scene = true
 font = ExtResource("5_2ufkr")
 font_size = 60
 outline_size = 20
@@ -38,7 +39,7 @@ offset_left = -98.0
 offset_top = -100.0
 offset_right = -48.0
 offset_bottom = -28.0
-text = "R"
+text = "X"
 label_settings = SubResource("LabelSettings_kaf1t")
 horizontal_alignment = 1
 vertical_alignment = 1

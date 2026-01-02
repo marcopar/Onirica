@@ -17,9 +17,10 @@ shader_parameter/pulse_frequency = 10.0
 size = Vector2(256, 384)
 
 [sub_resource type="LabelSettings" id="LabelSettings_uouw3"]
+resource_local_to_scene = true
 font = ExtResource("4_sfx5m")
 font_size = 80
-outline_size = 34
+outline_size = 40
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 0
 
@@ -38,11 +39,11 @@ shape = SubResource("RectangleShape2D_32ddj")
 
 [node name="Label" type="Label" parent="."]
 offset_left = 90.0
-offset_top = 280.0
+offset_top = 270.0
 offset_right = 170.0
-offset_bottom = 376.0
+offset_bottom = 366.0
 pivot_offset = Vector2(40, 0)
-text = "R"
+text = "X"
 label_settings = SubResource("LabelSettings_uouw3")
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -19,7 +19,7 @@ curve = SubResource("Curve_vgxtx")
 
 [sub_resource type="LabelSettings" id="LabelSettings_bs7hk"]
 font = ExtResource("2_0h65k")
-font_size = 100
+font_size = 50
 
 [node name="DiscardPanel" type="TextureRect"]
 material = SubResource("CanvasItemMaterial_lvojv")
@@ -181,7 +181,7 @@ texture = ExtResource("5_bs7hk")
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Yellowlabel" type="Label" parent="VBoxContainer/Yellow"]
+[node name="YellowLabel" type="Label" parent="VBoxContainer/Yellow"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 text = "Y"

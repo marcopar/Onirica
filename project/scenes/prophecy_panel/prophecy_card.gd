@@ -12,8 +12,8 @@ var card_model: CardModel:
 func _ready() -> void:
 	super._ready()
 	sprite_2d.texture = load(card_model.sprite_name)
-	Commons.set_card_colorblind_label_text(label, card_model.color, card_model.type)
-	Commons.set_card_colorblind_label_position(label, card_model.color, card_model.type)
+	Commons.set_colorblind_text(label, card_model.color, card_model.type)
+	Commons.set_card_colorblind_properties(label, card_model.color, card_model.type)
 
 func handle_position_update(drag_event: InputEventScreenDrag) -> void:
 	z_index = Constants.DRAGGING_BASE_Z
