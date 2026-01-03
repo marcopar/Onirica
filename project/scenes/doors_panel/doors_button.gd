@@ -18,15 +18,14 @@ const DOOR_TEXTURES: Dictionary[CardManager.CARD_COLOR, Resource] = {
 }
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
-@onready var label: Label = $Label
+@onready var label: TextureRect = $Label
 
 var color: CardManager.CARD_COLOR
 	
 func set_color(pcolor: CardManager.CARD_COLOR) -> void:
 	self.color = pcolor
 	sprite_2d.texture = DOOR_TEXTURES[color]
-	Commons.set_colorblind_text(label, color, CardManager.CARD_TYPE.NONE)
-	Commons.set_doors_button_colorblind_properties(label, color, CardManager.CARD_TYPE.NONE)
+	label.texture = Commons.get_colorblid_symbol(color)
 
 func set_outline(enabled: bool) -> void:
 	##the shader has an instance parameter to enable it or not on the single card

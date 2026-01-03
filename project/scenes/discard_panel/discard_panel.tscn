@@ -1,11 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://e6l72l0k2qmx"]
+[gd_scene load_steps=14 format=3 uid="uid://e6l72l0k2qmx"]
 
 [ext_resource type="PackedScene" uid="uid://8t2tuwn2eo6g" path="res://scenes/discard_panel/discard_panel_counter.tscn" id="1_lvojv"]
 [ext_resource type="Script" uid="uid://b8vc6a88uwxde" path="res://scenes/discard_panel/discard_panel.gd" id="1_vgxtx"]
-[ext_resource type="FontFile" uid="uid://sswonxg48rqb" path="res://assets/sprites/gui/Tomorrow-Regular.ttf" id="2_0h65k"]
+[ext_resource type="Texture2D" uid="uid://cy5v6dt4xset4" path="res://assets/sprites/icons/circle.svg" id="2_ij7bi"]
 [ext_resource type="Texture2D" uid="uid://pm3i6isjac6q" path="res://assets/sprites/gui/moon-fill-white.svg" id="3_egv2n"]
 [ext_resource type="Texture2D" uid="uid://cio6pnpruhrbe" path="res://assets/sprites/gui/key-2-fill-white.svg" id="4_0h65k"]
 [ext_resource type="Texture2D" uid="uid://dpbi54qhin08b" path="res://assets/sprites/gui/spiral-bold-white.svg" id="5_bs7hk"]
+[ext_resource type="Texture2D" uid="uid://syttm3bko7s6" path="res://assets/sprites/icons/triangle.svg" id="7_yr8xo"]
+[ext_resource type="Texture2D" uid="uid://dahrhv2aungas" path="res://assets/sprites/icons/square.svg" id="8_ohgrf"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_lvojv"]
 blend_mode = 3
@@ -17,17 +19,11 @@ point_count = 1
 [sub_resource type="CurveTexture" id="CurveTexture_qwpt0"]
 curve = SubResource("Curve_vgxtx")
 
-[sub_resource type="LabelSettings" id="LabelSettings_bs7hk"]
-font = ExtResource("2_0h65k")
-font_size = 50
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gl2cn"]
+load_path = "res://.godot/imported/diamond.svg-f7db88e2a667dd42a0c82991b20b9df0.ctex"
 
-[sub_resource type="LabelSettings" id="LabelSettings_0h65k"]
-font = ExtResource("2_0h65k")
-font_size = 60
-
-[sub_resource type="LabelSettings" id="LabelSettings_uqxqe"]
-font = ExtResource("2_0h65k")
-font_size = 60
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_uqxqe"]
+load_path = "res://.godot/imported/star.svg-ea992afc0326e3bbdde151b82bac8243.ctex"
 
 [node name="DiscardPanel" type="TextureRect"]
 material = SubResource("CanvasItemMaterial_lvojv")
@@ -51,13 +47,14 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="RedLabel" type="Label" parent="VBoxContainer/Red"]
-custom_minimum_size = Vector2(150, 0)
+[node name="RedLabel" type="TextureRect" parent="VBoxContainer/Red"]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-text = "R"
-label_settings = SubResource("LabelSettings_bs7hk")
-horizontal_alignment = 1
-vertical_alignment = 1
+size_flags_horizontal = 6
+size_flags_vertical = 4
+texture = ExtResource("2_ij7bi")
+expand_mode = 1
+stretch_mode = 4
 
 [node name="RedSun" parent="VBoxContainer/Red" instance=ExtResource("1_lvojv")]
 modulate = Color(1, 0, 0, 1)
@@ -97,13 +94,15 @@ texture = ExtResource("5_bs7hk")
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="GreenLabel" type="Label" parent="VBoxContainer/Green"]
-custom_minimum_size = Vector2(150, 0)
+[node name="GreenLabel" type="TextureRect" parent="VBoxContainer/Green"]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-text = "G"
-label_settings = SubResource("LabelSettings_bs7hk")
-horizontal_alignment = 1
-vertical_alignment = 1
+size_flags_horizontal = 6
+size_flags_vertical = 4
+texture = ExtResource("7_yr8xo")
+expand_mode = 1
+stretch_mode = 4
+flip_v = true
 
 [node name="GreenSun" parent="VBoxContainer/Green" instance=ExtResource("1_lvojv")]
 modulate = Color(0, 1, 0, 1)
@@ -143,13 +142,14 @@ texture = ExtResource("5_bs7hk")
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="BlueLabel" type="Label" parent="VBoxContainer/Blue"]
-custom_minimum_size = Vector2(150, 0)
+[node name="BlueLabel" type="TextureRect" parent="VBoxContainer/Blue"]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-text = "B"
-label_settings = SubResource("LabelSettings_bs7hk")
-horizontal_alignment = 1
-vertical_alignment = 1
+size_flags_horizontal = 6
+size_flags_vertical = 4
+texture = ExtResource("8_ohgrf")
+expand_mode = 1
+stretch_mode = 4
 
 [node name="BlueSun" parent="VBoxContainer/Blue" instance=ExtResource("1_lvojv")]
 modulate = Color(0, 1, 1, 1)
@@ -189,13 +189,14 @@ texture = ExtResource("5_bs7hk")
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="YellowLabel" type="Label" parent="VBoxContainer/Yellow"]
-custom_minimum_size = Vector2(150, 0)
+[node name="YellowLabel" type="TextureRect" parent="VBoxContainer/Yellow"]
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
-text = "Y"
-label_settings = SubResource("LabelSettings_0h65k")
-horizontal_alignment = 1
-vertical_alignment = 1
+size_flags_horizontal = 6
+size_flags_vertical = 4
+texture = SubResource("CompressedTexture2D_gl2cn")
+expand_mode = 3
+stretch_mode = 4
 
 [node name="YellowSun" parent="VBoxContainer/Yellow" instance=ExtResource("1_lvojv")]
 modulate = Color(1, 1, 0, 1)
@@ -232,16 +233,18 @@ size_flags_vertical = 6
 texture = ExtResource("5_bs7hk")
 
 [node name="Multi" type="HBoxContainer" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="MultiLabel" type="Label" parent="VBoxContainer/Multi"]
-custom_minimum_size = Vector2(150, 0)
+[node name="MultiLabel" type="TextureRect" parent="VBoxContainer/Multi"]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-text = "M"
-label_settings = SubResource("LabelSettings_uqxqe")
-horizontal_alignment = 1
-vertical_alignment = 1
+size_flags_horizontal = 6
+size_flags_vertical = 4
+texture = SubResource("CompressedTexture2D_uqxqe")
+expand_mode = 1
+stretch_mode = 4
 
 [node name="MultiSun" parent="VBoxContainer/Multi" instance=ExtResource("1_lvojv")]
 layout_mode = 2

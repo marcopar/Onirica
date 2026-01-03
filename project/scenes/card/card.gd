@@ -2,7 +2,7 @@ extends DraggableSprite
 
 class_name Card
 
-@onready var label: Label = $Label
+@onready var label: TextureRect = $Label
 
 const NO_SIZE: Vector2 = Vector2.ZERO
 const FULL_SIZE: Vector2 = Vector2.ONE
@@ -72,10 +72,18 @@ func set_limbo_size() -> void:
 	
 func set_front_texture():
 	sprite_2d.texture = front_texture
-	Commons.set_colorblind_text(label, card_model.color, card_model.type)
-	Commons.set_card_colorblind_properties(label, card_model.color, card_model.type)
+	label.texture = Commons.get_colorblid_symbol(card_model.color)
+	match card_model.type:
+		CardManager.CARD_TYPE.DOOR:
+			label.position.x = sprite_2d.texture.get_width() / 2.0 - label.texture.get_width() / 2.0
+			# arbitrary value 3 that works
+			label.position.y = sprite_2d.texture.get_height() / 3.0
+		_:
+			#texture dependant
+			label.position.x = -89
+			label.position.y = -90
 
 func set_back_texture():
 	sprite_2d.texture = back_texture
-	label.text = ""
+	label.texture = null
 	

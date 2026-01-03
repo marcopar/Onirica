@@ -24,11 +24,11 @@ class_name DiscardPanel
 
 @onready var multi: HBoxContainer = $VBoxContainer/Multi
 
-@onready var red_label: Label = $VBoxContainer/Red/RedLabel
-@onready var green_label: Label = $VBoxContainer/Green/GreenLabel
-@onready var blue_label: Label = $VBoxContainer/Blue/BlueLabel
-@onready var yellow_label: Label = $VBoxContainer/Yellow/YellowLabel
-@onready var multi_label: Label = $VBoxContainer/Multi/MultiLabel
+@onready var red_label: TextureRect = $VBoxContainer/Red/RedLabel
+@onready var green_label: TextureRect = $VBoxContainer/Green/GreenLabel
+@onready var blue_label: TextureRect = $VBoxContainer/Blue/BlueLabel
+@onready var yellow_label: TextureRect = $VBoxContainer/Yellow/YellowLabel
+@onready var multi_label: TextureRect = $VBoxContainer/Multi/MultiLabel
 
 var counters: Dictionary[CardManager.CARD_TYPE, Variant]
 
@@ -39,11 +39,11 @@ func _ready() -> void:
 	yellow_label.visible = SettingsManager.color_blind_on
 	multi_label.visible = SettingsManager.color_blind_on
 	
-	red_label.text = Commons.get_colorblid_symbol(CardManager.CARD_COLOR.RED)
-	green_label.text = Commons.get_colorblid_symbol(CardManager.CARD_COLOR.GREEN)
-	blue_label.text = Commons.get_colorblid_symbol(CardManager.CARD_COLOR.BLUE)
-	yellow_label.text = Commons.get_colorblid_symbol(CardManager.CARD_COLOR.YELLOW)
-	multi_label.text = Commons.get_colorblid_symbol(CardManager.CARD_COLOR.MULTI)
+	red_label.texture = Commons.get_colorblid_symbol(CardManager.CARD_COLOR.RED)
+	green_label.texture = Commons.get_colorblid_symbol(CardManager.CARD_COLOR.GREEN)
+	blue_label.texture = Commons.get_colorblid_symbol(CardManager.CARD_COLOR.BLUE)
+	yellow_label.texture = Commons.get_colorblid_symbol(CardManager.CARD_COLOR.YELLOW)
+	multi_label.texture = Commons.get_colorblid_symbol(CardManager.CARD_COLOR.MULTI)
 	
 
 	
