@@ -45,6 +45,7 @@ func _ready() -> void:
 	yellow_label.texture = Commons.get_colorblid_symbol(CardManager.CARD_COLOR.YELLOW)
 	multi_label.texture = Commons.get_colorblid_symbol(CardManager.CARD_COLOR.MULTI)
 	
+	multi.visible = false
 
 	
 func _on_gui_input(event: InputEvent) -> void:

@@ -73,15 +73,16 @@ func set_limbo_size() -> void:
 func set_front_texture():
 	sprite_2d.texture = front_texture
 	label.texture = Commons.get_colorblid_symbol(card_model.color)
-	match card_model.type:
-		CardManager.CARD_TYPE.DOOR:
-			label.position.x = sprite_2d.texture.get_width() / 2.0 - label.texture.get_width() / 2.0
-			# arbitrary value 3 that works
-			label.position.y = sprite_2d.texture.get_height() / 3.0
-		_:
-			#texture dependant
-			label.position.x = -89
-			label.position.y = -90
+	if label.texture != null:
+		match card_model.type:
+			CardManager.CARD_TYPE.DOOR:
+				label.position.x = sprite_2d.texture.get_width() / 2.0 - label.texture.get_width() / 2.0
+				# arbitrary value 3 that works
+				label.position.y = sprite_2d.texture.get_height() / 3.0
+			_:
+				#texture dependant
+				label.position.x = -89
+				label.position.y = -90
 
 func set_back_texture():
 	sprite_2d.texture = back_texture
