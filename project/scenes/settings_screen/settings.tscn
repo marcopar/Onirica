@@ -142,6 +142,36 @@ grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_p57yh")
 
+[node name="ColorBlind" type="Button" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_focus_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_hover_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_fonts/font = ExtResource("3_vghtj")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = ExtResource("4_h6son")
+theme_override_styles/pressed = ExtResource("4_h6son")
+theme_override_styles/hover = ExtResource("4_h6son")
+theme_override_styles/disabled = ExtResource("4_h6son")
+theme_override_styles/focus = ExtResource("4_h6son")
+text = "COLOR BLIND AID ON"
+
+[node name="Shade" type="TextureRect" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/ColorBlind"]
+material = SubResource("CanvasItemMaterial_vimye")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_p57yh")
+
 [connection signal="pressed" from="GUI/VBoxContainer/MenuBar/ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/Music" to="." method="_on_music_pressed"]
 [connection signal="pressed" from="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/SoundEffects" to="." method="_on_sound_effects_pressed"]
+[connection signal="pressed" from="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/ColorBlind" to="." method="_on_color_blind_pressed"]

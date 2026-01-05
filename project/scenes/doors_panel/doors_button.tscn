@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dc7ok7mwww8fx"]
+[gd_scene load_steps=7 format=3 uid="uid://dc7ok7mwww8fx"]
 
 [ext_resource type="Script" uid="uid://bpsakiro5c8ug" path="res://scenes/doors_panel/doors_button.gd" id="1_32ddj"]
 [ext_resource type="Shader" uid="uid://ev2hcn4hhgq2" path="res://shaders/outline.gdshader" id="2_kb5p8"]
 [ext_resource type="Texture2D" uid="uid://btnkgsntbdm5f" path="res://assets/sprites/cards/red_door.png" id="3_s2eab"]
+[ext_resource type="Texture2D" uid="uid://syttm3bko7s6" path="res://assets/sprites/icons/triangle.svg" id="4_sfx5m"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fudy4"]
 resource_local_to_scene = true
@@ -27,5 +28,15 @@ centered = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(128, 192)
 shape = SubResource("RectangleShape2D_32ddj")
+
+[node name="Label" type="TextureRect" parent="."]
+texture_filter = 4
+offset_left = 88.0
+offset_top = 290.0
+offset_right = 168.0
+offset_bottom = 370.0
+pivot_offset = Vector2(40, 0)
+texture = ExtResource("4_sfx5m")
+expand_mode = 3
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]

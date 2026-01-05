@@ -1,10 +1,7 @@
-//slightly customized
-//2D outline shader 1.0.0
-//Julian-Vos; MIT; 2024-04-01
+//Based on 2D outline shader 1.0.0; Julian-Vos; MIT; 2024-04-01
 //https://godotengine.org/asset-library/asset/2829
 
 shader_type canvas_item;
-
 render_mode blend_mix;
 
 uniform vec4 color : source_color = vec4(1.0);

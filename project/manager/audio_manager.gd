@@ -19,6 +19,16 @@ func _ready() -> void:
 	SignalManager.card_added_to_labyrinth.connect(card_added_to_labyrinth)
 	SignalManager.card_added_to_discard.connect(card_added_to_discard)
 	SignalManager.card_added_to_limbo.connect(card_added_to_limbo)
+	
+	if SettingsManager.music_on:
+		set_music_volume(1)
+	else:
+		set_music_volume(0)
+	if SettingsManager.sound_on:
+		set_sound_volume(1)
+	else:
+		set_sound_volume(0)
+		
 	pass
 	
 func set_music_volume(value: float) -> void:
