@@ -10,7 +10,7 @@
 font = ExtResource("2_ob46e")
 font_size = 200
 font_color = Color(0, 0.2732794, 0.39949194, 1)
-outline_size = 31
+outline_size = 32
 outline_color = Color(0.52647823, 0.88617295, 0.9999998, 1)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wem23"]

@@ -13,7 +13,9 @@ config_version=5
 config/name="Onirica"
 run/main_scene="uid://djaj5qaevc02v"
 config/features=PackedStringArray("4.5", "Mobile")
-config/icon="res://icon.svg"
+boot_splash/fullsize=false
+boot_splash/image="uid://c8sr6ovr4gvuo"
+config/icon="uid://cx2kw13fkk6ff"
 
 [autoload]
 
