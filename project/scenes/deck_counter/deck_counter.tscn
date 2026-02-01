@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dpnumcx06ayqk"]
+[gd_scene format=3 uid="uid://dpnumcx06ayqk"]
 
 [ext_resource type="Script" uid="uid://dffiof7npgcb1" path="res://scenes/deck_counter/deck_counter.gd" id="1_c1qxh"]
 [ext_resource type="FontFile" uid="uid://sswonxg48rqb" path="res://assets/sprites/gui/Tomorrow-Regular.ttf" id="2_xwpgk"]
@@ -16,13 +16,13 @@ font_color = Color(0.7806942, 4.548356e-06, 4.813075e-07, 1)
 outline_size = 12
 outline_color = Color(0.080783345, 0.080783345, 0.080783345, 1)
 
-[node name="DeckCounter" type="Control"]
+[node name="DeckCounter" type="Control" unique_id=432479452]
 layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2
 script = ExtResource("1_c1qxh")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=839191036]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -38,7 +38,7 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_constants/separation = 30
 
-[node name="CardCount" type="Label" parent="HBoxContainer"]
+[node name="CardCount" type="Label" parent="HBoxContainer" unique_id=849813292]
 layout_mode = 2
 size_flags_horizontal = 6
 text = "00"
@@ -46,7 +46,7 @@ label_settings = SubResource("LabelSettings_c1qxh")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NightmareCount" type="Label" parent="HBoxContainer"]
+[node name="NightmareCount" type="Label" parent="HBoxContainer" unique_id=1896704155]
 layout_mode = 2
 size_flags_horizontal = 6
 text = "00"

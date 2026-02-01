@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://fib6nrvub15n"]
+[gd_scene format=3 uid="uid://fib6nrvub15n"]
 
 [ext_resource type="Script" uid="uid://m62nde2ysxpr" path="res://scenes/card/card.gd" id="1_atepj"]
 [ext_resource type="PackedScene" uid="uid://mnnbxl1vr0ep" path="res://scenes/common/draggable_sprite.tscn" id="1_vtcvk"]
@@ -17,7 +17,7 @@ shader_parameter/pulse_frequency = 10.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g65cd"]
 size = Vector2(236, 364)
 
-[node name="Card" instance=ExtResource("1_vtcvk")]
+[node name="Card" unique_id=1172274696 instance=ExtResource("1_vtcvk")]
 script = ExtResource("1_atepj")
 
 [node name="Sprite2D" parent="." index="0"]
@@ -27,7 +27,7 @@ texture = ExtResource("4_2ufkr")
 [node name="CollisionShape2D" parent="." index="1"]
 shape = SubResource("RectangleShape2D_g65cd")
 
-[node name="Label" type="TextureRect" parent="." index="2"]
+[node name="Label" type="TextureRect" parent="." index="2" unique_id=89113289]
 texture_filter = 4
 offset_left = -89.0
 offset_top = -90.0

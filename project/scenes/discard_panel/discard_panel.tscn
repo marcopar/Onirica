@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://e6l72l0k2qmx"]
+[gd_scene format=3 uid="uid://e6l72l0k2qmx"]
 
 [ext_resource type="PackedScene" uid="uid://8t2tuwn2eo6g" path="res://scenes/discard_panel/discard_panel_counter.tscn" id="1_lvojv"]
 [ext_resource type="Script" uid="uid://b8vc6a88uwxde" path="res://scenes/discard_panel/discard_panel.gd" id="1_vgxtx"]
@@ -21,7 +21,7 @@ point_count = 1
 [sub_resource type="CurveTexture" id="CurveTexture_qwpt0"]
 curve = SubResource("Curve_vgxtx")
 
-[node name="DiscardPanel" type="TextureRect"]
+[node name="DiscardPanel" type="TextureRect" unique_id=2121675712]
 material = SubResource("CanvasItemMaterial_lvojv")
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,7 +31,7 @@ grow_vertical = 2
 texture = SubResource("CurveTexture_qwpt0")
 script = ExtResource("1_vgxtx")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2035768887]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -39,11 +39,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Red" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Red" type="HBoxContainer" parent="VBoxContainer" unique_id=625031331]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="RedLabel" type="TextureRect" parent="VBoxContainer/Red"]
+[node name="RedLabel" type="TextureRect" parent="VBoxContainer/Red" unique_id=211831881]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -52,13 +52,13 @@ texture = ExtResource("2_gl2cn")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="RedSun" parent="VBoxContainer/Red" instance=ExtResource("1_lvojv")]
+[node name="RedSun" parent="VBoxContainer/Red" unique_id=789823710 instance=ExtResource("1_lvojv")]
 modulate = Color(1, 0, 0, 1)
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="RedMoon" parent="VBoxContainer/Red" instance=ExtResource("1_lvojv")]
+[node name="RedMoon" parent="VBoxContainer/Red" unique_id=1302657969 instance=ExtResource("1_lvojv")]
 modulate = Color(1, 0, 0, 1)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -67,7 +67,7 @@ size_flags_vertical = 6
 [node name="Icon" parent="VBoxContainer/Red/RedMoon/HBoxContainer" index="0"]
 texture = ExtResource("3_egv2n")
 
-[node name="RedKey" parent="VBoxContainer/Red" instance=ExtResource("1_lvojv")]
+[node name="RedKey" parent="VBoxContainer/Red" unique_id=771163890 instance=ExtResource("1_lvojv")]
 modulate = Color(1, 0, 0, 1)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -76,7 +76,7 @@ size_flags_vertical = 6
 [node name="Icon" parent="VBoxContainer/Red/RedKey/HBoxContainer" index="0"]
 texture = ExtResource("4_0h65k")
 
-[node name="RedGlyph" parent="VBoxContainer/Red" instance=ExtResource("1_lvojv")]
+[node name="RedGlyph" parent="VBoxContainer/Red" unique_id=404520395 instance=ExtResource("1_lvojv")]
 visible = false
 modulate = Color(1, 0, 0, 1)
 layout_mode = 2
@@ -86,11 +86,11 @@ size_flags_vertical = 6
 [node name="Icon" parent="VBoxContainer/Red/RedGlyph/HBoxContainer" index="0"]
 texture = ExtResource("5_bs7hk")
 
-[node name="Green" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Green" type="HBoxContainer" parent="VBoxContainer" unique_id=46421346]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="GreenLabel" type="TextureRect" parent="VBoxContainer/Green"]
+[node name="GreenLabel" type="TextureRect" parent="VBoxContainer/Green" unique_id=1053641492]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -99,13 +99,13 @@ texture = ExtResource("7_ij7bi")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="GreenSun" parent="VBoxContainer/Green" instance=ExtResource("1_lvojv")]
+[node name="GreenSun" parent="VBoxContainer/Green" unique_id=1460735871 instance=ExtResource("1_lvojv")]
 modulate = Color(0, 1, 0, 1)
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="GreenMoon" parent="VBoxContainer/Green" instance=ExtResource("1_lvojv")]
+[node name="GreenMoon" parent="VBoxContainer/Green" unique_id=182732080 instance=ExtResource("1_lvojv")]
 modulate = Color(0, 1, 0, 1)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -114,7 +114,7 @@ size_flags_vertical = 6
 [node name="Icon" parent="VBoxContainer/Green/GreenMoon/HBoxContainer" index="0"]
 texture = ExtResource("3_egv2n")
 
-[node name="GreenKey" parent="VBoxContainer/Green" instance=ExtResource("1_lvojv")]
+[node name="GreenKey" parent="VBoxContainer/Green" unique_id=1331025557 instance=ExtResource("1_lvojv")]
 modulate = Color(0, 1, 0, 1)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -123,7 +123,7 @@ size_flags_vertical = 6
 [node name="Icon" parent="VBoxContainer/Green/GreenKey/HBoxContainer" index="0"]
 texture = ExtResource("4_0h65k")
 
-[node name="GreenGlyph" parent="VBoxContainer/Green" instance=ExtResource("1_lvojv")]
+[node name="GreenGlyph" parent="VBoxContainer/Green" unique_id=1170034279 instance=ExtResource("1_lvojv")]
 visible = false
 modulate = Color(0, 1, 0, 1)
 layout_mode = 2
@@ -133,11 +133,11 @@ size_flags_vertical = 6
 [node name="Icon" parent="VBoxContainer/Green/GreenGlyph/HBoxContainer" index="0"]
 texture = ExtResource("5_bs7hk")
 
-[node name="Blue" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Blue" type="HBoxContainer" parent="VBoxContainer" unique_id=1853377804]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="BlueLabel" type="TextureRect" parent="VBoxContainer/Blue"]
+[node name="BlueLabel" type="TextureRect" parent="VBoxContainer/Blue" unique_id=459706568]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -146,13 +146,13 @@ texture = ExtResource("8_yr8xo")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="BlueSun" parent="VBoxContainer/Blue" instance=ExtResource("1_lvojv")]
+[node name="BlueSun" parent="VBoxContainer/Blue" unique_id=454948391 instance=ExtResource("1_lvojv")]
 modulate = Color(0, 1, 1, 1)
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="BlueMoon" parent="VBoxContainer/Blue" instance=ExtResource("1_lvojv")]
+[node name="BlueMoon" parent="VBoxContainer/Blue" unique_id=857234461 instance=ExtResource("1_lvojv")]
 modulate = Color(0, 1, 1, 1)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -161,7 +161,7 @@ size_flags_vertical = 6
 [node name="Icon" parent="VBoxContainer/Blue/BlueMoon/HBoxContainer" index="0"]
 texture = ExtResource("3_egv2n")
 
-[node name="BlueKey" parent="VBoxContainer/Blue" instance=ExtResource("1_lvojv")]
+[node name="BlueKey" parent="VBoxContainer/Blue" unique_id=1751463177 instance=ExtResource("1_lvojv")]
 modulate = Color(0, 1, 1, 1)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -170,7 +170,7 @@ size_flags_vertical = 6
 [node name="Icon" parent="VBoxContainer/Blue/BlueKey/HBoxContainer" index="0"]
 texture = ExtResource("4_0h65k")
 
-[node name="BlueGlyph" parent="VBoxContainer/Blue" instance=ExtResource("1_lvojv")]
+[node name="BlueGlyph" parent="VBoxContainer/Blue" unique_id=2135723767 instance=ExtResource("1_lvojv")]
 visible = false
 modulate = Color(0, 1, 1, 1)
 layout_mode = 2
@@ -180,11 +180,11 @@ size_flags_vertical = 6
 [node name="Icon" parent="VBoxContainer/Blue/BlueGlyph/HBoxContainer" index="0"]
 texture = ExtResource("5_bs7hk")
 
-[node name="Yellow" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Yellow" type="HBoxContainer" parent="VBoxContainer" unique_id=1786523656]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="YellowLabel" type="TextureRect" parent="VBoxContainer/Yellow"]
+[node name="YellowLabel" type="TextureRect" parent="VBoxContainer/Yellow" unique_id=2028570328]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -193,13 +193,13 @@ texture = ExtResource("9_ohgrf")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="YellowSun" parent="VBoxContainer/Yellow" instance=ExtResource("1_lvojv")]
+[node name="YellowSun" parent="VBoxContainer/Yellow" unique_id=130009233 instance=ExtResource("1_lvojv")]
 modulate = Color(1, 1, 0, 1)
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="YellowMoon" parent="VBoxContainer/Yellow" instance=ExtResource("1_lvojv")]
+[node name="YellowMoon" parent="VBoxContainer/Yellow" unique_id=1167671453 instance=ExtResource("1_lvojv")]
 modulate = Color(1, 1, 0, 1)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -208,7 +208,7 @@ size_flags_vertical = 6
 [node name="Icon" parent="VBoxContainer/Yellow/YellowMoon/HBoxContainer" index="0"]
 texture = ExtResource("3_egv2n")
 
-[node name="YellowKey" parent="VBoxContainer/Yellow" instance=ExtResource("1_lvojv")]
+[node name="YellowKey" parent="VBoxContainer/Yellow" unique_id=1785467525 instance=ExtResource("1_lvojv")]
 modulate = Color(1, 1, 0, 1)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -217,7 +217,7 @@ size_flags_vertical = 6
 [node name="Icon" parent="VBoxContainer/Yellow/YellowKey/HBoxContainer" index="0"]
 texture = ExtResource("4_0h65k")
 
-[node name="YellowGlyph" parent="VBoxContainer/Yellow" instance=ExtResource("1_lvojv")]
+[node name="YellowGlyph" parent="VBoxContainer/Yellow" unique_id=1543158197 instance=ExtResource("1_lvojv")]
 visible = false
 modulate = Color(1, 1, 0, 1)
 layout_mode = 2
@@ -227,11 +227,11 @@ size_flags_vertical = 6
 [node name="Icon" parent="VBoxContainer/Yellow/YellowGlyph/HBoxContainer" index="0"]
 texture = ExtResource("5_bs7hk")
 
-[node name="Multi" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Multi" type="HBoxContainer" parent="VBoxContainer" unique_id=1502264334]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="MultiLabel" type="TextureRect" parent="VBoxContainer/Multi"]
+[node name="MultiLabel" type="TextureRect" parent="VBoxContainer/Multi" unique_id=969620990]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -240,12 +240,12 @@ texture = ExtResource("10_ij7bi")
 expand_mode = 1
 stretch_mode = 4
 
-[node name="MultiSun" parent="VBoxContainer/Multi" instance=ExtResource("1_lvojv")]
+[node name="MultiSun" parent="VBoxContainer/Multi" unique_id=869512956 instance=ExtResource("1_lvojv")]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="MultiMoon" parent="VBoxContainer/Multi" instance=ExtResource("1_lvojv")]
+[node name="MultiMoon" parent="VBoxContainer/Multi" unique_id=179340761 instance=ExtResource("1_lvojv")]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
@@ -253,7 +253,7 @@ size_flags_vertical = 6
 [node name="Icon" parent="VBoxContainer/Multi/MultiMoon/HBoxContainer" index="0"]
 texture = ExtResource("3_egv2n")
 
-[node name="MultiKey" parent="VBoxContainer/Multi" instance=ExtResource("1_lvojv")]
+[node name="MultiKey" parent="VBoxContainer/Multi" unique_id=9010569 instance=ExtResource("1_lvojv")]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6

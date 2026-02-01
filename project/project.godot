@@ -12,8 +12,8 @@ config_version=5
 
 config/name="Onirica"
 run/main_scene="uid://djaj5qaevc02v"
-config/features=PackedStringArray("4.5", "Mobile")
-boot_splash/fullsize=false
+config/features=PackedStringArray("4.6", "Mobile")
+boot_splash/stretch_mode=0
 boot_splash/image="uid://c8sr6ovr4gvuo"
 config/icon="uid://cx2kw13fkk6ff"
 
@@ -26,7 +26,7 @@ SignalManager="*res://manager/signal_manager.gd"
 CardManager="*res://manager/card_manager.gd"
 GameManager="*res://manager/game_manager.gd"
 SceneManager="*res://manager/scene_manager.gd"
-SoundManager="*res://addons/sound_manager/sound_manager.gd"
+SoundManager="*uid://ccm14y2kvmt5u"
 AudioManager="*res://manager/audio_manager.gd"
 
 [debug]

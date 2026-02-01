@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cymsolbakuem"]
+[gd_scene format=3 uid="uid://cymsolbakuem"]
 
 [ext_resource type="PackedScene" uid="uid://cnvk7ds1on5x1" path="res://scenes/common/round_button.tscn" id="1_85b4l"]
 [ext_resource type="Script" uid="uid://7ilbna5m2nat" path="res://scenes/open_door_panel/open_door_panel.gd" id="1_nt4qj"]
@@ -31,37 +31,37 @@ shader_parameter/pulse_frequency = 10.0
 radius = 31.0408
 height = 120.0
 
-[node name="OpenDoorPanel" type="Node2D"]
+[node name="OpenDoorPanel" type="Node2D" unique_id=101922206]
 script = ExtResource("1_nt4qj")
 
-[node name="Shade" type="Sprite2D" parent="."]
+[node name="Shade" type="Sprite2D" parent="." unique_id=1453883620]
 material = SubResource("CanvasItemMaterial_m7vp2")
 scale = Vector2(1, 400)
 texture = SubResource("CurveTexture_rmh13")
 
-[node name="Door" parent="." instance=ExtResource("1_85b4l")]
+[node name="Door" parent="." unique_id=131202227 instance=ExtResource("1_85b4l")]
 position = Vector2(300, 0)
 texture = ExtResource("2_85b4l")
 
-[node name="Limbo" parent="." instance=ExtResource("1_85b4l")]
+[node name="Limbo" parent="." unique_id=677576620 instance=ExtResource("1_85b4l")]
 position = Vector2(-300, 0)
 texture = ExtResource("1_tw2cc")
 
-[node name="Key" type="Area2D" parent="."]
+[node name="Key" type="Area2D" parent="." unique_id=1843473191]
 position = Vector2(2, 2)
 rotation = 0.872665
 scale = Vector2(1.5, 1.5)
 
-[node name="Sprite2D" type="Sprite2D" parent="Key"]
+[node name="Sprite2D" type="Sprite2D" parent="Key" unique_id=1394567474]
 material = SubResource("ShaderMaterial_rmh13")
 position = Vector2(-1.87844, 0.164342)
 rotation = -0.872665
 texture = ExtResource("3_nt4qj")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Key"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Key" unique_id=2126665553]
 shape = SubResource("CapsuleShape2D_m7vp2")
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=835509128]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -400.0

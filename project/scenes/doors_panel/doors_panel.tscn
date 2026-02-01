@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bxhxggou0553h"]
+[gd_scene format=3 uid="uid://bxhxggou0553h"]
 
 [ext_resource type="Script" uid="uid://bi1yoni0bh1vi" path="res://scenes/doors_panel/doors_panel.gd" id="1_n3ltj"]
 [ext_resource type="PackedScene" uid="uid://dc7ok7mwww8fx" path="res://scenes/doors_panel/doors_button.tscn" id="2_6jafe"]
@@ -17,60 +17,60 @@ height = 150
 fill = 2
 fill_from = Vector2(0.5, 0.5)
 
-[node name="DoorsPanel" type="Node2D"]
+[node name="DoorsPanel" type="Node2D" unique_id=1464626659]
 script = ExtResource("1_n3ltj")
 
-[node name="Background" type="Sprite2D" parent="."]
+[node name="Background" type="Sprite2D" parent="." unique_id=1855091226]
 material = SubResource("CanvasItemMaterial_ldbn4")
 texture = SubResource("GradientTexture2D_c8mwo")
 centered = false
 
-[node name="DoorContainer" type="Node2D" parent="Background"]
+[node name="DoorContainer" type="Node2D" parent="Background" unique_id=1383584302]
 position = Vector2(34, 17)
 
-[node name="D1" parent="Background/DoorContainer" instance=ExtResource("2_6jafe")]
+[node name="D1" parent="Background/DoorContainer" unique_id=1684072551 instance=ExtResource("2_6jafe")]
 scale = Vector2(0.3, 0.3)
 
-[node name="D2" parent="Background/DoorContainer" instance=ExtResource("2_6jafe")]
+[node name="D2" parent="Background/DoorContainer" unique_id=1444284298 instance=ExtResource("2_6jafe")]
 position = Vector2(85, 0)
 scale = Vector2(0.3, 0.3)
 
-[node name="D3" parent="Background/DoorContainer" instance=ExtResource("2_6jafe")]
+[node name="D3" parent="Background/DoorContainer" unique_id=415865314 instance=ExtResource("2_6jafe")]
 position = Vector2(170, 0)
 scale = Vector2(0.3, 0.3)
 
-[node name="D4" parent="Background/DoorContainer" instance=ExtResource("2_6jafe")]
+[node name="D4" parent="Background/DoorContainer" unique_id=552481016 instance=ExtResource("2_6jafe")]
 position = Vector2(255, 0)
 scale = Vector2(0.3, 0.3)
 
-[node name="D5" parent="Background/DoorContainer" instance=ExtResource("2_6jafe")]
+[node name="D5" parent="Background/DoorContainer" unique_id=712941634 instance=ExtResource("2_6jafe")]
 position = Vector2(340, 0)
 scale = Vector2(0.3, 0.3)
 
-[node name="D6" parent="Background/DoorContainer" instance=ExtResource("2_6jafe")]
+[node name="D6" parent="Background/DoorContainer" unique_id=1231841088 instance=ExtResource("2_6jafe")]
 position = Vector2(425.00003, 0)
 scale = Vector2(0.3, 0.3)
 
-[node name="D7" parent="Background/DoorContainer" instance=ExtResource("2_6jafe")]
+[node name="D7" parent="Background/DoorContainer" unique_id=1543415756 instance=ExtResource("2_6jafe")]
 position = Vector2(510, 0)
 scale = Vector2(0.3, 0.3)
 
-[node name="D8" parent="Background/DoorContainer" instance=ExtResource("2_6jafe")]
+[node name="D8" parent="Background/DoorContainer" unique_id=688243780 instance=ExtResource("2_6jafe")]
 position = Vector2(595, 0)
 scale = Vector2(0.3, 0.3)
 
-[node name="D9" parent="Background/DoorContainer" instance=ExtResource("2_6jafe")]
+[node name="D9" parent="Background/DoorContainer" unique_id=2078346665 instance=ExtResource("2_6jafe")]
 position = Vector2(680, 0)
 scale = Vector2(0.3, 0.3)
 
-[node name="D10" parent="Background/DoorContainer" instance=ExtResource("2_6jafe")]
+[node name="D10" parent="Background/DoorContainer" unique_id=808998878 instance=ExtResource("2_6jafe")]
 position = Vector2(765, 0)
 scale = Vector2(0.3, 0.3)
 
-[node name="D11" parent="Background/DoorContainer" instance=ExtResource("2_6jafe")]
+[node name="D11" parent="Background/DoorContainer" unique_id=1753201898 instance=ExtResource("2_6jafe")]
 position = Vector2(850, 0)
 scale = Vector2(0.3, 0.3)
 
-[node name="D12" parent="Background/DoorContainer" instance=ExtResource("2_6jafe")]
+[node name="D12" parent="Background/DoorContainer" unique_id=1189872910 instance=ExtResource("2_6jafe")]
 position = Vector2(935.00006, 0)
 scale = Vector2(0.3, 0.3)

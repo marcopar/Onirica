@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b2ya0la80ijxu"]
+[gd_scene format=3 uid="uid://b2ya0la80ijxu"]
 
 [ext_resource type="Script" uid="uid://1i8i2v8uida6" path="res://scenes/prophecy_panel/prophecy_panel.gd" id="1_udjif"]
 
@@ -14,30 +14,30 @@ metadata/_snap_enabled = true
 width = 1080
 curve = SubResource("Curve_18j78")
 
-[node name="ProphecyPanel" type="Node2D"]
+[node name="ProphecyPanel" type="Node2D" unique_id=1958781877]
 script = ExtResource("1_udjif")
 
-[node name="Shade" type="Sprite2D" parent="."]
+[node name="Shade" type="Sprite2D" parent="." unique_id=507077130]
 material = SubResource("CanvasItemMaterial_udjif")
 scale = Vector2(1, 400)
 texture = SubResource("CurveTexture_std26")
 centered = false
 
-[node name="CardContainer" type="Node2D" parent="."]
+[node name="CardContainer" type="Node2D" parent="." unique_id=1029473287]
 position = Vector2(0, 200)
 
-[node name="CardPosition1" type="Marker2D" parent="CardContainer"]
+[node name="CardPosition1" type="Marker2D" parent="CardContainer" unique_id=383469903]
 position = Vector2(110, 0)
 
-[node name="CardPosition2" type="Marker2D" parent="CardContainer"]
+[node name="CardPosition2" type="Marker2D" parent="CardContainer" unique_id=1490904236]
 position = Vector2(320, 0)
 
-[node name="CardPosition3" type="Marker2D" parent="CardContainer"]
+[node name="CardPosition3" type="Marker2D" parent="CardContainer" unique_id=595051146]
 position = Vector2(530, 0)
 
-[node name="CardPosition4" type="Marker2D" parent="CardContainer"]
+[node name="CardPosition4" type="Marker2D" parent="CardContainer" unique_id=1697231924]
 position = Vector2(740, 0)
 
-[node name="CardPosition5" type="Marker2D" parent="CardContainer"]
+[node name="CardPosition5" type="Marker2D" parent="CardContainer" unique_id=1270620518]
 position = Vector2(960, 50)
 rotation = 0.0872665

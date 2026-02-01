@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dgnm54pnp7lqh"]
+[gd_scene format=3 uid="uid://dgnm54pnp7lqh"]
 
 [ext_resource type="Texture2D" uid="uid://b1gjt3rpk4sc3" path="res://assets/sprites/backgrounds/background.png" id="1_1slea"]
 [ext_resource type="Script" uid="uid://r4iae4wtudn3" path="res://scenes/settings_screen/settings.gd" id="1_v1hle"]
@@ -19,7 +19,7 @@ metadata/_snap_count = 5
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_p57yh"]
 gradient = SubResource("Gradient_p7ghj")
 
-[node name="Settings" type="Control"]
+[node name="Settings" type="Control" unique_id=145863107]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,20 +28,20 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_v1hle")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=1556205692]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("1_1slea")
 
-[node name="GUI" type="Control" parent="."]
+[node name="GUI" type="Control" parent="." unique_id=628483757]
 custom_minimum_size = Vector2(1080, 1920)
 anchors_preset = 0
 offset_right = 1080.0
 offset_bottom = 1920.0
 mouse_filter = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GUI"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI" unique_id=763934314]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,14 +50,14 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="MenuBar" type="MarginContainer" parent="GUI/VBoxContainer"]
+[node name="MenuBar" type="MarginContainer" parent="GUI/VBoxContainer" unique_id=2122174418]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 0
 
-[node name="ExitButton" type="TextureButton" parent="GUI/VBoxContainer/MenuBar"]
+[node name="ExitButton" type="TextureButton" parent="GUI/VBoxContainer/MenuBar" unique_id=1340471771]
 modulate = Color(0.5254902, 0.8862745, 1, 1)
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
@@ -66,11 +66,11 @@ texture_normal = ExtResource("2_v1hle")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="MainArea" type="Control" parent="GUI/VBoxContainer"]
+[node name="MainArea" type="Control" parent="GUI/VBoxContainer" unique_id=2084442897]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="GUI/VBoxContainer/MainArea"]
+[node name="MarginContainer" type="MarginContainer" parent="GUI/VBoxContainer/MainArea" unique_id=942632109]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -80,11 +80,11 @@ grow_vertical = 2
 theme_override_constants/margin_top = 100
 theme_override_constants/margin_bottom = 50
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GUI/VBoxContainer/MainArea/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/VBoxContainer/MainArea/MarginContainer" unique_id=2065289536]
 layout_mode = 2
 theme_override_constants/separation = 50
 
-[node name="Music" type="Button" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer"]
+[node name="Music" type="Button" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer" unique_id=417552220]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5254902, 0.8862745, 1, 1)
@@ -102,7 +102,7 @@ theme_override_styles/disabled = ExtResource("4_h6son")
 theme_override_styles/focus = ExtResource("4_h6son")
 text = "MUSIC ON"
 
-[node name="Shade" type="TextureRect" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/Music"]
+[node name="Shade" type="TextureRect" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/Music" unique_id=1654667248]
 material = SubResource("CanvasItemMaterial_vimye")
 layout_mode = 1
 anchors_preset = 15
@@ -113,7 +113,7 @@ grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_p57yh")
 
-[node name="SoundEffects" type="Button" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer"]
+[node name="SoundEffects" type="Button" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer" unique_id=181301733]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5254902, 0.8862745, 1, 1)
@@ -131,7 +131,7 @@ theme_override_styles/disabled = ExtResource("4_h6son")
 theme_override_styles/focus = ExtResource("4_h6son")
 text = "SOUND EFFECTS ON"
 
-[node name="Shade" type="TextureRect" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/SoundEffects"]
+[node name="Shade" type="TextureRect" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/SoundEffects" unique_id=323042202]
 material = SubResource("CanvasItemMaterial_vimye")
 layout_mode = 1
 anchors_preset = 15
@@ -142,7 +142,7 @@ grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_p57yh")
 
-[node name="ColorBlind" type="Button" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer"]
+[node name="ColorBlind" type="Button" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer" unique_id=1369926558]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5254902, 0.8862745, 1, 1)
@@ -160,7 +160,7 @@ theme_override_styles/disabled = ExtResource("4_h6son")
 theme_override_styles/focus = ExtResource("4_h6son")
 text = "COLOR BLIND AID ON"
 
-[node name="Shade" type="TextureRect" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/ColorBlind"]
+[node name="Shade" type="TextureRect" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/ColorBlind" unique_id=566568740]
 material = SubResource("CanvasItemMaterial_vimye")
 layout_mode = 1
 anchors_preset = 15

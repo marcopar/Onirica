@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dtcl11a05xwoe"]
+[gd_scene format=3 uid="uid://dtcl11a05xwoe"]
 
 [ext_resource type="Script" uid="uid://lgunxy87r4b5" path="res://scenes/nightmare_panel/nightmare_panel.gd" id="1_fdyaw"]
 [ext_resource type="PackedScene" uid="uid://lxy2bi2qt2tk" path="res://scenes/nightmare_panel/nightmare_button.tscn" id="1_habke"]
@@ -19,29 +19,29 @@ metadata/_snap_enabled = true
 width = 1080
 curve = SubResource("Curve_fdyaw")
 
-[node name="NightmarePanel" type="Node2D"]
+[node name="NightmarePanel" type="Node2D" unique_id=177857648]
 script = ExtResource("1_fdyaw")
 
-[node name="Shade" type="Sprite2D" parent="."]
+[node name="Shade" type="Sprite2D" parent="." unique_id=1883075691]
 material = SubResource("CanvasItemMaterial_fdyaw")
 scale = Vector2(1, 300)
 texture = SubResource("CurveTexture_t1ikr")
 
-[node name="ButtonDiscardDeck" parent="." instance=ExtResource("1_habke")]
+[node name="ButtonDiscardDeck" parent="." unique_id=1465799526 instance=ExtResource("1_habke")]
 position = Vector2(-300, 0)
 type = 1
 texture = ExtResource("1_uyndy")
 
-[node name="ButtonDiscardDoor" parent="." instance=ExtResource("1_habke")]
+[node name="ButtonDiscardDoor" parent="." unique_id=1050180271 instance=ExtResource("1_habke")]
 position = Vector2(-100, 0)
 type = 2
 texture = ExtResource("2_t4lxu")
 
-[node name="ButtonDiscardHand" parent="." instance=ExtResource("1_habke")]
+[node name="ButtonDiscardHand" parent="." unique_id=1798718522 instance=ExtResource("1_habke")]
 position = Vector2(100, 0)
 texture = ExtResource("3_fl2d7")
 
-[node name="ButtonDiscardKey" parent="." instance=ExtResource("1_habke")]
+[node name="ButtonDiscardKey" parent="." unique_id=1462444153 instance=ExtResource("1_habke")]
 position = Vector2(300, 0)
 type = 3
 texture = ExtResource("4_3ai2i")

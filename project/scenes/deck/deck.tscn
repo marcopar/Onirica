@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://kpjmqglw46ry"]
+[gd_scene format=3 uid="uid://kpjmqglw46ry"]
 
 [ext_resource type="Texture2D" uid="uid://b24ywwxn5efhv" path="res://assets/sprites/cards/back.png" id="1_5an2p"]
 [ext_resource type="Script" uid="uid://cghvgcfio327k" path="res://scenes/deck/deck.gd" id="1_lvj0y"]
@@ -23,15 +23,15 @@ shader_parameter/pulse_frequency = 10.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rpjld"]
 size = Vector2(256, 384)
 
-[node name="Deck" type="Area2D" groups=["deck"]]
+[node name="Deck" type="Area2D" unique_id=388128589 groups=["deck"]]
 material = SubResource("ShaderMaterial_765a5")
 script = ExtResource("1_lvj0y")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1375147041]
 material = SubResource("ShaderMaterial_u3j8v")
 texture = ExtResource("1_5an2p")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1328463081]
 shape = SubResource("RectangleShape2D_rpjld")
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
