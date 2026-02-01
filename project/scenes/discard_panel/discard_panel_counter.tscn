@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://8t2tuwn2eo6g"]
+[gd_scene format=3 uid="uid://8t2tuwn2eo6g"]
 
 [ext_resource type="Script" uid="uid://bm2gn4ql7ed5p" path="res://scenes/discard_panel/discard_panel_counter.gd" id="1_5dbci"]
 [ext_resource type="Texture2D" uid="uid://bjg6keq0po07p" path="res://assets/sprites/gui/sunny_96dp_FFFFFF_FILL0_wght400_GRAD0_opsz48.svg" id="1_pb7yn"]
@@ -8,13 +8,13 @@
 font = ExtResource("2_5dbci")
 font_size = 64
 
-[node name="DiscardScreenCounter" type="Control"]
+[node name="DiscardScreenCounter" type="Control" unique_id=550191198]
 layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2
 script = ExtResource("1_5dbci")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=357586132]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 1
 anchors_preset = 8
@@ -31,7 +31,7 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_constants/separation = 19
 
-[node name="Icon" type="TextureRect" parent="HBoxContainer"]
+[node name="Icon" type="TextureRect" parent="HBoxContainer" unique_id=1778550076]
 clip_contents = true
 custom_minimum_size = Vector2(75, 75)
 layout_mode = 2
@@ -41,7 +41,7 @@ texture = ExtResource("1_pb7yn")
 expand_mode = 2
 stretch_mode = 4
 
-[node name="Label" type="Label" parent="HBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer" unique_id=1111829038]
 layout_mode = 2
 size_flags_vertical = 8
 text = "0"

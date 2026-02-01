@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cau3cr0g51h8p"]
+[gd_scene format=3 uid="uid://cau3cr0g51h8p"]
 
 [ext_resource type="Script" uid="uid://bt2ppt5mpotk1" path="res://scenes/labyrinth/labyrinth.gd" id="1_ufj7f"]
 
@@ -41,10 +41,10 @@ metadata/_snap_enabled = true
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gl1fh"]
 size = Vector2(1080, 230)
 
-[node name="Labyrinth" type="Area2D" groups=["labyrinth"]]
+[node name="Labyrinth" type="Area2D" unique_id=1089145039 groups=["labyrinth"]]
 script = ExtResource("1_ufj7f")
 
-[node name="Highlight" type="PointLight2D" parent="."]
+[node name="Highlight" type="PointLight2D" parent="." unique_id=1232525873]
 position = Vector2(541, -1.99994)
 scale = Vector2(18, 5)
 enabled = false
@@ -53,28 +53,28 @@ energy = 2.0
 range_z_max = 0
 texture = SubResource("GradientTexture2D_d1mfr")
 
-[node name="CardDetectionCollision" type="CollisionShape2D" parent="."]
+[node name="CardDetectionCollision" type="CollisionShape2D" parent="." unique_id=583228284]
 position = Vector2(540, 0)
 shape = SubResource("RectangleShape2D_wyiyu")
 
-[node name="StartPosition" type="Marker2D" parent="."]
+[node name="StartPosition" type="Marker2D" parent="." unique_id=1698463408]
 position = Vector2(150, 0)
 
-[node name="CardContainer" type="Node2D" parent="."]
+[node name="CardContainer" type="Node2D" parent="." unique_id=1624082221]
 
-[node name="LeftFading" type="Sprite2D" parent="."]
+[node name="LeftFading" type="Sprite2D" parent="." unique_id=1454587093]
 z_index = 199
 material = SubResource("CanvasItemMaterial_72pmk")
 position = Vector2(540, 0)
 texture = SubResource("GradientTexture2D_dv73n")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=316804484]
 position = Vector2(540, 0)
 texture = SubResource("GradientTexture2D_wwp6j")
 
-[node name="ScrollInputArea" type="Area2D" parent="."]
+[node name="ScrollInputArea" type="Area2D" parent="." unique_id=914645526]
 
-[node name="ScrollInputCollision" type="CollisionShape2D" parent="ScrollInputArea"]
+[node name="ScrollInputCollision" type="CollisionShape2D" parent="ScrollInputArea" unique_id=263289897]
 z_index = 100
 z_as_relative = false
 position = Vector2(540, 0)

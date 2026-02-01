@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bqghirh8g0ov4"]
+[gd_scene format=3 uid="uid://bqghirh8g0ov4"]
 
 [ext_resource type="Script" uid="uid://dvvxyb2g3i2fx" path="res://scenes/main/main.gd" id="1_xny0v"]
 [ext_resource type="Texture2D" uid="uid://b1gjt3rpk4sc3" path="res://assets/sprites/backgrounds/background.png" id="2_ec000"]
@@ -17,7 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://ddo0ayeeujk0m" path="res://scenes/game_end_panel/game_end_panel.tscn" id="15_raeie"]
 [ext_resource type="FontFile" uid="uid://ocls0l48n0q2" path="res://assets/sprites/gui/Tomorrow-Bold.ttf" id="16_hxu8e"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7smn1"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hxu8e"]
 resource_local_to_scene = true
 shader = ExtResource("4_th5th")
 shader_parameter/color = Color(1, 1, 1, 1)
@@ -39,18 +39,18 @@ font_color = Color(0.23, 0, 0, 1)
 outline_size = 16
 outline_color = Color(0.78, 0, 0, 1)
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" unique_id=623838156]
 script = ExtResource("1_xny0v")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=760119573]
 position = Vector2(540, 960)
 texture = ExtResource("2_ec000")
 
-[node name="Deck" parent="." instance=ExtResource("3_25a8g")]
-material = SubResource("ShaderMaterial_7smn1")
+[node name="Deck" parent="." unique_id=1865964864 instance=ExtResource("3_25a8g")]
+material = SubResource("ShaderMaterial_hxu8e")
 position = Vector2(540, 1650)
 
-[node name="DeckCounter" parent="Deck" instance=ExtResource("11_ouso4")]
+[node name="DeckCounter" parent="Deck" unique_id=902690773 instance=ExtResource("11_ouso4")]
 z_index = 100
 anchors_preset = 8
 anchor_left = 0.5
@@ -63,65 +63,65 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 8
 
-[node name="Labyrinth" parent="." instance=ExtResource("4_qul2u")]
+[node name="Labyrinth" parent="." unique_id=1640465157 instance=ExtResource("4_qul2u")]
 position = Vector2(0, 540)
 
-[node name="HandMarkers" type="Node2D" parent="."]
+[node name="HandMarkers" type="Node2D" parent="." unique_id=238914690]
 position = Vector2(0, 92)
 
-[node name="HandMarker1" type="Marker2D" parent="HandMarkers"]
+[node name="HandMarker1" type="Marker2D" parent="HandMarkers" unique_id=680034125]
 position = Vector2(300, 1055)
 rotation = -0.349066
 
-[node name="HandMarker2" type="Marker2D" parent="HandMarkers"]
+[node name="HandMarker2" type="Marker2D" parent="HandMarkers" unique_id=77497164]
 position = Vector2(420, 1015)
 rotation = -0.174533
 
-[node name="HandMarker3" type="Marker2D" parent="HandMarkers"]
+[node name="HandMarker3" type="Marker2D" parent="HandMarkers" unique_id=2081841278]
 position = Vector2(540, 1000)
 
-[node name="HandMarker4" type="Marker2D" parent="HandMarkers"]
+[node name="HandMarker4" type="Marker2D" parent="HandMarkers" unique_id=1972814341]
 position = Vector2(660, 1015)
 rotation = 0.174533
 
-[node name="HandMarker5" type="Marker2D" parent="HandMarkers"]
+[node name="HandMarker5" type="Marker2D" parent="HandMarkers" unique_id=486490188]
 position = Vector2(780, 1050)
 rotation = 0.349066
 
-[node name="Discard" parent="." instance=ExtResource("5_korep")]
+[node name="Discard" parent="." unique_id=461105708 instance=ExtResource("5_korep")]
 position = Vector2(930, 1770)
 
-[node name="Limbo" parent="." instance=ExtResource("6_jqqak")]
+[node name="Limbo" parent="." unique_id=1510766462 instance=ExtResource("6_jqqak")]
 position = Vector2(150, 1770)
 
-[node name="CardContainer" type="Node2D" parent="."]
+[node name="CardContainer" type="Node2D" parent="." unique_id=1025627321]
 
-[node name="DoorsPanel" parent="." instance=ExtResource("7_dlvyq")]
+[node name="DoorsPanel" parent="." unique_id=634294043 instance=ExtResource("7_dlvyq")]
 position = Vector2(0, 220)
 
-[node name="DoorFoundMarker" type="Marker2D" parent="."]
+[node name="DoorFoundMarker" type="Marker2D" parent="." unique_id=1490068914]
 position = Vector2(540, 900)
 
-[node name="CardPresentationMarker" type="Marker2D" parent="."]
+[node name="CardPresentationMarker" type="Marker2D" parent="." unique_id=1935549538]
 position = Vector2(540, 1330)
 
-[node name="NightmarePanel" parent="." instance=ExtResource("8_7jqxr")]
+[node name="NightmarePanel" parent="." unique_id=80509367 instance=ExtResource("8_7jqxr")]
 process_mode = 4
 visible = false
 z_index = 199
 position = Vector2(536, 780)
 
-[node name="OpenDoorPanel" parent="." instance=ExtResource("9_b1x3f")]
+[node name="OpenDoorPanel" parent="." unique_id=1749791194 instance=ExtResource("9_b1x3f")]
 visible = false
 z_index = 199
 position = Vector2(536, 780)
 
-[node name="ProphecyPanel" parent="." instance=ExtResource("10_a8run")]
+[node name="ProphecyPanel" parent="." unique_id=1667819452 instance=ExtResource("10_a8run")]
 visible = false
 z_index = 199
 position = Vector2(-3, 1179)
 
-[node name="GUI" type="Control" parent="."]
+[node name="GUI" type="Control" parent="." unique_id=1623250445]
 custom_minimum_size = Vector2(1080, 1920)
 layout_mode = 3
 anchors_preset = 0
@@ -129,7 +129,7 @@ offset_right = 1080.0
 offset_bottom = 1920.0
 mouse_filter = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GUI"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI" unique_id=879432924]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -138,14 +138,14 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="MenuBar" type="MarginContainer" parent="GUI/VBoxContainer"]
+[node name="MenuBar" type="MarginContainer" parent="GUI/VBoxContainer" unique_id=417866553]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 0
 
-[node name="ExitButton" type="TextureButton" parent="GUI/VBoxContainer/MenuBar"]
+[node name="ExitButton" type="TextureButton" parent="GUI/VBoxContainer/MenuBar" unique_id=1814421338]
 modulate = Color(0.5254902, 0.8862745, 1, 1)
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
@@ -154,12 +154,12 @@ texture_normal = ExtResource("12_blune")
 ignore_texture_size = true
 stretch_mode = 4
 
-[node name="MainArea" type="Control" parent="GUI/VBoxContainer"]
+[node name="MainArea" type="Control" parent="GUI/VBoxContainer" unique_id=1691417253]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="DiscardPanelContainer" type="Control" parent="GUI/VBoxContainer/MainArea"]
+[node name="DiscardPanelContainer" type="Control" parent="GUI/VBoxContainer/MainArea" unique_id=449390646]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -170,7 +170,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="DiscardPanel" parent="GUI/VBoxContainer/MainArea/DiscardPanelContainer" instance=ExtResource("14_7smn1")]
+[node name="DiscardPanel" parent="GUI/VBoxContainer/MainArea/DiscardPanelContainer" unique_id=653347061 instance=ExtResource("14_7smn1")]
 z_index = 1000
 custom_minimum_size = Vector2(900, 1200)
 layout_mode = 1
@@ -187,7 +187,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 0
 
-[node name="WinLosePanelContainer" type="Control" parent="GUI/VBoxContainer/MainArea"]
+[node name="WinLosePanelContainer" type="Control" parent="GUI/VBoxContainer/MainArea" unique_id=1642094447]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -196,7 +196,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="WinPanel" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer" instance=ExtResource("15_raeie")]
+[node name="WinPanel" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer" unique_id=1859644697 instance=ExtResource("15_raeie")]
 visible = false
 z_index = 2000
 layout_mode = 1
@@ -212,10 +212,10 @@ offset_bottom = 150.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Label" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer/WinPanel" index="3"]
+[node name="Label" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer/WinPanel" index="3" unique_id=1787065325]
 label_settings = SubResource("LabelSettings_nvumn")
 
-[node name="LosePanel" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer" instance=ExtResource("15_raeie")]
+[node name="LosePanel" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer" unique_id=1459153273 instance=ExtResource("15_raeie")]
 visible = false
 z_index = 2000
 layout_mode = 1
@@ -231,10 +231,10 @@ offset_bottom = 150.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="ColorRect" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer/LosePanel/MarginContainer" index="0"]
+[node name="ColorRect" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer/LosePanel/MarginContainer" parent_id_path=PackedInt32Array(1459153273, 2108480358) index="0" unique_id=232331145]
 color = Color(0.31, 0, 0, 1)
 
-[node name="Label" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer/LosePanel" index="3"]
+[node name="Label" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer/LosePanel" index="3" unique_id=1787065325]
 text = "Defeat!"
 label_settings = SubResource("LabelSettings_ou6is")
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://mnnbxl1vr0ep"]
+[gd_scene format=3 uid="uid://mnnbxl1vr0ep"]
 
 [ext_resource type="Script" uid="uid://bmflxknbyj1pn" path="res://scenes/common/draggable_sprite.gd" id="1_c7aik"]
 [ext_resource type="Shader" uid="uid://ev2hcn4hhgq2" path="res://shaders/outline.gdshader" id="2_no7xh"]
@@ -10,12 +10,12 @@ shader_parameter/width = 5.0
 shader_parameter/enabled = false
 shader_parameter/pulse_frequency = 10.0
 
-[node name="DraggableSprite" type="Area2D"]
+[node name="DraggableSprite" type="Area2D" unique_id=1545763703]
 script = ExtResource("1_c7aik")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1726629560]
 material = SubResource("ShaderMaterial_no7xh")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1807765533]
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]

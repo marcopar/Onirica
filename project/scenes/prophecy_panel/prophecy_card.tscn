@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://ce08id5decbqq"]
+[gd_scene format=3 uid="uid://ce08id5decbqq"]
 
 [ext_resource type="PackedScene" uid="uid://mnnbxl1vr0ep" path="res://scenes/common/draggable_sprite.tscn" id="1_33eyq"]
 [ext_resource type="Script" uid="uid://n6ncncvi88f6" path="res://scenes/prophecy_panel/prophecy_card.gd" id="2_wwmfv"]
@@ -8,16 +8,16 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ib5bh"]
 size = Vector2(236, 364)
 
-[node name="ProphecyCard" instance=ExtResource("1_33eyq")]
+[node name="ProphecyCard" unique_id=1079060610 instance=ExtResource("1_33eyq")]
 script = ExtResource("2_wwmfv")
 
-[node name="Sprite2D" parent="." index="0"]
+[node name="Sprite2D" parent="." index="0" unique_id=1726629560]
 texture = ExtResource("3_ib5bh")
 
-[node name="CollisionShape2D" parent="." index="1"]
+[node name="CollisionShape2D" parent="." index="1" unique_id=1807765533]
 shape = SubResource("RectangleShape2D_ib5bh")
 
-[node name="Label" type="TextureRect" parent="." index="2"]
+[node name="Label" type="TextureRect" parent="." index="2" unique_id=383763184]
 texture_filter = 4
 offset_left = -89.0
 offset_top = -90.0

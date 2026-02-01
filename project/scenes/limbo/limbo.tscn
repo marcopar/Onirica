@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dbcm0qgdsw0l7"]
+[gd_scene format=3 uid="uid://dbcm0qgdsw0l7"]
 
 [ext_resource type="Script" uid="uid://dul15h7bxc8pn" path="res://scenes/limbo/limbo.gd" id="1_ibssl"]
 [ext_resource type="Gradient" uid="uid://bku5rcu7ieurn" path="res://scenes/limbo_discard_gradient.tres" id="2_g61vg"]
@@ -16,15 +16,15 @@ height = 300
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[node name="Limbo" type="Area2D" groups=["limbo"]]
+[node name="Limbo" type="Area2D" unique_id=730434694 groups=["limbo"]]
 script = ExtResource("1_ibssl")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=351048953]
 shape = SubResource("CircleShape2D_5ngh6")
 
-[node name="CardContainer" type="Node2D" parent="."]
+[node name="CardContainer" type="Node2D" parent="." unique_id=841841128]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=614994762]
 z_index = 198
 material = SubResource("CanvasItemMaterial_5p6o8")
 texture = SubResource("GradientTexture2D_nuc87")

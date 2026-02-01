@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dc7ok7mwww8fx"]
+[gd_scene format=3 uid="uid://dc7ok7mwww8fx"]
 
 [ext_resource type="Script" uid="uid://bpsakiro5c8ug" path="res://scenes/doors_panel/doors_button.gd" id="1_32ddj"]
 [ext_resource type="Shader" uid="uid://ev2hcn4hhgq2" path="res://shaders/outline.gdshader" id="2_kb5p8"]
@@ -16,20 +16,20 @@ shader_parameter/pulse_frequency = 10.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_32ddj"]
 size = Vector2(256, 384)
 
-[node name="DoorsButton" type="Area2D"]
+[node name="DoorsButton" type="Area2D" unique_id=342582246]
 script = ExtResource("1_32ddj")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1696684777]
 self_modulate = Color(0.2, 0.2, 0.2, 1)
 material = SubResource("ShaderMaterial_fudy4")
 texture = ExtResource("3_s2eab")
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=857935805]
 position = Vector2(128, 192)
 shape = SubResource("RectangleShape2D_32ddj")
 
-[node name="Label" type="TextureRect" parent="."]
+[node name="Label" type="TextureRect" parent="." unique_id=448353892]
 texture_filter = 4
 offset_left = 88.0
 offset_top = 290.0
