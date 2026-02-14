@@ -32,6 +32,10 @@ var ignore_gui_events: bool = false
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		var e: InputEventKey = event
+		if e.as_text_keycode() == "S" and e.is_pressed():
+			GameManager.save_game()
+		if e.as_text_keycode() == "L" and e.is_pressed():
+			GameManager.load_game()
 		if e.as_text_keycode() == "D" and e.is_pressed():
 			GameManager.dump()
 		
@@ -78,12 +82,12 @@ func draw_card(nightmares_enabled: bool, doors_enabled: bool) -> Card:
 			card.hand_position = hand_position	
 			await animate_card_draw(card)
 			if card_model.can_be_in_hand:
-				GameManager.hand[hand_position] = card
+				GameManager.hand[hand_position] = card_model
 				break
 			else:
 				if nightmares_enabled and card.card_model.type == CardManager.CARD_TYPE.NIGHTMARE:
 					return card
-				elif doors_enabled and card.card_model.type == CardManager.CARD_TYPE.DOOR and check_door_against_hand_keys(card):					
+				elif doors_enabled and card.card_model.type == CardManager.CARD_TYPE.DOOR and GameManager.check_door_against_hand_keys(card.card_model):					
 					return card
 				else:					
 					await animate_card_to_limbo(card)
@@ -113,8 +117,8 @@ func draw_full_hand(empty_limbo_for_each_card: bool, nightmares_enabled: bool, d
 			nightmare_panel.set_panel_enabled(true)
 			return
 		if doors_enabled and card.card_model.type == CardManager.CARD_TYPE.DOOR:
-			var key: Card = check_door_against_hand_keys(card)
-			if key != null:
+			var key_model: CardModel = GameManager.check_door_against_hand_keys(card.card_model)
+			if key_model != null:
 				await animate_door_to_open_decision(card)
 				open_door_panel.key_card = key
 				open_door_panel.door_card = card
@@ -123,12 +127,7 @@ func draw_full_hand(empty_limbo_for_each_card: bool, nightmares_enabled: bool, d
 	if not GameManager.limbo.is_empty():
 		await empty_limbo()
 	set_hand_freezed(false)
-		
-func check_door_against_hand_keys(door: Card) -> Card:
-	for card in GameManager.hand:
-		if card != null && card.card_model.type == CardManager.CARD_TYPE.KEY && card.card_model.color == door.card_model.color:			
-			return card
-	return null
+
 
 func shuffle() -> void:
 	AudioManager.play_shuffle_sound()
@@ -158,7 +157,7 @@ func door_found(door_card: Card) -> void:
 	await animate_door_found(door_card, true)
 	
 func card_added_to_labyrinth(card: Card) -> void:
-	GameManager.card_added_to_labyrinth(card)
+	GameManager.card_added_to_labyrinth(card.card_model)
 	var card_model: CardModel = GameManager.check_door_found()
 	if card_model != null:
 		set_hand_freezed(true)
@@ -176,7 +175,7 @@ func card_added_to_labyrinth(card: Card) -> void:
 		await draw_full_hand(true, true, true)
 
 func card_added_to_discard(card: Card, pdraw_card: bool) -> void:
-	GameManager.card_added_to_discard(card)
+	GameManager.card_added_to_discard(card.card_model)
 	if not prophecy_panel.visible and not open_door_panel.visible and not nightmare_panel.visible and card.card_model.type == CardManager.CARD_TYPE.KEY:
 		open_prophecy_panel()
 		return
@@ -204,7 +203,7 @@ func open_prophecy_panel() -> void:
 		show_lose_panel()
 	
 func card_added_to_limbo(card: Card) -> void:
-	GameManager.card_added_to_limbo(card)
+	GameManager.card_added_to_limbo(card.card_model)
 
 func set_hand_freezed(value: bool) -> void:
 	for child in card_container.get_children():
@@ -313,8 +312,8 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 		return
 	ignore_gui_events = true
 	if type == Constants.NIGHTMARE_DISCARD.HAND and object is Card:
-		for card in GameManager.hand:
-			if card != null:
+		for card_model in GameManager.hand:
+			if card_model != null:
 				await animate_card_to_discard(card)
 				SignalManager.card_added_to_discard.emit(card, false)				
 		await discard_nightmare_card()
