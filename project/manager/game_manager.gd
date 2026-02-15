@@ -8,25 +8,25 @@ var deck_model: DeckModel:
 	set(value):
 		deck_model = value
 		
-var hand: Array[CardModel]:
+var hand: Array[Card]:
 	get:
 		return hand
 	set(value):
 		hand = value
 		
-var labyrinth: Array[CardModel]:
+var labyrinth: Array[Card]:
 	get:
 		return labyrinth
 	set(value):
 		labyrinth = value
 
-var limbo: Array[CardModel]:
+var limbo: Array[Card]:
 	get:
 		return limbo
 	set(value):
 		limbo = value
 
-var discard: Array[CardModel]:
+var discard: Array[Card]:
 	get:
 		return discard
 	set(value):
@@ -55,13 +55,24 @@ func new_game() -> void:
 	doors_to_be_found = deck_model.get_number_of(CardManager.CARD_TYPE.DOOR)
 	deck_model.shuffle()
 	
+	for card in hand:
+		if card != null:
+			card.queue_free()
 	hand.clear()	
 	#refill hand with null
 	for hand_position in range(0, HAND_SIZE):
 		hand.push_back(null)
-	
+		
+	for card in labyrinth:
+		card.queue_free()
 	labyrinth.clear()
+	
+	for card in limbo:
+		card.queue_free()
 	limbo.clear()
+	
+	for card in discard:
+		card.queue_free()
 	discard.clear()
 	
 	found_doors = {
@@ -76,16 +87,16 @@ func shuffle() -> void:
 
 #checks the whole lanyrinth every time but doesn't need to store extra flags
 func check_door_found() -> CardModel:
-	var last3: Array[CardModel] = []
-	for card_model in labyrinth:
-		last3.push_back(card_model)
+	var last3: Array[Card] = []
+	for card in labyrinth:
+		last3.push_back(card)
 		if last3.size() != 3:
 			continue		
 		if check_for_door_combo(last3):
 			#if it's the last 3 then we found a combo
-			if labyrinth.find(card_model) == labyrinth.size() - 1:
+			if labyrinth.find(card) == labyrinth.size() - 1:
 				#get the door from the deck
-				var door: CardModel = deck_model.search(CardManager.CARD_TYPE.DOOR, card_model.color)
+				var door: CardModel = deck_model.search(CardManager.CARD_TYPE.DOOR, card.card_model.color)
 				if door != null:
 					set_door_as_found(door)
 					return door
@@ -101,13 +112,13 @@ func set_door_as_found(door: CardModel) -> void:
 	deck_model.deck.erase(door)
 	found_doors[door.color].push_back(door)
 
-func check_for_door_combo(last3: Array[CardModel]) -> bool:
+func check_for_door_combo(last3: Array[Card]) -> bool:
 	var colors: Dictionary[CardManager.CARD_COLOR, bool] = {}
 	#count the different colors
-	for card_model in last3:
-		if card_model.color == CardManager.CARD_COLOR.MULTI:
+	for card in last3:
+		if card.card_model.color == CardManager.CARD_COLOR.MULTI:
 			continue
-		colors[card_model.color] = true
+		colors[card.card_model.color] = true
 	#check the colors number and the types
 	if colors.keys().size() == 1 and \
 		last3[0].card_model.type != last3[1].card_model.type and \
@@ -115,143 +126,53 @@ func check_for_door_combo(last3: Array[CardModel]) -> bool:
 			return true
 	return false
 	
-func card_added_to_discard(card_model: CardModel) -> void:
-	var hand_position: int = hand.find(card_model)
+func card_added_to_discard(card: Card) -> void:
+	var hand_position: int = hand.find(card)
 	if hand_position != -1:
 		hand[hand_position] = null
-	discard.push_back(card_model)
+	discard.push_back(card)
+	card.set_outline(false)
 	
-func card_added_to_labyrinth(card_model: CardModel) -> void:
-	var hand_position: int = hand.find(card_model)
+func card_added_to_labyrinth(card: Card) -> void:
+	var hand_position: int = hand.find(card)
 	if hand_position != -1:
 		hand[hand_position] = null
-	labyrinth.push_back(card_model)
+	labyrinth.push_back(card)
 
-func card_added_to_limbo(card_model: CardModel) -> void:
-	var hand_position: int = hand.find(card_model)
+func card_added_to_limbo(card: Card) -> void:
+	var hand_position: int = hand.find(card)
 	if hand_position != -1:
 		hand[hand_position] = null
-	limbo.push_back(card_model)
+	limbo.push_back(card)
 
 func check_won_game() -> bool:
 	var found_doors_count: int = 0
 	for color in found_doors.keys():
 		found_doors_count += found_doors[color].size()
 	return found_doors_count == doors_to_be_found
-	
-		
-func check_door_against_hand_keys(door_card_model: CardModel) -> CardModel:
-	for card_model in GameManager.hand:
-		if card_model != null && card_model.type == CardManager.CARD_TYPE.KEY && card_model.color == door_card_model.color:			
-			return card_model
-	return null
-
-const SAVE_PATH: String = "user://savegame.json"
-
-func save_game() -> void:
-	var save_data: Dictionary = {
-		"doors_to_be_found": doors_to_be_found,
-		"deck": _serialize_card_models(deck_model.deck),
-		"hand": _serialize_card_models(hand),
-		"labyrinth": _serialize_card_models(labyrinth),
-		"limbo": _serialize_card_models(limbo),
-		"discard": _serialize_card_models(discard),
-		"found_doors": _serialize_found_doors()
-	}
-	var file: FileAccess = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
-	file.store_string(JSON.stringify(save_data, "\t"))
-	file.close()
-	print("Game saved to: ", SAVE_PATH)
-
-func load_game() -> void:
-	if not FileAccess.file_exists(SAVE_PATH):
-		print("No save file found")
-		return
-	var file: FileAccess = FileAccess.open(SAVE_PATH, FileAccess.READ)
-	var save_data: Dictionary = JSON.parse_string(file.get_as_text())
-	file.close()
-	
-	doors_to_be_found = save_data["doors_to_be_found"]
-	deck_model = DeckModel.new()
-	deck_model.deck = _deserialize_card_models(save_data["deck"])
-	hand = _deserialize_card_models(save_data["hand"])
-	labyrinth = _deserialize_card_models(save_data["labyrinth"])
-	hand = _deserialize_card_models(save_data["limbo"])
-	discard = _deserialize_card_models(save_data["discard"])
-	found_doors = _deserialize_found_doors(save_data["found_doors"])
-	
-	print("Game loaded from: ", SAVE_PATH)
-
-func _serialize_card_models(cards: Array[CardModel]) -> Array:
-	var result: Array = []
-	for card_model in cards:
-		result.append(_card_model_to_dict(card_model))
-	return result
-	
-func _deserialize_card_models(data: Array) -> Array[CardModel]:
-	var result: Array[CardModel] = []
-	for item in data:
-		result.append(_dict_to_card_model(item))
-	return result
-	
-func _serialize_found_doors() -> Dictionary:
-	var result: Dictionary = {}
-	for color in found_doors.keys():
-		var doors_array: Array = []
-		for door in found_doors[color]:
-			doors_array.append(_card_model_to_dict(door))
-		result[color] = doors_array
-	return result
-
-func _deserialize_found_doors(data: Dictionary) -> Dictionary[CardManager.CARD_COLOR, Variant]:
-	var result: Dictionary[CardManager.CARD_COLOR, Variant] = {
-		CardManager.CARD_COLOR.RED: [],
-		CardManager.CARD_COLOR.GREEN: [],
-		CardManager.CARD_COLOR.BLUE: [],
-		CardManager.CARD_COLOR.YELLOW: []
-	}
-	for color_idx in data.keys():
-		var color: CardManager.CARD_COLOR = CardManager.CARD_COLOR.find_key(int(color_idx))
-		for item in data[color]:
-			result[color].append(_dict_to_card_model(item))
-	return result
-
-func _card_model_to_dict(card_model: CardModel) -> Dictionary:
-	return {
-		"type": card_model.type,
-		"color": card_model.color,
-		"sprite_name": card_model.sprite_name
-	}
-
-func _dict_to_card_model(data: Dictionary) -> CardModel:
-	var card_model := CardModel.new()
-	card_model.type = int(data["type"]) as CardManager.CARD_TYPE
-	card_model.color = int(data["color"]) as CardManager.CARD_COLOR
-	card_model.sprite_name = data["sprite_name"]
-	return card_model
 
 
 func dump() -> void:
 	print("######################################################################")
 	print("== HAND ==")
-	for card_model in hand:
-		if card_model !=  null:
-			print(card_model)
+	for card in hand:
+		if card !=  null:
+			print(card.card_model)
 	print("\n")
 	
 	print("== LIMBO %d ==" % [limbo.size()])
-	for card_model in limbo:
-		print(card_model)
+	for card in limbo:
+		print(card.card_model)
 	print("\n")
 	
 	print("== DISCARD %d ==" % [discard.size()])
-	for card_model in discard:
-		print(card_model)
+	for card in discard:
+		print(card.card_model)
 	print("\n")
 	
 	print("== LABYRINTH %d ==" % [labyrinth.size()])
-	for card_model in labyrinth:
-		print(card_model)
+	for card in labyrinth:
+		print(card.card_model)
 	print("\n")
 
 	print("== DECK %d ==" % [deck_model.deck.size()])
