@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bpsakiro5c8ug" path="res://scenes/doors_panel/doors_button.gd" id="1_32ddj"]
 [ext_resource type="Shader" uid="uid://ev2hcn4hhgq2" path="res://shaders/outline.gdshader" id="2_kb5p8"]
 [ext_resource type="Texture2D" uid="uid://btnkgsntbdm5f" path="res://assets/sprites/cards/red_door.png" id="3_s2eab"]
-[ext_resource type="Texture2D" uid="uid://syttm3bko7s6" path="res://assets/sprites/icons/triangle.svg" id="4_sfx5m"]
+[ext_resource type="Texture2D" uid="uid://b0rtfpv22dpip" path="res://assets/sprites/icons/triangle.svg" id="4_sfx5m"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fudy4"]
 resource_local_to_scene = true

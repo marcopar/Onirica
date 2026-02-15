@@ -15,7 +15,7 @@ run/main_scene="uid://djaj5qaevc02v"
 config/features=PackedStringArray("4.6", "Mobile")
 boot_splash/stretch_mode=0
 boot_splash/image="uid://c8sr6ovr4gvuo"
-config/icon="uid://cx2kw13fkk6ff"
+config/icon="uid://cyjafl43akdhu"
 
 [autoload]
 

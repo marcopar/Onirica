@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://mnnbxl1vr0ep" path="res://scenes/common/draggable_sprite.tscn" id="1_33eyq"]
 [ext_resource type="Script" uid="uid://n6ncncvi88f6" path="res://scenes/prophecy_panel/prophecy_card.gd" id="2_wwmfv"]
 [ext_resource type="Texture2D" uid="uid://r45clfjk4oy1" path="res://assets/sprites/cards/blue_glyph.png" id="3_ib5bh"]
-[ext_resource type="Texture2D" uid="uid://cy5v6dt4xset4" path="res://assets/sprites/icons/circle.svg" id="4_86jov"]
+[ext_resource type="Texture2D" uid="uid://b4oup1v83vv6d" path="res://assets/sprites/icons/circle.svg" id="4_86jov"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ib5bh"]
 size = Vector2(236, 364)

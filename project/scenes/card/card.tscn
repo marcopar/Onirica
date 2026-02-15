@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://mnnbxl1vr0ep" path="res://scenes/common/draggable_sprite.tscn" id="1_vtcvk"]
 [ext_resource type="Shader" uid="uid://ev2hcn4hhgq2" path="res://shaders/outline.gdshader" id="3_g65cd"]
 [ext_resource type="Texture2D" uid="uid://ok8mw4sjpg74" path="res://assets/sprites/cards/green_key.png" id="4_2ufkr"]
-[ext_resource type="Texture2D" uid="uid://syttm3bko7s6" path="res://assets/sprites/icons/triangle.svg" id="5_2ufkr"]
+[ext_resource type="Texture2D" uid="uid://b0rtfpv22dpip" path="res://assets/sprites/icons/triangle.svg" id="5_2ufkr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2ufkr"]
 resource_local_to_scene = true
@@ -20,11 +20,11 @@ size = Vector2(236, 364)
 [node name="Card" unique_id=1172274696 instance=ExtResource("1_vtcvk")]
 script = ExtResource("1_atepj")
 
-[node name="Sprite2D" parent="." index="0"]
+[node name="Sprite2D" parent="." index="0" unique_id=1726629560]
 material = SubResource("ShaderMaterial_2ufkr")
 texture = ExtResource("4_2ufkr")
 
-[node name="CollisionShape2D" parent="." index="1"]
+[node name="CollisionShape2D" parent="." index="1" unique_id=1807765533]
 shape = SubResource("RectangleShape2D_g65cd")
 
 [node name="Label" type="TextureRect" parent="." index="2" unique_id=89113289]
