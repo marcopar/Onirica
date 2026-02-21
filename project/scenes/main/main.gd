@@ -78,7 +78,7 @@ func draw_card(nightmares_enabled: bool, doors_enabled: bool) -> Card:
 			card.hand_position = hand_position	
 			await animate_card_draw(card)
 			if card_model.can_be_in_hand:
-				GameManager.hand[hand_position] = card
+				GameManager.hand[hand_position] = card_model
 				break
 			else:
 				if nightmares_enabled and card.card_model.type == CardManager.CARD_TYPE.NIGHTMARE:
@@ -88,7 +88,7 @@ func draw_card(nightmares_enabled: bool, doors_enabled: bool) -> Card:
 				else:					
 					await animate_card_to_limbo(card)
 					SignalManager.card_added_to_limbo.emit(card)
-		return card
+			return card
 	return null
 
 func create_card(model: CardModel, parent: Node2D, pposition: Vector2, pscale: Vector2, pickable: bool, pz_index: int) -> Card:
@@ -100,6 +100,17 @@ func create_card(model: CardModel, parent: Node2D, pposition: Vector2, pscale: V
 	card.z_index = pz_index
 	parent.add_child(card)
 	return card
+
+func find_card_node(card_model: CardModel) -> Card:
+	for child in card_container.get_children():
+		var card: Card = child
+		if card.card_model == card_model:
+			return card
+	for child in limbo.card_container.get_children():
+		var card: Card = child
+		if card.card_model == card_model:
+			return card
+	return null
 
 func draw_full_hand(empty_limbo_for_each_card: bool, nightmares_enabled: bool, doors_enabled: bool):
 	set_hand_freezed(true)
@@ -125,9 +136,9 @@ func draw_full_hand(empty_limbo_for_each_card: bool, nightmares_enabled: bool, d
 	set_hand_freezed(false)
 		
 func check_door_against_hand_keys(door: Card) -> Card:
-	for card in GameManager.hand:
-		if card != null && card.card_model.type == CardManager.CARD_TYPE.KEY && card.card_model.color == door.card_model.color:			
-			return card
+	for card_model in GameManager.hand:
+		if card_model != null && card_model.type == CardManager.CARD_TYPE.KEY && card_model.color == door.card_model.color:
+			return find_card_node(card_model)
 	return null
 
 func shuffle() -> void:
@@ -136,15 +147,16 @@ func shuffle() -> void:
 	GameManager.shuffle()
 	
 func empty_limbo() -> void:
-	var limbo_copy: Array[Card]
+	var limbo_copy: Array[CardModel]
 	limbo_copy.append_array(GameManager.limbo)
 	#remove cards from the top one, it's visually nicer
 	limbo_copy.reverse()
-	for card in limbo_copy:
+	for card_model in limbo_copy:
+		var card: Card = find_card_node(card_model)
 		await animate_card_from_limbo_to_deck(card)
-		GameManager.deck_model.add_card_back(card.card_model)
+		GameManager.deck_model.add_card_back(card_model)
 		SignalManager.card_removed_from_limbo.emit(card)
-		GameManager.limbo.erase(card)
+		GameManager.limbo.erase(card_model)
 		card.queue_free()
 	await shuffle()
 	
@@ -158,7 +170,7 @@ func door_found(door_card: Card) -> void:
 	await animate_door_found(door_card, true)
 	
 func card_added_to_labyrinth(card: Card) -> void:
-	GameManager.card_added_to_labyrinth(card)
+	GameManager.card_added_to_labyrinth(card.card_model)
 	var card_model: CardModel = GameManager.check_door_found()
 	if card_model != null:
 		set_hand_freezed(true)
@@ -176,7 +188,8 @@ func card_added_to_labyrinth(card: Card) -> void:
 		await draw_full_hand(true, true, true)
 
 func card_added_to_discard(card: Card, pdraw_card: bool) -> void:
-	GameManager.card_added_to_discard(card)
+	GameManager.card_added_to_discard(card.card_model)
+	card.set_outline(false)
 	if not prophecy_panel.visible and not open_door_panel.visible and not nightmare_panel.visible and card.card_model.type == CardManager.CARD_TYPE.KEY:
 		open_prophecy_panel()
 		return
@@ -204,7 +217,7 @@ func open_prophecy_panel() -> void:
 		show_lose_panel()
 	
 func card_added_to_limbo(card: Card) -> void:
-	GameManager.card_added_to_limbo(card)
+	GameManager.card_added_to_limbo(card.card_model)
 
 func set_hand_freezed(value: bool) -> void:
 	for child in card_container.get_children():
@@ -313,8 +326,9 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 		return
 	ignore_gui_events = true
 	if type == Constants.NIGHTMARE_DISCARD.HAND and object is Card:
-		for card in GameManager.hand:
-			if card != null:
+		for card_model in GameManager.hand:
+			if card_model != null:
+				var card: Card = find_card_node(card_model)
 				await animate_card_to_discard(card)
 				SignalManager.card_added_to_discard.emit(card, false)				
 		await discard_nightmare_card()
@@ -383,8 +397,9 @@ func set_keys_outline(enabled: bool) -> void:
 	set_cards_outline(enabled, true)
 	
 func set_cards_outline(enabled: bool, keys_only: bool) -> void:
-	for card in GameManager.hand:
-		if card != null:
+	for child in card_container.get_children():
+		var card: Card = child
+		if GameManager.hand.has(card.card_model):
 			if not keys_only or card.card_model.type == CardManager.CARD_TYPE.KEY:
 				card.set_outline(enabled)
 

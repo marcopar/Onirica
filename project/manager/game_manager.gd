@@ -8,25 +8,25 @@ var deck_model: DeckModel:
 	set(value):
 		deck_model = value
 		
-var hand: Array[Card]:
+var hand: Array[CardModel]:
 	get:
 		return hand
 	set(value):
 		hand = value
 		
-var labyrinth: Array[Card]:
+var labyrinth: Array[CardModel]:
 	get:
 		return labyrinth
 	set(value):
 		labyrinth = value
 
-var limbo: Array[Card]:
+var limbo: Array[CardModel]:
 	get:
 		return limbo
 	set(value):
 		limbo = value
 
-var discard: Array[Card]:
+var discard: Array[CardModel]:
 	get:
 		return discard
 	set(value):
@@ -55,24 +55,13 @@ func new_game() -> void:
 	doors_to_be_found = deck_model.get_number_of(CardManager.CARD_TYPE.DOOR)
 	deck_model.shuffle()
 	
-	for card in hand:
-		if card != null:
-			card.queue_free()
-	hand.clear()	
+	hand.clear()
 	#refill hand with null
 	for hand_position in range(0, HAND_SIZE):
 		hand.push_back(null)
 		
-	for card in labyrinth:
-		card.queue_free()
 	labyrinth.clear()
-	
-	for card in limbo:
-		card.queue_free()
 	limbo.clear()
-	
-	for card in discard:
-		card.queue_free()
 	discard.clear()
 	
 	found_doors = {
@@ -85,18 +74,18 @@ func new_game() -> void:
 func shuffle() -> void:
 	deck_model.shuffle()
 
-#checks the whole lanyrinth every time but doesn't need to store extra flags
+#checks the whole labyrinth every time but doesn't need to store extra flags
 func check_door_found() -> CardModel:
-	var last3: Array[Card] = []
-	for card in labyrinth:
-		last3.push_back(card)
+	var last3: Array[CardModel] = []
+	for card_model in labyrinth:
+		last3.push_back(card_model)
 		if last3.size() != 3:
 			continue		
 		if check_for_door_combo(last3):
 			#if it's the last 3 then we found a combo
-			if labyrinth.find(card) == labyrinth.size() - 1:
+			if labyrinth.find(card_model) == labyrinth.size() - 1:
 				#get the door from the deck
-				var door: CardModel = deck_model.search(CardManager.CARD_TYPE.DOOR, card.card_model.color)
+				var door: CardModel = deck_model.search(CardManager.CARD_TYPE.DOOR, card_model.color)
 				if door != null:
 					set_door_as_found(door)
 					return door
@@ -112,38 +101,37 @@ func set_door_as_found(door: CardModel) -> void:
 	deck_model.deck.erase(door)
 	found_doors[door.color].push_back(door)
 
-func check_for_door_combo(last3: Array[Card]) -> bool:
+func check_for_door_combo(last3: Array[CardModel]) -> bool:
 	var colors: Dictionary[CardManager.CARD_COLOR, bool] = {}
 	#count the different colors
-	for card in last3:
-		if card.card_model.color == CardManager.CARD_COLOR.MULTI:
+	for card_model in last3:
+		if card_model.color == CardManager.CARD_COLOR.MULTI:
 			continue
-		colors[card.card_model.color] = true
+		colors[card_model.color] = true
 	#check the colors number and the types
 	if colors.keys().size() == 1 and \
-		last3[0].card_model.type != last3[1].card_model.type and \
-		last3[1].card_model.type != last3[2].card_model.type:
+		last3[0].type != last3[1].type and \
+		last3[1].type != last3[2].type:
 			return true
 	return false
 	
-func card_added_to_discard(card: Card) -> void:
-	var hand_position: int = hand.find(card)
+func card_added_to_discard(card_model: CardModel) -> void:
+	var hand_position: int = hand.find(card_model)
 	if hand_position != -1:
 		hand[hand_position] = null
-	discard.push_back(card)
-	card.set_outline(false)
+	discard.push_back(card_model)
 	
-func card_added_to_labyrinth(card: Card) -> void:
-	var hand_position: int = hand.find(card)
+func card_added_to_labyrinth(card_model: CardModel) -> void:
+	var hand_position: int = hand.find(card_model)
 	if hand_position != -1:
 		hand[hand_position] = null
-	labyrinth.push_back(card)
+	labyrinth.push_back(card_model)
 
-func card_added_to_limbo(card: Card) -> void:
-	var hand_position: int = hand.find(card)
+func card_added_to_limbo(card_model: CardModel) -> void:
+	var hand_position: int = hand.find(card_model)
 	if hand_position != -1:
 		hand[hand_position] = null
-	limbo.push_back(card)
+	limbo.push_back(card_model)
 
 func check_won_game() -> bool:
 	var found_doors_count: int = 0
@@ -155,24 +143,24 @@ func check_won_game() -> bool:
 func dump() -> void:
 	print("######################################################################")
 	print("== HAND ==")
-	for card in hand:
-		if card !=  null:
-			print(card.card_model)
+	for card_model in hand:
+		if card_model != null:
+			print(card_model)
 	print("\n")
 	
 	print("== LIMBO %d ==" % [limbo.size()])
-	for card in limbo:
-		print(card.card_model)
+	for card_model in limbo:
+		print(card_model)
 	print("\n")
 	
 	print("== DISCARD %d ==" % [discard.size()])
-	for card in discard:
-		print(card.card_model)
+	for card_model in discard:
+		print(card_model)
 	print("\n")
 	
 	print("== LABYRINTH %d ==" % [labyrinth.size()])
-	for card in labyrinth:
-		print(card.card_model)
+	for card_model in labyrinth:
+		print(card_model)
 	print("\n")
 
 	print("== DECK %d ==" % [deck_model.deck.size()])
