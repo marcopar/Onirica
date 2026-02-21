@@ -88,7 +88,7 @@ func draw_card(nightmares_enabled: bool, doors_enabled: bool) -> Card:
 				else:					
 					await animate_card_to_limbo(card)
 					SignalManager.card_added_to_limbo.emit(card)
-			return card
+		return card
 	return null
 
 func create_card(model: CardModel, parent: Node2D, pposition: Vector2, pscale: Vector2, pickable: bool, pz_index: int) -> Card:
