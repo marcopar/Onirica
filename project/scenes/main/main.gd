@@ -12,6 +12,7 @@ extends Node2D
 @onready var door_found_marker: Marker2D = $DoorFoundMarker
 @onready var nightmare_panel: Node2D = $NightmarePanel
 @onready var discard: Discard = $Discard
+@onready var labyrinth: Labyrinth = $Labyrinth
 @onready var open_door_panel: OpenDoorPanel = $OpenDoorPanel
 @onready var card_presentation_marker: Marker2D = $CardPresentationMarker
 @onready var prophecy_panel: ProphecyPanel = $ProphecyPanel
@@ -34,10 +35,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		var e: InputEventKey = event
 		if e.as_text_keycode() == "D" and e.is_pressed():
 			GameManager.dump()
-		if e.as_text_keycode() == "L" and e.is_pressed():
-			GameManager.load_game()
-		if e.as_text_keycode() == "S" and e.is_pressed():
-			GameManager.save_game()
 		
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:	
@@ -120,6 +117,7 @@ func find_card_node(card_model: CardModel) -> Card:
 func draw_full_hand(empty_limbo_for_each_card: bool, nightmares_enabled: bool, doors_enabled: bool):
 	set_hand_freezed(true)
 	while true:
+		GameManager.save_game()
 		var card: Card = await draw_card(nightmares_enabled, doors_enabled)
 		if card == null:
 			break
@@ -127,6 +125,7 @@ func draw_full_hand(empty_limbo_for_each_card: bool, nightmares_enabled: bool, d
 			AudioManager.play_nightmare_sound()
 			await animate_nightmare(card)
 			nightmare_panel.set_panel_enabled(true)
+			exit_button.visible = false
 			return
 		if doors_enabled and card.card_model.type == CardManager.CARD_TYPE.DOOR:
 			var key: Card = check_door_against_hand_keys(card)
@@ -203,6 +202,7 @@ func card_added_to_discard(card: Card, pdraw_card: bool) -> void:
 
 func open_prophecy_panel() -> void:
 	set_hand_freezed(true)
+	exit_button.visible = false
 	
 	#first 5 cards filling with nulls at the beginning if there aren't enough cards
 	var null_cards: Array[CardModel] = [null, null, null, null, null]
@@ -321,6 +321,7 @@ func handle_prophecy_action() -> void:
 		
 	prophecy_panel.set_panel_enabled(false)
 	prophecy_panel.reset()
+	exit_button.visible = true
 	deck.set_outline(false)
 	await draw_full_hand(false, true, true)
 	ignore_gui_events = false
@@ -390,6 +391,7 @@ func discard_nightmare_card() -> void:
 	doors_panel.set_outline(false)
 	nightmare_panel.reset()
 	nightmare_panel.set_panel_enabled(false)
+	exit_button.visible = true
 	
 	var card: Card = find_nightmare_card()
 	await animate_card_to_discard(card)
@@ -614,12 +616,12 @@ func recreate_game_objects() -> void:
 		var card = create_card(c_model, discard.card_container, Vector2.ZERO, Card.DISCARD_SIZE, false, i + Constants.DISCARD_BASE_Z)
 		card.set_front_texture()
 
-	$Labyrinth/CardContainer.global_position.x = 0
+	labyrinth.card_container.global_position.x = 0
 	for i in range(GameManager.labyrinth.size()):
 		var c_model = GameManager.labyrinth[i]
-		var card = create_card(c_model, $Labyrinth/CardContainer, $Labyrinth/StartPosition.position + Vector2(i * 55, 0), Card.LABYRINTH_SIZE, false, i + Constants.LABYRINTH_BASE_Z)
+		var card = create_card(c_model, labyrinth.card_container, labyrinth.start_position_marker.position + Vector2(i * labyrinth.CARD_OFFSET, 0), Card.LABYRINTH_SIZE, false, i + Constants.LABYRINTH_BASE_Z)
 		card.set_front_texture()
-	if GameManager.labyrinth.size() >= 11:
-		$Labyrinth/CardContainer.global_position.x = -55 * (GameManager.labyrinth.size() - 11)
+	if GameManager.labyrinth.size() >= labyrinth.MAX_SIZE:
+		labyrinth.card_container.global_position.x = -labyrinth.CARD_OFFSET * (GameManager.labyrinth.size() - labyrinth.MAX_SIZE)
 		
 	SignalManager.deck_updated.emit()

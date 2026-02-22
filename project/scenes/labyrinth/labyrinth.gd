@@ -1,5 +1,7 @@
 extends Area2D
 
+class_name Labyrinth
+
 const CARD_OFFSET: int = 55
 const MAX_SIZE: int = 11
 
@@ -24,7 +26,7 @@ func card_added_to_labyrinth(card: Card) -> void:
 	highlight.enabled = false
 	card.set_labyrinth_size()
 	card.position = start_position_marker.position
-	card.position.x += CARD_OFFSET * (GameManager.labyrinth.size() - 1)
+	card.position.x += CARD_OFFSET * GameManager.labyrinth.size()
 	card.z_index = GameManager.labyrinth.size() + Constants.LABYRINTH_BASE_Z
 	card.input_pickable = false
 	card.get_parent().remove_child(card)
