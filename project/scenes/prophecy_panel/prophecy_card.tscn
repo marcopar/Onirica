@@ -23,7 +23,6 @@ offset_left = -89.0
 offset_top = -90.0
 offset_right = -59.0
 offset_bottom = -60.0
-pivot_offset = Vector2(15, 0)
 texture = ExtResource("4_86jov")
 expand_mode = 3
 stretch_mode = 4
