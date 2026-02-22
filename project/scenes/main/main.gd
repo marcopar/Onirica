@@ -34,6 +34,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		var e: InputEventKey = event
 		if e.as_text_keycode() == "D" and e.is_pressed():
 			GameManager.dump()
+		if e.as_text_keycode() == "L" and e.is_pressed():
+			GameManager.load_game()
+		if e.as_text_keycode() == "S" and e.is_pressed():
+			GameManager.save_game()
 		
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:	
@@ -55,11 +59,11 @@ func _ready() -> void:
 	hand_markers.push_back(hand_marker_5)
 	#this is to handle overlapping cards properly
 	get_viewport().physics_object_picking_sort = true
-	
-	GameManager.new_game()		
-	SignalManager.new_game.emit()
-	doors_panel.setup(GameManager.deck_model.get_number_of(CardManager.CARD_TYPE.DOOR))
+
+	recreate_game_objects()
 	await draw_full_hand(false, false, false)
+	
+	SignalManager.new_game.emit()
 	
 func draw_card(nightmares_enabled: bool, doors_enabled: bool) -> Card:
 	var card: Card = null
@@ -95,10 +99,11 @@ func create_card(model: CardModel, parent: Node2D, pposition: Vector2, pscale: V
 	var card: Card = CARD.instantiate()	
 	card.card_model = model
 	card.position = pposition
-	card.scale = pscale
 	card.input_pickable = pickable
 	card.z_index = pz_index
 	parent.add_child(card)
+	#after add_child because card._ready is called and it resets scale
+	card.scale = pscale
 	return card
 
 func find_card_node(card_model: CardModel) -> Card:
@@ -570,5 +575,51 @@ func discard_panel_closed() -> void:
 
 func _on_exit_button_pressed() -> void:
 	AudioManager.play_uiclick_sound()
-	GameManager.new_game()
+	if win_panel.visible or lose_panel.visible:
+		GameManager.delete_save_file()
+	else:
+		GameManager.save_game()
 	SceneManager.switch_to_menu()
+
+func recreate_game_objects() -> void:
+	for child in card_container.get_children():
+		child.queue_free()
+	for child in limbo.card_container.get_children():
+		child.queue_free()
+	for child in discard.card_container.get_children():
+		child.queue_free()
+	for child in $Labyrinth/CardContainer.get_children():
+		child.queue_free()
+		
+	doors_panel.setup(GameManager.doors_to_be_found)
+	for color in GameManager.found_doors.keys():
+		doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
+		
+	for i in range(GameManager.hand.size()):
+		var c_model = GameManager.hand[i]
+		if c_model != null:
+			var card = create_card(c_model, card_container, hand_markers[i].global_position, Card.FULL_SIZE, true, i + Constants.HAND_BASE_Z)
+			card.set_front_texture()
+			card.hand_position = i
+			card.rotation = hand_markers[i].rotation
+			card.freezed = false
+			
+	for i in range(GameManager.limbo.size()):
+		var c_model = GameManager.limbo[i]
+		var card = create_card(c_model, limbo.card_container, Vector2.ZERO, Card.LIMBO_SIZE, false, i + Constants.LIMBO_BASE_Z)
+		card.set_front_texture()
+
+	for i in range(GameManager.discard.size()):
+		var c_model = GameManager.discard[i]
+		var card = create_card(c_model, discard.card_container, Vector2.ZERO, Card.DISCARD_SIZE, false, i + Constants.DISCARD_BASE_Z)
+		card.set_front_texture()
+
+	$Labyrinth/CardContainer.global_position.x = 0
+	for i in range(GameManager.labyrinth.size()):
+		var c_model = GameManager.labyrinth[i]
+		var card = create_card(c_model, $Labyrinth/CardContainer, $Labyrinth/StartPosition.position + Vector2(i * 55, 0), Card.LABYRINTH_SIZE, false, i + Constants.LABYRINTH_BASE_Z)
+		card.set_front_texture()
+	if GameManager.labyrinth.size() >= 11:
+		$Labyrinth/CardContainer.global_position.x = -55 * (GameManager.labyrinth.size() - 11)
+		
+	SignalManager.deck_updated.emit()

@@ -1,6 +1,7 @@
 extends Node
 
 const HAND_SIZE: int = 5
+const SAVE_FILE_NAME: String = "user://savegame.json"
 
 var deck_model: DeckModel:
 	get:
@@ -139,6 +140,106 @@ func check_won_game() -> bool:
 		found_doors_count += found_doors[color].size()
 	return found_doors_count == doors_to_be_found
 
+func get_save_dict() -> Dictionary:
+	var dict = {
+		"deck": [],
+		"hand": [],
+		"labyrinth": [],
+		"limbo": [],
+		"discard": [],
+		"doors_to_be_found": doors_to_be_found,
+		"found_doors": {
+			CardManager.CARD_COLOR.RED: [],
+			CardManager.CARD_COLOR.GREEN: [],
+			CardManager.CARD_COLOR.BLUE: [],
+			CardManager.CARD_COLOR.YELLOW: []
+		}
+	}
+	for c in deck_model.deck:
+		dict["deck"].append({"type": c.type, "color": c.color})
+	for c in hand:
+		if c == null:
+			dict["hand"].append(null)
+		else:
+			dict["hand"].append({"type": c.type, "color": c.color})
+	for c in labyrinth:
+		dict["labyrinth"].append({"type": c.type, "color": c.color})
+	for c in limbo:
+		dict["limbo"].append({"type": c.type, "color": c.color})
+	for c in discard:
+		dict["discard"].append({"type": c.type, "color": c.color})
+	for color in found_doors.keys():
+		for c in found_doors[color]:
+			dict["found_doors"][color].append({"type": c.type, "color": c.color})
+	return dict
+
+func save_file_exists() -> bool:
+	return FileAccess.file_exists(SAVE_FILE_NAME)
+	
+func delete_save_file() -> void:
+	DirAccess.remove_absolute(SAVE_FILE_NAME)	
+	
+func save_game() -> void:
+	var dict = get_save_dict()
+	var file = FileAccess.open(SAVE_FILE_NAME, FileAccess.WRITE)
+	file.store_string(JSON.stringify(dict))
+	file.close()
+
+func load_game() -> void:
+	if not save_file_exists():
+		GameManager.new_game()
+		return
+	var file = FileAccess.open(SAVE_FILE_NAME, FileAccess.READ)
+	var json_string = file.get_as_text()
+	var json = JSON.new()
+	var error = json.parse(json_string)
+	if error == OK:
+		var dict = json.data
+		if dict.has("deck"):
+			deck_model = DeckModel.new()
+			deck_model.deck.clear()
+			for c_data in dict["deck"]:
+				deck_model.deck.append(CardManager.create_card(int(c_data["type"]), int(c_data["color"])))
+			
+			hand.clear()
+			for c_data in dict["hand"]:
+				if c_data == null:
+					hand.append(null)
+				else:
+					hand.append(CardManager.create_card(int(c_data["type"]), int(c_data["color"])))
+					
+			labyrinth.clear()
+			for c_data in dict["labyrinth"]:
+				labyrinth.append(CardManager.create_card(int(c_data["type"]), int(c_data["color"])))
+				
+			limbo.clear()
+			for c_data in dict["limbo"]:
+				limbo.append(CardManager.create_card(int(c_data["type"]), int(c_data["color"])))
+				
+			discard.clear()
+			for c_data in dict["discard"]:
+				discard.append(CardManager.create_card(int(c_data["type"]), int(c_data["color"])))
+				
+			doors_to_be_found = dict["doors_to_be_found"]
+			
+			found_doors = {
+				CardManager.CARD_COLOR.RED: [],
+				CardManager.CARD_COLOR.GREEN: [],
+				CardManager.CARD_COLOR.BLUE: [],
+				CardManager.CARD_COLOR.YELLOW: []
+			}
+			var fd = dict["found_doors"]
+			for color_str in fd.keys():
+				var color_idx = int(color_str)
+				for c_data in fd[color_str]:
+					found_doors[color_idx].append(CardManager.create_card(int(c_data["type"]), int(c_data["color"])))
+			file.close()
+			return
+	file.close()
+	delete_save_file()
+	GameManager.new_game()
+	
+
 
 func dump() -> void:
 	print("######################################################################")
@@ -172,4 +273,3 @@ func dump() -> void:
 	for color in found_doors.keys():
 		print(CardManager.CARD_COLOR.keys()[color],  " = ", found_doors[color].size())
 	print("\n")
-	
