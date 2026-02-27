@@ -117,7 +117,6 @@ func find_card_node(card_model: CardModel) -> Card:
 func draw_full_hand(empty_limbo_for_each_card: bool, nightmares_enabled: bool, doors_enabled: bool):
 	set_hand_freezed(true)
 	while true:
-		GameManager.save_game()
 		var card: Card = await draw_card(nightmares_enabled, doors_enabled)
 		if card == null:
 			break
@@ -138,6 +137,7 @@ func draw_full_hand(empty_limbo_for_each_card: bool, nightmares_enabled: bool, d
 	if not GameManager.limbo.is_empty():
 		await empty_limbo()
 	set_hand_freezed(false)
+	GameManager.save_game()
 		
 func check_door_against_hand_keys(door: Card) -> Card:
 	for card_model in GameManager.hand:
@@ -225,6 +225,7 @@ func card_added_to_limbo(card: Card) -> void:
 	GameManager.card_added_to_limbo(card.card_model)
 
 func set_hand_freezed(value: bool) -> void:
+	exit_button.visible = !value
 	for child in card_container.get_children():
 		var card: Card = child
 		card.freezed = value
@@ -444,12 +445,14 @@ func show_win_panel() -> void:
 	win_panel.visible = true
 	lose_panel.visible = false
 	win_lose_panel_container.visible = true
+	exit_button.visible = true
 
 func show_lose_panel() -> void:
 	AudioManager.play_game_defeat_music()
 	win_panel.visible = false
 	lose_panel.visible = true
 	win_lose_panel_container.visible = true
+	exit_button.visible = true
 	
 ####################################################
 ####################################################
