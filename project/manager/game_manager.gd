@@ -236,6 +236,7 @@ func load_game() -> void:
 			file.close()
 			return
 	file.close()
+	#arriving here means there was an error parsing the json
 	delete_save_file()
 	GameManager.new_game()
 	
