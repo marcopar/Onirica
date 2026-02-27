@@ -81,9 +81,9 @@ func clear_counters() -> void:
 }
 
 func setup() -> void:	
-	for card in GameManager.discard:
-		var type: CardManager.CARD_TYPE = card.card_model.type
-		var color: CardManager.CARD_COLOR = card.card_model.color
+	for card_model in GameManager.discard:
+		var type: CardManager.CARD_TYPE = card_model.type
+		var color: CardManager.CARD_COLOR = card_model.color
 		if type == CardManager.CARD_TYPE.SUN or type == CardManager.CARD_TYPE.MOON or \
 			type == CardManager.CARD_TYPE.KEY or type == CardManager.CARD_TYPE.GLYPH:
 				var counter = counters[type][color]

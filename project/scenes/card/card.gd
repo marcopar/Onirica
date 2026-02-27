@@ -48,7 +48,7 @@ func handle_overlapping_areas() -> bool:
 	for area in get_overlapping_areas():
 		if area.is_in_group(Constants.GROUP_LABYRINTH) and card_model.can_play:
 			#can't play the same type of an existing card already in the labyrinth last position
-			if GameManager.labyrinth.size() == 0 or card_model.type != GameManager.labyrinth[GameManager.labyrinth.size()-1].card_model.type:
+			if GameManager.labyrinth.size() == 0 or card_model.type != GameManager.labyrinth[GameManager.labyrinth.size()-1].type:
 				SignalManager.card_added_to_labyrinth.emit(self)
 				dragging = false
 				return true
@@ -76,7 +76,7 @@ func set_front_texture():
 	if label.texture != null:
 		match card_model.type:
 			CardManager.CARD_TYPE.DOOR:
-				label.position.x = sprite_2d.texture.get_width() / 2.0 - label.texture.get_width() / 2.0
+				label.position.x = -label.size.x/2
 				# arbitrary value 3 that works
 				label.position.y = sprite_2d.texture.get_height() / 3.0
 			_:

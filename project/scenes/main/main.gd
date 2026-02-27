@@ -12,6 +12,7 @@ extends Node2D
 @onready var door_found_marker: Marker2D = $DoorFoundMarker
 @onready var nightmare_panel: Node2D = $NightmarePanel
 @onready var discard: Discard = $Discard
+@onready var labyrinth: Labyrinth = $Labyrinth
 @onready var open_door_panel: OpenDoorPanel = $OpenDoorPanel
 @onready var card_presentation_marker: Marker2D = $CardPresentationMarker
 @onready var prophecy_panel: ProphecyPanel = $ProphecyPanel
@@ -55,11 +56,11 @@ func _ready() -> void:
 	hand_markers.push_back(hand_marker_5)
 	#this is to handle overlapping cards properly
 	get_viewport().physics_object_picking_sort = true
-	
-	GameManager.new_game()		
-	SignalManager.new_game.emit()
-	doors_panel.setup(GameManager.deck_model.get_number_of(CardManager.CARD_TYPE.DOOR))
+
+	recreate_game_objects()
 	await draw_full_hand(false, false, false)
+	
+	SignalManager.new_game.emit()
 	
 func draw_card(nightmares_enabled: bool, doors_enabled: bool) -> Card:
 	var card: Card = null
@@ -78,7 +79,7 @@ func draw_card(nightmares_enabled: bool, doors_enabled: bool) -> Card:
 			card.hand_position = hand_position	
 			await animate_card_draw(card)
 			if card_model.can_be_in_hand:
-				GameManager.hand[hand_position] = card
+				GameManager.hand[hand_position] = card_model
 				break
 			else:
 				if nightmares_enabled and card.card_model.type == CardManager.CARD_TYPE.NIGHTMARE:
@@ -95,11 +96,23 @@ func create_card(model: CardModel, parent: Node2D, pposition: Vector2, pscale: V
 	var card: Card = CARD.instantiate()	
 	card.card_model = model
 	card.position = pposition
-	card.scale = pscale
 	card.input_pickable = pickable
 	card.z_index = pz_index
 	parent.add_child(card)
+	#after add_child because card._ready is called and it resets scale
+	card.scale = pscale
 	return card
+
+func find_card_node(card_model: CardModel) -> Card:
+	for child in card_container.get_children():
+		var card: Card = child
+		if card.card_model == card_model:
+			return card
+	for child in limbo.card_container.get_children():
+		var card: Card = child
+		if card.card_model == card_model:
+			return card
+	return null
 
 func draw_full_hand(empty_limbo_for_each_card: bool, nightmares_enabled: bool, doors_enabled: bool):
 	set_hand_freezed(true)
@@ -111,6 +124,7 @@ func draw_full_hand(empty_limbo_for_each_card: bool, nightmares_enabled: bool, d
 			AudioManager.play_nightmare_sound()
 			await animate_nightmare(card)
 			nightmare_panel.set_panel_enabled(true)
+			exit_button.visible = false
 			return
 		if doors_enabled and card.card_model.type == CardManager.CARD_TYPE.DOOR:
 			var key: Card = check_door_against_hand_keys(card)
@@ -123,11 +137,12 @@ func draw_full_hand(empty_limbo_for_each_card: bool, nightmares_enabled: bool, d
 	if not GameManager.limbo.is_empty():
 		await empty_limbo()
 	set_hand_freezed(false)
+	GameManager.save_game()
 		
 func check_door_against_hand_keys(door: Card) -> Card:
-	for card in GameManager.hand:
-		if card != null && card.card_model.type == CardManager.CARD_TYPE.KEY && card.card_model.color == door.card_model.color:			
-			return card
+	for card_model in GameManager.hand:
+		if card_model != null && card_model.type == CardManager.CARD_TYPE.KEY && card_model.color == door.card_model.color:
+			return find_card_node(card_model)
 	return null
 
 func shuffle() -> void:
@@ -136,15 +151,16 @@ func shuffle() -> void:
 	GameManager.shuffle()
 	
 func empty_limbo() -> void:
-	var limbo_copy: Array[Card]
+	var limbo_copy: Array[CardModel]
 	limbo_copy.append_array(GameManager.limbo)
 	#remove cards from the top one, it's visually nicer
 	limbo_copy.reverse()
-	for card in limbo_copy:
+	for card_model in limbo_copy:
+		var card: Card = find_card_node(card_model)
 		await animate_card_from_limbo_to_deck(card)
-		GameManager.deck_model.add_card_back(card.card_model)
+		GameManager.deck_model.add_card_back(card_model)
 		SignalManager.card_removed_from_limbo.emit(card)
-		GameManager.limbo.erase(card)
+		GameManager.limbo.erase(card_model)
 		card.queue_free()
 	await shuffle()
 	
@@ -158,7 +174,7 @@ func door_found(door_card: Card) -> void:
 	await animate_door_found(door_card, true)
 	
 func card_added_to_labyrinth(card: Card) -> void:
-	GameManager.card_added_to_labyrinth(card)
+	GameManager.card_added_to_labyrinth(card.card_model)
 	var card_model: CardModel = GameManager.check_door_found()
 	if card_model != null:
 		set_hand_freezed(true)
@@ -176,7 +192,8 @@ func card_added_to_labyrinth(card: Card) -> void:
 		await draw_full_hand(true, true, true)
 
 func card_added_to_discard(card: Card, pdraw_card: bool) -> void:
-	GameManager.card_added_to_discard(card)
+	GameManager.card_added_to_discard(card.card_model)
+	card.set_outline(false)
 	if not prophecy_panel.visible and not open_door_panel.visible and not nightmare_panel.visible and card.card_model.type == CardManager.CARD_TYPE.KEY:
 		open_prophecy_panel()
 		return
@@ -185,6 +202,7 @@ func card_added_to_discard(card: Card, pdraw_card: bool) -> void:
 
 func open_prophecy_panel() -> void:
 	set_hand_freezed(true)
+	exit_button.visible = false
 	
 	#first 5 cards filling with nulls at the beginning if there aren't enough cards
 	var null_cards: Array[CardModel] = [null, null, null, null, null]
@@ -204,9 +222,10 @@ func open_prophecy_panel() -> void:
 		show_lose_panel()
 	
 func card_added_to_limbo(card: Card) -> void:
-	GameManager.card_added_to_limbo(card)
+	GameManager.card_added_to_limbo(card.card_model)
 
 func set_hand_freezed(value: bool) -> void:
+	exit_button.visible = !value
 	for child in card_container.get_children():
 		var card: Card = child
 		card.freezed = value
@@ -303,6 +322,7 @@ func handle_prophecy_action() -> void:
 		
 	prophecy_panel.set_panel_enabled(false)
 	prophecy_panel.reset()
+	exit_button.visible = true
 	deck.set_outline(false)
 	await draw_full_hand(false, true, true)
 	ignore_gui_events = false
@@ -313,8 +333,9 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 		return
 	ignore_gui_events = true
 	if type == Constants.NIGHTMARE_DISCARD.HAND and object is Card:
-		for card in GameManager.hand:
-			if card != null:
+		for card_model in GameManager.hand:
+			if card_model != null:
+				var card: Card = find_card_node(card_model)
 				await animate_card_to_discard(card)
 				SignalManager.card_added_to_discard.emit(card, false)				
 		await discard_nightmare_card()
@@ -371,6 +392,7 @@ func discard_nightmare_card() -> void:
 	doors_panel.set_outline(false)
 	nightmare_panel.reset()
 	nightmare_panel.set_panel_enabled(false)
+	exit_button.visible = true
 	
 	var card: Card = find_nightmare_card()
 	await animate_card_to_discard(card)
@@ -383,8 +405,9 @@ func set_keys_outline(enabled: bool) -> void:
 	set_cards_outline(enabled, true)
 	
 func set_cards_outline(enabled: bool, keys_only: bool) -> void:
-	for card in GameManager.hand:
-		if card != null:
+	for child in card_container.get_children():
+		var card: Card = child
+		if GameManager.hand.has(card.card_model):
 			if not keys_only or card.card_model.type == CardManager.CARD_TYPE.KEY:
 				card.set_outline(enabled)
 
@@ -422,12 +445,14 @@ func show_win_panel() -> void:
 	win_panel.visible = true
 	lose_panel.visible = false
 	win_lose_panel_container.visible = true
+	exit_button.visible = true
 
 func show_lose_panel() -> void:
 	AudioManager.play_game_defeat_music()
 	win_panel.visible = false
 	lose_panel.visible = true
 	win_lose_panel_container.visible = true
+	exit_button.visible = true
 	
 ####################################################
 ####################################################
@@ -555,5 +580,51 @@ func discard_panel_closed() -> void:
 
 func _on_exit_button_pressed() -> void:
 	AudioManager.play_uiclick_sound()
-	GameManager.new_game()
+	if win_panel.visible or lose_panel.visible:
+		GameManager.delete_save_file()
+	else:
+		GameManager.save_game()
 	SceneManager.switch_to_menu()
+
+func recreate_game_objects() -> void:
+	for child in card_container.get_children():
+		child.queue_free()
+	for child in limbo.card_container.get_children():
+		child.queue_free()
+	for child in discard.card_container.get_children():
+		child.queue_free()
+	for child in $Labyrinth/CardContainer.get_children():
+		child.queue_free()
+		
+	doors_panel.setup(GameManager.doors_to_be_found)
+	for color in GameManager.found_doors.keys():
+		doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
+		
+	for i in range(GameManager.hand.size()):
+		var c_model = GameManager.hand[i]
+		if c_model != null:
+			var card = create_card(c_model, card_container, hand_markers[i].global_position, Card.FULL_SIZE, true, i + Constants.HAND_BASE_Z)
+			card.set_front_texture()
+			card.hand_position = i
+			card.rotation = hand_markers[i].rotation
+			card.freezed = false
+			
+	for i in range(GameManager.limbo.size()):
+		var c_model = GameManager.limbo[i]
+		var card = create_card(c_model, limbo.card_container, Vector2.ZERO, Card.LIMBO_SIZE, false, i + Constants.LIMBO_BASE_Z)
+		card.set_front_texture()
+
+	for i in range(GameManager.discard.size()):
+		var c_model = GameManager.discard[i]
+		var card = create_card(c_model, discard.card_container, Vector2.ZERO, Card.DISCARD_SIZE, false, i + Constants.DISCARD_BASE_Z)
+		card.set_front_texture()
+
+	labyrinth.card_container.global_position.x = 0
+	for i in range(GameManager.labyrinth.size()):
+		var c_model = GameManager.labyrinth[i]
+		var card = create_card(c_model, labyrinth.card_container, labyrinth.start_position_marker.position + Vector2(i * labyrinth.CARD_OFFSET, 0), Card.LABYRINTH_SIZE, false, i + Constants.LABYRINTH_BASE_Z)
+		card.set_front_texture()
+	if GameManager.labyrinth.size() >= labyrinth.MAX_SIZE:
+		labyrinth.card_container.global_position.x = -labyrinth.CARD_OFFSET * (GameManager.labyrinth.size() - labyrinth.MAX_SIZE)
+		
+	SignalManager.deck_updated.emit()
