@@ -11,3 +11,6 @@ func switch_to_credits() -> void:
 	
 func switch_to_settings() -> void:
 	get_tree().change_scene_to_file("res://scenes/settings_screen/settings.tscn")
+	
+func switch_to_rules() -> void:
+	get_tree().change_scene_to_file("res://scenes/rules_screen/rules.tscn")

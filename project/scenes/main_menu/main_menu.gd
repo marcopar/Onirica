@@ -27,3 +27,7 @@ func _on_credits_pressed() -> void:
 func _on_settings_pressed() -> void:
 	AudioManager.play_uiclick_sound()
 	SceneManager.switch_to_settings()
+
+func _on_rules_pressed() -> void:
+	AudioManager.play_uiclick_sound()
+	SceneManager.switch_to_rules()

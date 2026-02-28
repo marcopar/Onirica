@@ -69,7 +69,7 @@ theme_override_constants/margin_bottom = 50
 [node name="VBoxContainer" type="VBoxContainer" parent="GUI/VBoxContainer/MainArea/MarginContainer" unique_id=279060765]
 layout_mode = 2
 
-[node name="AboutTheGame" type="RichTextLabel" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer" unique_id=1303956854]
+[node name="CreditsText" type="RichTextLabel" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer" unique_id=1303956854]
 layout_mode = 2
 size_flags_vertical = 3
 bbcode_enabled = true
@@ -142,4 +142,4 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="pressed" from="GUI/VBoxContainer/MenuBar/ExitButton" to="." method="_on_exit_button_pressed"]
-[connection signal="meta_clicked" from="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/AboutTheGame" to="." method="_on_rich_text_label_meta_clicked"]
+[connection signal="meta_clicked" from="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/CreditsText" to="." method="_on_credits_text_meta_clicked"]

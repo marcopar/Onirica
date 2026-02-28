@@ -1,0 +1,140 @@
+[gd_scene format=3 uid="uid://b2vlkavh2cf8k"]
+
+[ext_resource type="Texture2D" uid="uid://b1gjt3rpk4sc3" path="res://assets/sprites/backgrounds/background.png" id="1_fjooa"]
+[ext_resource type="Script" uid="uid://dg5lvi16cwhcb" path="res://scenes/rules_screen/rules.gd" id="1_gdwoh"]
+[ext_resource type="Texture2D" uid="uid://5ts0q5ytbdy6" path="res://assets/sprites/gui/logout_96dp_FFFFFF_FILL0_wght400_GRAD0_opsz48.svg" id="2_gdwoh"]
+
+[node name="Rules" type="Control" unique_id=621306541]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gdwoh")
+
+[node name="Background" type="TextureRect" parent="." unique_id=418140735]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_fjooa")
+
+[node name="GUI" type="Control" parent="." unique_id=1505210768]
+custom_minimum_size = Vector2(1080, 1920)
+anchors_preset = 0
+offset_right = 1080.0
+offset_bottom = 1920.0
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI" unique_id=321118187]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MenuBar" type="MarginContainer" parent="GUI/VBoxContainer" unique_id=821623171]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 0
+
+[node name="ExitButton" type="TextureButton" parent="GUI/VBoxContainer/MenuBar" unique_id=616684659]
+modulate = Color(0.5254902, 0.8862745, 1, 1)
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+texture_normal = ExtResource("2_gdwoh")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="MainArea" type="Control" parent="GUI/VBoxContainer" unique_id=1523460933]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="GUI/VBoxContainer/MainArea" unique_id=306283604]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/VBoxContainer/MainArea/MarginContainer" unique_id=777536613]
+layout_mode = 2
+
+[node name="RulesText" type="RichTextLabel" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer" unique_id=1676002707]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[font name=\"res://assets/sprites/gui/Tomorrow-SemiBold.ttf\"]
+[color=#86e2ff]
+[font size=36]
+[center]BASE GAME[/center]
+
+The deck is made of 76 cards.
+		18 red cards: 9 suns, 4 moons, 3 keys
+		17 blue cards: 8 suns, 4 moons, 3 keys
+		16 green cards: 7 suns, 4 moons, 3 keys
+		15 yellow cards: 6 suns, 4 moons, 3 keys
+		8 doors: 2 for each color
+		10 Nightmare cards
+
+[center]OBJECTIVE OF THE GAME[/center]
+
+Unlock all 8 doors (visible at the top of the screen)
+To unlock the doors, you play cards from your hand, trying to form a valid sequence of 3 cards of the same color.
+
+[center]HOW TO PLAY CARDS[/center]
+
+At the beginning of the game, you are dealt cards until you have 5 location cards in your hand.
+Any door or nightmare drawn in this phase is put in the limbo (bottom left of the screen) and then reshuffled into the deck.
+
+During your game turn, you can play or discard a card.
+
+To play a card, move it to the labyrinth area (the black stripe above your hand of cards). 
+You can't play two subsequent cards, of any color combination, with the same symbol (sun, moon, key).
+If a valid sequence of 3 cards of the same color is played, a door of the same color is unlocked.
+ 
+To discard a card, move it to the bottom right corner of the screen.
+When a moon or a sun is discarded, a new card is drawn.
+When a key is discarded, a prophecy is triggered.
+    
+[center]PROPHECY[/center]
+
+Discarding a key will open a panel showing the top 5 cards of the deck.
+You can reorder the cards and the rightmost one will be discarded (useful to discard nightmares)
+Doors can’t be discarded.
+
+[center]DRAWING CARDS[/center]
+
+Cards are automatically drawn to refill the hand to 5 cards.
+If a location card is drawn, nothing happens.
+If a door is drawn and a matching color key is in hand, you have the option to use the key to unlock the door or to put the door in the limbo and then reshuffle it into the deck.
+If a nightmare is drawn, it must be resolved.
+
+[center]NIGHTMARES[/center]
+
+Nightmares can be resolved in 4 ways
+* Discard your hand
+* Discard the top 5 cards of the deck
+* Discard an already found door
+* Discard a key in hand
+
+After resolving the nightmare, the nightmare is discarded and new cards are drawn to fill the hand.
+Every new nightmare drawn must be resolved unless the resolution action was to discard the hand. In this case the nightmare are ignored and reshuffled into the deck.
+
+If the deck runs out of cards, you lose
+[/font]
+[/color]
+[/font]"
+vertical_alignment = 1
+
+[connection signal="pressed" from="GUI/VBoxContainer/MenuBar/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="meta_clicked" from="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/RulesText" to="." method="_on_rules_text_meta_clicked"]
