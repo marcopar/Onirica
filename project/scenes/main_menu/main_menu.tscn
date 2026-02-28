@@ -59,7 +59,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ResumeGame" type="Button" parent="VBoxContainer" unique_id=1094324561]
-custom_minimum_size = Vector2(0, 150)
+custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5254902, 0.8862745, 1, 1)
 theme_override_colors/font_focus_color = Color(0.5254902, 0.8862745, 1, 1)
@@ -87,8 +87,11 @@ grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_5seab")
 
+[node name="Panel3" type="Panel" parent="VBoxContainer" unique_id=1502984512]
+layout_mode = 2
+
 [node name="NewGame" type="Button" parent="VBoxContainer" unique_id=1730497483]
-custom_minimum_size = Vector2(0, 150)
+custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5254902, 0.8862745, 1, 1)
 theme_override_colors/font_focus_color = Color(0.5254902, 0.8862745, 1, 1)
@@ -117,7 +120,7 @@ mouse_filter = 2
 texture = SubResource("GradientTexture2D_5seab")
 
 [node name="Settings" type="Button" parent="VBoxContainer" unique_id=177957414]
-custom_minimum_size = Vector2(0, 150)
+custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5254902, 0.8862745, 1, 1)
 theme_override_colors/font_focus_color = Color(0.5254902, 0.8862745, 1, 1)
@@ -145,8 +148,43 @@ grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_5seab")
 
+[node name="Panel2" type="Panel" parent="VBoxContainer" unique_id=714259715]
+layout_mode = 2
+
+[node name="Rules" type="Button" parent="VBoxContainer" unique_id=2135788096]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_focus_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_hover_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_fonts/font = ExtResource("4_uqeha")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = ExtResource("5_wem23")
+theme_override_styles/pressed = ExtResource("5_wem23")
+theme_override_styles/hover = ExtResource("5_wem23")
+theme_override_styles/disabled = ExtResource("5_wem23")
+theme_override_styles/focus = ExtResource("5_wem23")
+text = "RULES"
+
+[node name="Shade" type="TextureRect" parent="VBoxContainer/Rules" unique_id=41920833]
+material = SubResource("CanvasItemMaterial_wem23")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_5seab")
+
+[node name="Panel" type="Panel" parent="VBoxContainer" unique_id=400464878]
+layout_mode = 2
+
 [node name="Credits" type="Button" parent="VBoxContainer" unique_id=1079749142]
-custom_minimum_size = Vector2(0, 150)
+custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.5254902, 0.8862745, 1, 1)
 theme_override_colors/font_focus_color = Color(0.5254902, 0.8862745, 1, 1)
@@ -177,4 +215,5 @@ texture = SubResource("GradientTexture2D_5seab")
 [connection signal="pressed" from="VBoxContainer/ResumeGame" to="." method="_on_resume_game_pressed"]
 [connection signal="pressed" from="VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="VBoxContainer/Rules" to="." method="_on_rules_pressed"]
 [connection signal="pressed" from="VBoxContainer/Credits" to="." method="_on_credits_pressed"]
