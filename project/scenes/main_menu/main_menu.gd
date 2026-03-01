@@ -3,7 +3,7 @@ extends Control
 class_name MainMenu
 
 @onready var resume_game: Button = $VBoxContainer/ResumeGame
-@onready var label: Label = $VBoxContainer/Label
+@onready var label: Label = $Label
 
 func _ready() -> void:	
 	AudioManager.play_menu_music()
