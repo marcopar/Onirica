@@ -3,10 +3,12 @@ extends Control
 class_name MainMenu
 
 @onready var resume_game: Button = $VBoxContainer/ResumeGame
+@onready var label: Label = $VBoxContainer/Label
 
 func _ready() -> void:	
 	AudioManager.play_menu_music()
 	resume_game.visible = GameManager.save_file_exists()
+	label.text = ProjectSettings.get_setting("application/config/version")
 			
 func _on_new_game_pressed() -> void:
 	AudioManager.play_uiclick_sound()
