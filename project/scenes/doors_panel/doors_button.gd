@@ -40,7 +40,7 @@ func set_lighted(enabled: bool) -> void:
 func is_lighted() -> bool:
 	return sprite_2d.self_modulate.r == LIGHT_DOOR
 	
-func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventScreenTouch:
 		var touch_event: InputEventScreenTouch = event
 		if touch_event.index > 0:

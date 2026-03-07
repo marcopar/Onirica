@@ -70,11 +70,11 @@ func play_door_sound() -> void:
 func play_uiclick_sound() -> void:
 	SoundManager.play_sound(UI_CLICK_7)
 
-func card_added_to_labyrinth(card: Card) -> void:
+func card_added_to_labyrinth(_card: Card) -> void:
 	play_card_played_sound()
 
-func card_added_to_discard(card: Card, draw_card: bool) -> void:
+func card_added_to_discard(_card: Card, _draw_card: bool) -> void:
 	play_card_played_sound()
 	
-func card_added_to_limbo(card: Card) -> void:
+func card_added_to_limbo(_card: Card) -> void:
 	play_card_played_sound()

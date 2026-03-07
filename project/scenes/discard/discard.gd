@@ -33,5 +33,5 @@ func _on_area_exited(area: Area2D) -> void:
 		if card.dragging:
 			highlight.enabled = false
 
-func card_return_to_hand(card: Card) -> void:
+func card_return_to_hand(_card: Card) -> void:
 	highlight.enabled = false

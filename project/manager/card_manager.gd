@@ -97,10 +97,10 @@ func create_card(type: CARD_TYPE, color: CARD_COLOR) -> CardModel:
 
 func create_base_deck() -> Array[CardModel]:
 	var deck: Array[CardModel] = []
-	for type in BASE_DECK.keys():
-		for color in BASE_DECK[type]:
+	for type: CARD_TYPE in BASE_DECK.keys():
+		for color: CARD_COLOR in BASE_DECK[type]:
 			var qty: int = BASE_DECK[type][color]
-			for i in range(0, qty):
+			for i: int in range(0, qty):
 				var card: CardModel = create_card(type, color)
 				deck.push_back(card)
 	return deck

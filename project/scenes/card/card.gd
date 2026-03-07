@@ -70,7 +70,7 @@ func set_discard_size() -> void:
 func set_limbo_size() -> void:
 	scale = LIMBO_SIZE
 	
-func set_front_texture():
+func set_front_texture() -> void:
 	sprite_2d.texture = front_texture
 	label.texture = Commons.get_colorblid_symbol(card_model.color)
 	if label.texture != null:
@@ -84,7 +84,7 @@ func set_front_texture():
 				label.position.x = -89
 				label.position.y = -90
 
-func set_back_texture():
+func set_back_texture() -> void:
 	sprite_2d.texture = back_texture
 	label.texture = null
 	
