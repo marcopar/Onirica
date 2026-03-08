@@ -93,7 +93,7 @@ grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_5seab")
 
-[node name="Spacer1" type="Panel" parent="VBoxContainer" unique_id=1502984512]
+[node name="Spacer1" type="Control" parent="VBoxContainer" unique_id=90762322]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
@@ -155,7 +155,7 @@ grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_5seab")
 
-[node name="Spacer2" type="Panel" parent="VBoxContainer" unique_id=714259715]
+[node name="Spacer2" type="Control" parent="VBoxContainer" unique_id=1853878256]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
@@ -188,7 +188,7 @@ grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_5seab")
 
-[node name="Spacer3" type="Panel" parent="VBoxContainer" unique_id=400464878]
+[node name="Spacer3" type="Control" parent="VBoxContainer" unique_id=2022224666]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 

@@ -105,6 +105,16 @@ func create_base_deck() -> Array[CardModel]:
 				deck.push_back(card)
 	return deck
 	
+func create_the_glyphs_deck() -> Array[CardModel]:
+	var deck: Array[CardModel] = []
+	for type: CARD_TYPE in GLYPHS_EXPANSION_DECK.keys():
+		for color: CARD_COLOR in GLYPHS_EXPANSION_DECK[type]:
+			var qty: int = GLYPHS_EXPANSION_DECK[type][color]
+			for i: int in range(0, qty):
+				var card: CardModel = create_card(type, color)
+				deck.push_back(card)
+	return deck
+	
 func create_test_deck() -> Array[CardModel]:
 	var deck: Array[CardModel] = []
 	var card: CardModel = create_card(CardManager.CARD_TYPE.SUN, CardManager.CARD_COLOR.RED)

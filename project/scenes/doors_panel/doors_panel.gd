@@ -53,7 +53,7 @@ func set_doors_found(color: CardManager.CARD_COLOR, door_count: int) -> void:
 	if doors == 12:
 		var first_door: int = 1 + DOOR_COLORS_12.find(color)
 		for i in range(first_door, first_door + 3):
-			var node: Sprite2D = door_container.find_child(str("D", i))
+			var node: DoorsButton = door_container.find_child(str("D", i))
 			if i - first_door < door_count:
 				node.set_lighted(true)
 			else:

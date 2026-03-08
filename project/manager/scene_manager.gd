@@ -14,3 +14,6 @@ func switch_to_settings() -> void:
 	
 func switch_to_rules() -> void:
 	get_tree().change_scene_to_file("res://scenes/rules_screen/rules.tscn")
+	
+func switch_to_expansion_selection() -> void:
+	get_tree().change_scene_to_file("res://scenes/expansion_selection_screen/expansion_selection.tscn")

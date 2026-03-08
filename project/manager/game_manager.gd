@@ -34,6 +34,8 @@ var discard: Array[CardModel]:
 		discard = value
 		
 var doors_to_be_found: int
+
+var the_glyphs_on: bool = false
 		
 #Variant because  we want to have an  Array as value
 var found_doors: Dictionary[CardManager.CARD_COLOR, Variant] = {
@@ -53,6 +55,9 @@ func _ready() -> void:
 func new_game() -> void:
 	deck_model = DeckModel.new()
 	deck_model.deck = CardManager.create_base_deck()
+	if the_glyphs_on:
+		deck_model.deck.append_array(CardManager.create_the_glyphs_deck())
+		
 	doors_to_be_found = deck_model.get_number_of(CardManager.CARD_TYPE.DOOR)
 	deck_model.shuffle()
 	
@@ -153,7 +158,8 @@ func get_save_dict() -> Dictionary[String, Variant]:
 			CardManager.CARD_COLOR.GREEN: [],
 			CardManager.CARD_COLOR.BLUE: [],
 			CardManager.CARD_COLOR.YELLOW: []
-		}
+		},
+		"the_glyphs_on": the_glyphs_on
 	}
 	for c in deck_model.deck:
 		dict["deck"].append({"type": c.type, "color": c.color})
@@ -221,6 +227,7 @@ func load_game() -> void:
 				discard.append(CardManager.create_card(c_data["type"] as int, c_data["color"] as int))
 				
 			doors_to_be_found = dict["doors_to_be_found"]
+			the_glyphs_on = dict["the_glyphs_on"]
 			
 			found_doors = {
 				CardManager.CARD_COLOR.RED: [],
