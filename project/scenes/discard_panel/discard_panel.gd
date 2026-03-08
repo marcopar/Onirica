@@ -86,23 +86,23 @@ func setup() -> void:
 		var color: CardManager.CARD_COLOR = card_model.color
 		if type == CardManager.CARD_TYPE.SUN or type == CardManager.CARD_TYPE.MOON or \
 			type == CardManager.CARD_TYPE.KEY or type == CardManager.CARD_TYPE.GLYPH:
-				var counter = counters[type][color]
+				var counter: int = counters[type][color]
 				counters[type][color] = counter + 1
 	
-	red_sun.set_number(counters[CardManager.CARD_TYPE.SUN][CardManager.CARD_COLOR.RED])
-	red_moon.set_number(counters[CardManager.CARD_TYPE.MOON][CardManager.CARD_COLOR.RED])
-	red_key.set_number(counters[CardManager.CARD_TYPE.KEY][CardManager.CARD_COLOR.RED])
-	red_glyph.set_number(counters[CardManager.CARD_TYPE.GLYPH][CardManager.CARD_COLOR.RED])
-	green_sun.set_number(counters[CardManager.CARD_TYPE.SUN][CardManager.CARD_COLOR.GREEN])
-	green_moon.set_number(counters[CardManager.CARD_TYPE.MOON][CardManager.CARD_COLOR.GREEN])
-	green_key.set_number(counters[CardManager.CARD_TYPE.KEY][CardManager.CARD_COLOR.GREEN])
-	green_glyph.set_number(counters[CardManager.CARD_TYPE.GLYPH][CardManager.CARD_COLOR.GREEN])
-	blue_sun.set_number(counters[CardManager.CARD_TYPE.SUN][CardManager.CARD_COLOR.BLUE])
-	blue_moon.set_number(counters[CardManager.CARD_TYPE.MOON][CardManager.CARD_COLOR.BLUE])
-	blue_key.set_number(counters[CardManager.CARD_TYPE.KEY][CardManager.CARD_COLOR.BLUE])
-	blue_glyph.set_number(counters[CardManager.CARD_TYPE.GLYPH][CardManager.CARD_COLOR.BLUE])
-	yellow_sun.set_number(counters[CardManager.CARD_TYPE.SUN][CardManager.CARD_COLOR.YELLOW])
-	yellow_moon.set_number(counters[CardManager.CARD_TYPE.MOON][CardManager.CARD_COLOR.YELLOW])
-	yellow_key.set_number(counters[CardManager.CARD_TYPE.KEY][CardManager.CARD_COLOR.YELLOW])
-	yellow_glyph.set_number(counters[CardManager.CARD_TYPE.GLYPH][CardManager.CARD_COLOR.YELLOW])
+	red_sun.set_number(counters[CardManager.CARD_TYPE.SUN][CardManager.CARD_COLOR.RED] as int)
+	red_moon.set_number(counters[CardManager.CARD_TYPE.MOON][CardManager.CARD_COLOR.RED] as int)
+	red_key.set_number(counters[CardManager.CARD_TYPE.KEY][CardManager.CARD_COLOR.RED] as int)
+	red_glyph.set_number(counters[CardManager.CARD_TYPE.GLYPH][CardManager.CARD_COLOR.RED] as int)
+	green_sun.set_number(counters[CardManager.CARD_TYPE.SUN][CardManager.CARD_COLOR.GREEN] as int)
+	green_moon.set_number(counters[CardManager.CARD_TYPE.MOON][CardManager.CARD_COLOR.GREEN] as int)
+	green_key.set_number(counters[CardManager.CARD_TYPE.KEY][CardManager.CARD_COLOR.GREEN] as int)
+	green_glyph.set_number(counters[CardManager.CARD_TYPE.GLYPH][CardManager.CARD_COLOR.GREEN] as int)
+	blue_sun.set_number(counters[CardManager.CARD_TYPE.SUN][CardManager.CARD_COLOR.BLUE] as int)
+	blue_moon.set_number(counters[CardManager.CARD_TYPE.MOON][CardManager.CARD_COLOR.BLUE]  as int)
+	blue_key.set_number(counters[CardManager.CARD_TYPE.KEY][CardManager.CARD_COLOR.BLUE] as int)
+	blue_glyph.set_number(counters[CardManager.CARD_TYPE.GLYPH][CardManager.CARD_COLOR.BLUE] as int)
+	yellow_sun.set_number(counters[CardManager.CARD_TYPE.SUN][CardManager.CARD_COLOR.YELLOW] as int)
+	yellow_moon.set_number(counters[CardManager.CARD_TYPE.MOON][CardManager.CARD_COLOR.YELLOW] as int)
+	yellow_key.set_number(counters[CardManager.CARD_TYPE.KEY][CardManager.CARD_COLOR.YELLOW] as int)
+	yellow_glyph.set_number(counters[CardManager.CARD_TYPE.GLYPH][CardManager.CARD_COLOR.YELLOW] as int)
 	
