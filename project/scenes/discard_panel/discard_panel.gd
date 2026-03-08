@@ -45,6 +45,11 @@ func _ready() -> void:
 	yellow_label.texture = Commons.get_colorblid_symbol(CardManager.CARD_COLOR.YELLOW)
 	multi_label.texture = Commons.get_colorblid_symbol(CardManager.CARD_COLOR.MULTI)
 	
+	red_glyph.visible = GameManager.the_glyphs_on
+	green_glyph.visible = GameManager.the_glyphs_on
+	blue_glyph.visible = GameManager.the_glyphs_on
+	yellow_glyph.visible = GameManager.the_glyphs_on
+		
 	multi.visible = false
 
 	

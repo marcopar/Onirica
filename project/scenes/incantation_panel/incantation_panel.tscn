@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://cile6otgqkmob"]
+
+[ext_resource type="Script" uid="uid://ync8xmqofvpa" path="res://scenes/incantation_panel/incantation_panel.gd" id="1_tvoi7"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_udjif"]
+blend_mode = 3
+
+[sub_resource type="Curve" id="Curve_18j78"]
+_data = [Vector2(0, 0.3), 0.0, 0.0, 0, 0]
+point_count = 1
+metadata/_snap_enabled = true
+
+[sub_resource type="CurveTexture" id="CurveTexture_std26"]
+width = 1080
+curve = SubResource("Curve_18j78")
+
+[node name="IncantationPanel" type="Node2D" unique_id=1958781877]
+script = ExtResource("1_tvoi7")
+
+[node name="Shade" type="Sprite2D" parent="." unique_id=507077130]
+material = SubResource("CanvasItemMaterial_udjif")
+scale = Vector2(1, 400)
+texture = SubResource("CurveTexture_std26")
+centered = false
+
+[node name="CardContainer" type="Node2D" parent="." unique_id=1029473287]
+position = Vector2(0, 200)
+
+[node name="CardPosition1" type="Marker2D" parent="CardContainer" unique_id=383469903]
+position = Vector2(110, 0)
+
+[node name="CardPosition2" type="Marker2D" parent="CardContainer" unique_id=1490904236]
+position = Vector2(320, 0)
+
+[node name="CardPosition3" type="Marker2D" parent="CardContainer" unique_id=595051146]
+position = Vector2(530, 0)
+
+[node name="CardPosition4" type="Marker2D" parent="CardContainer" unique_id=1697231924]
+position = Vector2(740, 0)
+
+[node name="CardPosition5" type="Marker2D" parent="CardContainer" unique_id=1270620518]
+position = Vector2(950, 0)

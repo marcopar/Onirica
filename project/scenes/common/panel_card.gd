@@ -32,13 +32,20 @@ func handle_position_update(drag_event: InputEventScreenDrag) -> void:
 func abort_dragging_action() -> void:
 	super.abort_dragging_action()
 	z_index = 0
-	SignalManager.panel_cards_reset_position.emit(self)
+	if is_in_group(Constants.GROUP_PROPHECY_CARDS):
+		SignalManager.prophecy_cards_reset_position.emit(self)
+	if is_in_group(Constants.GROUP_INCANTATION_CARDS):
+		SignalManager.incantation_cards_reset_position.emit(self)
 
 func handle_overlapping_areas() -> bool:
 	for area in get_overlapping_areas():
 		if area.is_in_group(Constants.GROUP_PROPHECY_CARDS):
 			self.z_index = 0
-			SignalManager.swap_panel_cards.emit(self, area)
+			SignalManager.swap_prophecy_cards.emit(self, area)
+			return true
+		if area.is_in_group(Constants.GROUP_INCANTATION_CARDS):
+			self.z_index = 0
+			SignalManager.swap_incantation_cards.emit(self, area)
 			return true
 	return false
 	

@@ -8,7 +8,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ib5bh"]
 size = Vector2(236, 364)
 
-[node name="ProphecyCard" unique_id=1079060610 instance=ExtResource("1_tl6pa")]
+[node name="PanelCard" unique_id=1079060610 instance=ExtResource("1_tl6pa")]
 script = ExtResource("2_u1jo8")
 
 [node name="Sprite2D" parent="." index="0" unique_id=1726629560]

@@ -22,8 +22,9 @@ extends Node2D
 @onready var win_lose_panel_container: Control = $GUI/VBoxContainer/MainArea/WinLosePanelContainer
 @onready var win_panel: Control = $GUI/VBoxContainer/MainArea/WinLosePanelContainer/WinPanel
 @onready var lose_panel: Control = $GUI/VBoxContainer/MainArea/WinLosePanelContainer/LosePanel
+@onready var incantation_panel: IncantationPanel = $IncantationPanel
 
-const CARD = preload("uid://fib6nrvub15n")
+const CARD = preload("res://scenes/card/card.tscn")
 
 var hand_markers: Array[Marker2D]
 
@@ -194,8 +195,11 @@ func card_added_to_labyrinth(card: Card) -> void:
 func card_added_to_discard(card: Card, pdraw_card: bool) -> void:
 	GameManager.card_added_to_discard(card.card_model)
 	card.set_outline(false)
-	if not prophecy_panel.visible and not open_door_panel.visible and not nightmare_panel.visible and card.card_model.type == CardManager.CARD_TYPE.KEY:
+	if not prophecy_panel.visible and not incantation_panel.visible and not open_door_panel.visible and not nightmare_panel.visible and card.card_model.type == CardManager.CARD_TYPE.KEY:
 		open_prophecy_panel()
+		return
+	if not incantation_panel.visible and not prophecy_panel.visible and not open_door_panel.visible and not nightmare_panel.visible and card.card_model.type == CardManager.CARD_TYPE.GLYPH:
+		open_incantation_panel()
 		return
 	if pdraw_card:
 		await draw_full_hand(true, true, true)
@@ -211,6 +215,27 @@ func open_prophecy_panel() -> void:
 	
 	prophecy_panel.card_models = first_5_cards
 	prophecy_panel.set_panel_enabled(true)
+	var all_doors: bool = true
+	for card_model in first_5_cards:
+		if card_model == null:
+			continue
+		if card_model.type != CardManager.CARD_TYPE.DOOR:
+			all_doors = false
+			break
+	if all_doors:
+		show_lose_panel()
+
+func open_incantation_panel() -> void:
+	set_hand_freezed(true)
+	exit_button.visible = false
+	
+	#first 5 cards filling with nulls at the beginning if there aren't enough cards
+	var null_cards: Array[CardModel] = [null, null, null, null, null]
+	var first_5_cards: Array[CardModel] = null_cards + GameManager.deck_model.deck.slice(0, min(5,  GameManager.deck_model.get_number_of_cards()) as int)
+	first_5_cards = first_5_cards.slice(first_5_cards.size() - 5, first_5_cards.size())
+	
+	incantation_panel.card_models = first_5_cards
+	incantation_panel.set_panel_enabled(true)
 	var all_doors: bool = true
 	for card_model in first_5_cards:
 		if card_model == null:
@@ -267,6 +292,9 @@ func touch_event(object: Variant) -> void:
 	if prophecy_panel.visible and object is Deck:
 		await handle_prophecy_action()		
 		return
+	if incantation_panel.visible and object is Deck:
+		await handle_incantation_action()		
+		return
 	pass
 
 func handle_prophecy_action() -> void:
@@ -296,7 +324,7 @@ func handle_prophecy_action() -> void:
 		#we don't want to animate prophecy cards that are to be used only in the panel
 		prophecy_cards[i].queue_free()
 		if i < 4:
-			#thhe first 4 cardds from the panel go to the deck
+			#the first 4 cardds from the panel go to the deck
 			#create a fake card showing the back texturre moving to the deck
 			var card: Card = create_card(card_model, card_container, prophecy_panel.card_markers[i].global_position, Card.FULL_SIZE, false, Constants.DRAGGING_BASE_Z)
 			card.set_back_texture()
@@ -313,7 +341,7 @@ func handle_prophecy_action() -> void:
 	#execute the actual deck manipulation
 	#remove the discarded card from the cards to be added back to the deck
 	card_models.pop_at(4)
-	#add them back in the selected order in the panel
+	#add them at the top of the deck in the selected order in the panel
 	card_models.reverse()
 	for card_model in card_models:
 		if card_model == null:
@@ -322,6 +350,50 @@ func handle_prophecy_action() -> void:
 		
 	prophecy_panel.set_panel_enabled(false)
 	prophecy_panel.reset()
+	exit_button.visible = true
+	deck.set_outline(false)
+	await draw_full_hand(false, true, true)
+	ignore_gui_events = false
+	return
+	
+func handle_incantation_action() -> void:
+	if ignore_gui_events:
+		return
+	ignore_gui_events = true
+	#reorder cards and close the prophecy panel
+	var card_models: Array[CardModel] = incantation_panel.card_models
+	var incantation_cards: Array[PanelCard] = incantation_panel.panel_cards
+		
+	#execute the animations
+	#in this order for animation purposes
+	for i in range(4, -1, -1):
+		#model in the i position as ordered in the panel
+		var card_model: CardModel = card_models[i]
+		if card_model == null:
+			#skip the empty slots
+			continue
+		#remove the card from the deck
+		GameManager.deck_model.get_next_card()
+		#let the placholder card disappear before animation
+		#we don't want to animate prophecy cards that are to be used only in the panel
+		incantation_cards[i].queue_free()
+		#cards go to the deck
+		#create a fake card showing the back texturre moving to the deck
+		var card: Card = create_card(card_model, card_container, incantation_panel.card_markers[i].global_position, Card.FULL_SIZE, false, Constants.DRAGGING_BASE_Z)
+		card.set_back_texture()
+		await animate_card_to_deck(card)
+		card.queue_free()
+	
+	#execute the actual deck manipulation
+	#add them at the bootom of the deck in the selected order in the panel
+	card_models.reverse()
+	for card_model in card_models:
+		if card_model == null:
+			continue
+		GameManager.deck_model.add_card_back(card_model)
+		
+	incantation_panel.set_panel_enabled(false)
+	incantation_panel.reset()
 	exit_button.visible = true
 	deck.set_outline(false)
 	await draw_full_hand(false, true, true)
