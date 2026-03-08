@@ -1,6 +1,7 @@
 extends DraggableSprite
 
 class_name PanelCard
+
 @onready var label: TextureRect = $Label
 
 var card_model: CardModel:

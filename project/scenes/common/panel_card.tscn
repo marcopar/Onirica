@@ -3,7 +3,16 @@
 [ext_resource type="PackedScene" uid="uid://mnnbxl1vr0ep" path="res://scenes/common/draggable_sprite.tscn" id="1_tl6pa"]
 [ext_resource type="Script" uid="uid://n6ncncvi88f6" path="res://scenes/common/panel_card.gd" id="2_u1jo8"]
 [ext_resource type="Texture2D" uid="uid://r45clfjk4oy1" path="res://assets/sprites/cards/blue_glyph.png" id="3_tcnjq"]
+[ext_resource type="Shader" uid="uid://ev2hcn4hhgq2" path="res://shaders/outline.gdshader" id="3_u1jo8"]
 [ext_resource type="Texture2D" uid="uid://b4oup1v83vv6d" path="res://assets/sprites/icons/circle.svg" id="4_if1cs"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tcnjq"]
+resource_local_to_scene = true
+shader = ExtResource("3_u1jo8")
+shader_parameter/color = Color(1, 1, 0, 1)
+shader_parameter/width = 5.0
+shader_parameter/enabled = false
+shader_parameter/pulse_frequency = 10.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ib5bh"]
 size = Vector2(236, 364)
@@ -12,6 +21,7 @@ size = Vector2(236, 364)
 script = ExtResource("2_u1jo8")
 
 [node name="Sprite2D" parent="." index="0" unique_id=1726629560]
+material = SubResource("ShaderMaterial_tcnjq")
 texture = ExtResource("3_tcnjq")
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1807765533]

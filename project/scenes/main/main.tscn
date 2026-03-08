@@ -18,7 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://ddo0ayeeujk0m" path="res://scenes/game_end_panel/game_end_panel.tscn" id="15_raeie"]
 [ext_resource type="FontFile" uid="uid://ocls0l48n0q2" path="res://assets/sprites/gui/Tomorrow-Bold.ttf" id="16_hxu8e"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ou6is"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nvumn"]
 resource_local_to_scene = true
 shader = ExtResource("4_th5th")
 shader_parameter/color = Color(1, 1, 1, 1)
@@ -48,7 +48,7 @@ position = Vector2(540, 960)
 texture = ExtResource("2_ec000")
 
 [node name="Deck" parent="." unique_id=1865964864 instance=ExtResource("3_25a8g")]
-material = SubResource("ShaderMaterial_ou6is")
+material = SubResource("ShaderMaterial_nvumn")
 position = Vector2(540, 1650)
 
 [node name="DeckCounter" parent="Deck" unique_id=902690773 instance=ExtResource("11_ouso4")]

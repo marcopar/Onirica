@@ -21,11 +21,6 @@ var card_models: Array[CardModel]:
 		return card_models
 	set(value):
 		card_models = value
-		if card_models[4] == null:
-			#no cards for the prophecy
-			SignalManager.deck_outline_enabled.emit(false)
-		else:
-			SignalManager.deck_outline_enabled.emit(true)
 
 var panel_cards: Array[PanelCard]:
 	get:
@@ -45,6 +40,7 @@ func set_panel_enabled(enabled: bool) -> void:
 	visible = enabled
 	if visible:
 		process_mode = Node.PROCESS_MODE_INHERIT
+		var door_present: bool = false
 		for card_model in card_models:
 			if card_model == null:
 				#skip empty slots (less than 5 cards prophecy)
@@ -53,8 +49,12 @@ func set_panel_enabled(enabled: bool) -> void:
 			var marker: Marker2D = card_markers[card_models.find(card_model)]
 			var panel_card: PanelCard = create_incantation_card(card_model, card_container, marker.position, PROPHECY_SIZE, true, 0)
 			panel_card.rotation = marker.rotation
+			if card_model.type == CardManager.CARD_TYPE.DOOR:
+				panel_card.set_outline(true)
+				door_present = true
 			panel_cards.push_back(panel_card)
 			pass
+		SignalManager.deck_outline_enabled.emit(!door_present)
 	else:
 		process_mode = Node.PROCESS_MODE_DISABLED
 
