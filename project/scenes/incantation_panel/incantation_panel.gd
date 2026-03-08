@@ -26,7 +26,10 @@ var panel_cards: Array[PanelCard]:
 	get:
 		return panel_cards
 		
+var door_present: bool = false
+		
 func _ready() -> void:
+	SignalManager.touch_event.connect(touch_event)
 	SignalManager.swap_incantation_cards.connect(swap_incantation_cards)
 	SignalManager.incantation_cards_reset_position.connect(incantation_cards_reset_position)
 
@@ -39,8 +42,7 @@ func _ready() -> void:
 func set_panel_enabled(enabled: bool) -> void:
 	visible = enabled
 	if visible:
-		process_mode = Node.PROCESS_MODE_INHERIT
-		var door_present: bool = false
+		process_mode = Node.PROCESS_MODE_INHERIT		
 		for card_model in card_models:
 			if card_model == null:
 				#skip empty slots (less than 5 cards prophecy)
@@ -64,6 +66,7 @@ func reset() -> void:
 			object.queue_free()
 	card_models.clear()
 	panel_cards.clear()
+	door_present = false
 		
 func create_incantation_card(model: CardModel, parent: Node2D, pposition: Vector2, pscale: Vector2, pickable: bool, pz_index: int) -> PanelCard:
 	var card: PanelCard = PANEL_CARD.instantiate()	
@@ -102,3 +105,8 @@ func incantation_cards_reset_position(card: PanelCard) -> void:
 	
 	card.position = marker.position
 	card.rotation = marker.rotation	
+
+func touch_event(object: Variant) -> void:
+	if object is PanelCard:
+		var panel_card: PanelCard = object
+		SignalManager.incantation_door_selected.emit(panel_card)

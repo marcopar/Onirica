@@ -49,6 +49,7 @@ func _ready() -> void:
 	SignalManager.key_open_door_selected.connect(key_open_door_selected)
 	SignalManager.deck_outline_enabled.connect(deck_outline_enabled)
 	SignalManager.discard_panel_closed.connect(discard_panel_closed)
+	SignalManager.incantation_door_selected.connect(incantation_door_selected)
 	
 	hand_markers.push_back(hand_marker_1)
 	hand_markers.push_back(hand_marker_2)
@@ -292,8 +293,8 @@ func touch_event(object: Variant) -> void:
 	if prophecy_panel.visible and object is Deck:
 		await handle_prophecy_action()		
 		return
-	if incantation_panel.visible and object is Deck:
-		await handle_incantation_action()		
+	if incantation_panel.visible and object is Deck:		
+		await handle_incantation_action(object)
 		return
 	pass
 
@@ -356,10 +357,28 @@ func handle_prophecy_action() -> void:
 	ignore_gui_events = false
 	return
 	
-func handle_incantation_action() -> void:
+func incantation_door_selected(panel_card: PanelCard) -> void:
+	handle_incantation_action(panel_card)
+
+func handle_incantation_action(object: Variant) -> void:
 	if ignore_gui_events:
 		return
 	ignore_gui_events = true
+	
+	if object is Deck and incantation_panel.door_present:
+		#ignore clicks on deck if user has doors to select
+		ignore_gui_events = false
+		return
+		
+	var door_panel_card_model: CardModel = null
+	if object is PanelCard:
+		var panel_card: PanelCard = object
+		if panel_card.card_model.type != CardManager.CARD_TYPE.DOOR:
+			#ignore click on cards that are not doors
+			ignore_gui_events = false
+			return
+		door_panel_card_model = panel_card.card_model
+			
 	#reorder cards and close the prophecy panel
 	var card_models: Array[CardModel] = incantation_panel.card_models
 	var incantation_cards: Array[PanelCard] = incantation_panel.panel_cards
@@ -378,11 +397,22 @@ func handle_incantation_action() -> void:
 		#we don't want to animate prophecy cards that are to be used only in the panel
 		incantation_cards[i].queue_free()
 		#cards go to the deck
-		#create a fake card showing the back texturre moving to the deck
-		var card: Card = create_card(card_model, card_container, incantation_panel.card_markers[i].global_position, Card.FULL_SIZE, false, Constants.DRAGGING_BASE_Z)
-		card.set_back_texture()
-		await animate_card_to_deck(card)
-		card.queue_free()
+		if card_model == door_panel_card_model:
+			card_models.erase(card_model)
+			var door_card: Card = create_card(card_model, card_container, deck.position, Card.FULL_SIZE, false, Constants.DRAGGING_BASE_Z)
+			door_card.set_back_texture()		
+			await door_found(door_card)
+			GameManager.set_door_as_found(card_model)
+			doors_panel.set_doors_found(door_card.card_model.color, GameManager.found_doors[door_card.card_model.color].size() as int)
+			if GameManager.check_won_game():
+				show_win_panel()
+				return
+		else:
+			#create a fake card showing the back texturre moving to the deck
+			var card: Card = create_card(card_model, card_container, incantation_panel.card_markers[i].global_position, Card.FULL_SIZE, false, Constants.DRAGGING_BASE_Z)
+			card.set_back_texture()
+			await animate_card_to_deck(card)
+			card.queue_free()
 	
 	#execute the actual deck manipulation
 	#add them at the bootom of the deck in the selected order in the panel

@@ -39,6 +39,7 @@ func abort_dragging_action() -> void:
 		SignalManager.incantation_cards_reset_position.emit(self)
 
 func handle_overlapping_areas() -> bool:
+	abort_dragging_action()	
 	for area in get_overlapping_areas():
 		if area.is_in_group(Constants.GROUP_PROPHECY_CARDS):
 			self.z_index = 0
@@ -49,6 +50,12 @@ func handle_overlapping_areas() -> bool:
 			SignalManager.swap_incantation_cards.emit(self, area)
 			return true
 	return false
+
+func touch_action() -> void:
+	if is_in_group(Constants.GROUP_PROPHECY_CARDS):
+		return
+	if is_in_group(Constants.GROUP_INCANTATION_CARDS) and card_model.type == CardManager.CARD_TYPE.DOOR:
+		SignalManager.touch_event.emit(self)
 	
 func _to_string() -> String:
 	return card_model.to_string()
