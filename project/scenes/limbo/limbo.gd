@@ -9,10 +9,6 @@ func _ready() -> void:
 	SignalManager.card_added_to_limbo.connect(card_added_to_limbo)
 	SignalManager.card_removed_from_limbo.connect(card_removed_from_limbo)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
 func card_added_to_limbo(card: Card) -> void:
 	card.set_limbo_size()
 	card.hand_position = -1

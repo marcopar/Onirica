@@ -20,7 +20,7 @@ const DOOR_COLORS_12: Array[CardManager.CARD_COLOR] = [
 const MAX_DOORS: int = 12
 var doors: int
 
-func setup(door_count: int):
+func setup(door_count: int) -> void:
 	doors = door_count
 	
 	for i in range(1, MAX_DOORS + 1):
@@ -41,7 +41,7 @@ func setup(door_count: int):
 			node.visible = true
 			node.set_color(DOOR_COLORS_12[i-first_door])
 		
-func set_doors_found(color: CardManager.CARD_COLOR, door_count: int):
+func set_doors_found(color: CardManager.CARD_COLOR, door_count: int) -> void:
 	if doors == 8:
 		var first_door: int = 3 + DOOR_COLORS_8.find(color)
 		for i in range(first_door, first_door + 2):
@@ -53,7 +53,7 @@ func set_doors_found(color: CardManager.CARD_COLOR, door_count: int):
 	if doors == 12:
 		var first_door: int = 1 + DOOR_COLORS_12.find(color)
 		for i in range(first_door, first_door + 3):
-			var node: Sprite2D = door_container.find_child(str("D", i))
+			var node: DoorsButton = door_container.find_child(str("D", i))
 			if i - first_door < door_count:
 				node.set_lighted(true)
 			else:

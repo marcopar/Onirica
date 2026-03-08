@@ -23,7 +23,7 @@ func set_outline(enabled: bool) -> void:
 	##the shader has an instance parameter to enable it or not on the single card
 	sprite_2d.material.set_shader_parameter("enabled", enabled)
 	
-func _notification(what : int):
+func _notification(what : int) -> void:
 	if dragging and what == NOTIFICATION_WM_MOUSE_EXIT:
 		abort_dragging_action()
 
@@ -45,7 +45,7 @@ func _input(event: InputEvent) -> void:
 			drag_start = drag_event.position
 		handle_position_update(drag_event)
 
-func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventScreenTouch:
 		get_viewport().set_input_as_handled()
 		var touch_event: InputEventScreenTouch = event

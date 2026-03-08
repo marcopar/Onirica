@@ -11,10 +11,9 @@ func _ready() -> void:
 	label.text = ProjectSettings.get_setting("application/config/version")
 			
 func _on_new_game_pressed() -> void:
-	AudioManager.play_uiclick_sound()
-	GameManager.new_game()
+	AudioManager.play_uiclick_sound()	
 	AudioManager.play_game_music()
-	SceneManager.switch_to_game()
+	SceneManager.switch_to_expansion_selection()
 	
 func _on_resume_game_pressed() -> void:
 	AudioManager.play_uiclick_sound()

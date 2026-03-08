@@ -46,11 +46,11 @@ func _on_area_exited(area: Area2D) -> void:
 		if card.dragging:
 			highlight.enabled = false
 			
-func card_return_to_hand(card: Card) -> void:
+func card_return_to_hand(_card: Card) -> void:
 	highlight.enabled = false
 
 
-func _on_scroll_input_area_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _on_scroll_input_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventScreenTouch:
 		labyrinth_dragging = event.pressed
 		pass
