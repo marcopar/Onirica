@@ -22,8 +22,9 @@ extends Node2D
 @onready var win_lose_panel_container: Control = $GUI/VBoxContainer/MainArea/WinLosePanelContainer
 @onready var win_panel: Control = $GUI/VBoxContainer/MainArea/WinLosePanelContainer/WinPanel
 @onready var lose_panel: Control = $GUI/VBoxContainer/MainArea/WinLosePanelContainer/LosePanel
+@onready var incantation_panel: IncantationPanel = $IncantationPanel
 
-const CARD = preload("uid://fib6nrvub15n")
+const CARD = preload("res://scenes/card/card.tscn")
 
 var hand_markers: Array[Marker2D]
 
@@ -48,6 +49,7 @@ func _ready() -> void:
 	SignalManager.key_open_door_selected.connect(key_open_door_selected)
 	SignalManager.deck_outline_enabled.connect(deck_outline_enabled)
 	SignalManager.discard_panel_closed.connect(discard_panel_closed)
+	SignalManager.incantation_door_selected.connect(incantation_door_selected)
 	
 	hand_markers.push_back(hand_marker_1)
 	hand_markers.push_back(hand_marker_2)
@@ -58,7 +60,7 @@ func _ready() -> void:
 	get_viewport().physics_object_picking_sort = true
 
 	recreate_game_objects()
-	await draw_full_hand(false, false, false)
+	await draw_full_hand(false, false)
 	
 	SignalManager.new_game.emit()
 	
@@ -114,7 +116,7 @@ func find_card_node(card_model: CardModel) -> Card:
 			return card
 	return null
 
-func draw_full_hand(empty_limbo_for_each_card: bool, nightmares_enabled: bool, doors_enabled: bool):
+func draw_full_hand(nightmares_enabled: bool, doors_enabled: bool) -> void:
 	set_hand_freezed(true)
 	while true:
 		var card: Card = await draw_card(nightmares_enabled, doors_enabled)
@@ -181,24 +183,27 @@ func card_added_to_labyrinth(card: Card) -> void:
 		var door_card: Card = create_card(card_model, card_container, deck.position, Card.FULL_SIZE, false, Constants.DRAGGING_BASE_Z)
 		door_card.set_back_texture()		
 		await door_found(door_card)
-		doors_panel.set_doors_found(door_card.card_model.color, GameManager.found_doors[door_card.card_model.color].size())
+		doors_panel.set_doors_found(door_card.card_model.color, GameManager.found_doors[door_card.card_model.color].size() as int)
 		if GameManager.check_won_game():
 			show_win_panel()
 			return
 		else:
 			await shuffle()
-			await draw_full_hand(true, true, true)
+			await draw_full_hand(true, true)
 	else:
-		await draw_full_hand(true, true, true)
+		await draw_full_hand(true, true)
 
 func card_added_to_discard(card: Card, pdraw_card: bool) -> void:
 	GameManager.card_added_to_discard(card.card_model)
 	card.set_outline(false)
-	if not prophecy_panel.visible and not open_door_panel.visible and not nightmare_panel.visible and card.card_model.type == CardManager.CARD_TYPE.KEY:
+	if not prophecy_panel.visible and not incantation_panel.visible and not open_door_panel.visible and not nightmare_panel.visible and card.card_model.type == CardManager.CARD_TYPE.KEY:
 		open_prophecy_panel()
 		return
+	if not incantation_panel.visible and not prophecy_panel.visible and not open_door_panel.visible and not nightmare_panel.visible and card.card_model.type == CardManager.CARD_TYPE.GLYPH:
+		open_incantation_panel()
+		return
 	if pdraw_card:
-		await draw_full_hand(true, true, true)
+		await draw_full_hand(true, true)
 
 func open_prophecy_panel() -> void:
 	set_hand_freezed(true)
@@ -206,11 +211,32 @@ func open_prophecy_panel() -> void:
 	
 	#first 5 cards filling with nulls at the beginning if there aren't enough cards
 	var null_cards: Array[CardModel] = [null, null, null, null, null]
-	var first_5_cards: Array[CardModel] = null_cards + GameManager.deck_model.deck.slice(0, min(5,  GameManager.deck_model.get_number_of_cards()))
+	var first_5_cards: Array[CardModel] = null_cards + GameManager.deck_model.deck.slice(0, min(5,  GameManager.deck_model.get_number_of_cards()) as int)
 	first_5_cards = first_5_cards.slice(first_5_cards.size() - 5, first_5_cards.size())
 	
 	prophecy_panel.card_models = first_5_cards
 	prophecy_panel.set_panel_enabled(true)
+	var all_doors: bool = true
+	for card_model in first_5_cards:
+		if card_model == null:
+			continue
+		if card_model.type != CardManager.CARD_TYPE.DOOR:
+			all_doors = false
+			break
+	if all_doors:
+		show_lose_panel()
+
+func open_incantation_panel() -> void:
+	set_hand_freezed(true)
+	exit_button.visible = false
+	
+	#first 5 cards filling with nulls at the beginning if there aren't enough cards
+	var null_cards: Array[CardModel] = [null, null, null, null, null]
+	var first_5_cards: Array[CardModel] = null_cards + GameManager.deck_model.deck.slice(0, min(5,  GameManager.deck_model.get_number_of_cards()) as int)
+	first_5_cards = first_5_cards.slice(first_5_cards.size() - 5, first_5_cards.size())
+	
+	incantation_panel.card_models = first_5_cards
+	incantation_panel.set_panel_enabled(true)
 	var all_doors: bool = true
 	for card_model in first_5_cards:
 		if card_model == null:
@@ -232,7 +258,7 @@ func set_hand_freezed(value: bool) -> void:
 
 func door_discarded(color: CardManager.CARD_COLOR) -> void:
 	GameManager.door_discarded(color)
-	doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
+	doors_panel.set_doors_found(color, GameManager.found_doors[color].size() as int)
 
 func nightmare_action_selected(type: Constants.NIGHTMARE_DISCARD) -> void:
 	nightmare_action_discard_selected = type
@@ -267,6 +293,9 @@ func touch_event(object: Variant) -> void:
 	if prophecy_panel.visible and object is Deck:
 		await handle_prophecy_action()		
 		return
+	if incantation_panel.visible and object is Deck:		
+		await handle_incantation_action(object)
+		return
 	pass
 
 func handle_prophecy_action() -> void:
@@ -275,7 +304,7 @@ func handle_prophecy_action() -> void:
 	ignore_gui_events = true
 	#reorder cards and close the prophecy panel
 	var card_models: Array[CardModel] = prophecy_panel.card_models
-	var prophecy_cards: Array[ProphecyCard] = prophecy_panel.prophecy_cards
+	var prophecy_cards: Array[PanelCard] = prophecy_panel.panel_cards
 	
 	#can't discard doors and deadends, etc
 	if not card_models[4].can_discard:
@@ -296,7 +325,7 @@ func handle_prophecy_action() -> void:
 		#we don't want to animate prophecy cards that are to be used only in the panel
 		prophecy_cards[i].queue_free()
 		if i < 4:
-			#thhe first 4 cardds from the panel go to the deck
+			#the first 4 cardds from the panel go to the deck
 			#create a fake card showing the back texturre moving to the deck
 			var card: Card = create_card(card_model, card_container, prophecy_panel.card_markers[i].global_position, Card.FULL_SIZE, false, Constants.DRAGGING_BASE_Z)
 			card.set_back_texture()
@@ -313,7 +342,7 @@ func handle_prophecy_action() -> void:
 	#execute the actual deck manipulation
 	#remove the discarded card from the cards to be added back to the deck
 	card_models.pop_at(4)
-	#add them back in the selected order in the panel
+	#add them at the top of the deck in the selected order in the panel
 	card_models.reverse()
 	for card_model in card_models:
 		if card_model == null:
@@ -324,7 +353,80 @@ func handle_prophecy_action() -> void:
 	prophecy_panel.reset()
 	exit_button.visible = true
 	deck.set_outline(false)
-	await draw_full_hand(false, true, true)
+	await draw_full_hand(true, true)
+	ignore_gui_events = false
+	return
+	
+func incantation_door_selected(panel_card: PanelCard) -> void:
+	handle_incantation_action(panel_card)
+
+func handle_incantation_action(object: Variant) -> void:
+	if ignore_gui_events:
+		return
+	ignore_gui_events = true
+	
+	if object is Deck and incantation_panel.door_present:
+		#ignore clicks on deck if user has doors to select
+		ignore_gui_events = false
+		return
+		
+	var door_panel_card_model: CardModel = null
+	if object is PanelCard:
+		var panel_card: PanelCard = object
+		if panel_card.card_model.type != CardManager.CARD_TYPE.DOOR:
+			#ignore click on cards that are not doors
+			ignore_gui_events = false
+			return
+		door_panel_card_model = panel_card.card_model
+			
+	#reorder cards and close the prophecy panel
+	var card_models: Array[CardModel] = incantation_panel.card_models
+	var incantation_cards: Array[PanelCard] = incantation_panel.panel_cards
+		
+	#execute the animations
+	#in this order for animation purposes
+	for i in range(4, -1, -1):
+		#model in the i position as ordered in the panel
+		var card_model: CardModel = card_models[i]
+		if card_model == null:
+			#skip the empty slots
+			continue
+		#remove the card from the deck
+		GameManager.deck_model.get_next_card()
+		#let the placholder card disappear before animation
+		#we don't want to animate prophecy cards that are to be used only in the panel
+		incantation_cards[i].queue_free()
+		#cards go to the deck
+		if card_model == door_panel_card_model:
+			card_models.erase(card_model)
+			var door_card: Card = create_card(card_model, card_container, deck.position, Card.FULL_SIZE, false, Constants.DRAGGING_BASE_Z)
+			door_card.set_back_texture()		
+			await door_found(door_card)
+			GameManager.set_door_as_found(card_model)
+			doors_panel.set_doors_found(door_card.card_model.color, GameManager.found_doors[door_card.card_model.color].size() as int)
+			if GameManager.check_won_game():
+				show_win_panel()
+				return
+		else:
+			#create a fake card showing the back texturre moving to the deck
+			var card: Card = create_card(card_model, card_container, incantation_panel.card_markers[i].global_position, Card.FULL_SIZE, false, Constants.DRAGGING_BASE_Z)
+			card.set_back_texture()
+			await animate_card_to_deck(card)
+			card.queue_free()
+	
+	#execute the actual deck manipulation
+	#add them at the bootom of the deck in the selected order in the panel
+	card_models.reverse()
+	for card_model in card_models:
+		if card_model == null:
+			continue
+		GameManager.deck_model.add_card_back(card_model)
+		
+	incantation_panel.set_panel_enabled(false)
+	incantation_panel.reset()
+	exit_button.visible = true
+	deck.set_outline(false)
+	await draw_full_hand(true, true)
 	ignore_gui_events = false
 	return
 	
@@ -340,7 +442,7 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 				SignalManager.card_added_to_discard.emit(card, false)				
 		await discard_nightmare_card()
 		#draw with the same logic as starting the game (nightmares are not resolved, doors are not open)
-		await draw_full_hand(false, false, false)
+		await draw_full_hand(false, false)
 		ignore_gui_events = false
 	if type == Constants.NIGHTMARE_DISCARD.KEY and object is Card:
 		var card: Card = object
@@ -348,7 +450,7 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 			await animate_card_to_discard(card)
 			SignalManager.card_added_to_discard.emit(card, false)
 			await discard_nightmare_card()
-			await draw_full_hand(false, true, true)
+			await draw_full_hand(true, true)
 		ignore_gui_events = false
 	if type == Constants.NIGHTMARE_DISCARD.DECK and object is Deck:
 		for i in range(0, 5):
@@ -365,20 +467,20 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 				await animate_card_to_limbo(card)
 				SignalManager.card_added_to_limbo.emit(card)
 		await discard_nightmare_card()
-		await draw_full_hand(false, true, true)
+		await draw_full_hand(true, true)
 		ignore_gui_events = false
 	if type == Constants.NIGHTMARE_DISCARD.DOOR and object is DoorsButton:
 		var doors_button: DoorsButton = object
 		var color: CardManager.CARD_COLOR = doors_button.color
 		if doors_button.is_lighted() and GameManager.found_doors[color].size() > 0:
-			var card_model = GameManager.found_doors[color].pop_back()
+			var card_model: CardModel = GameManager.found_doors[color].pop_back()
 			var card: Card = create_card(card_model, card_container, Vector2(door_found_marker.position.x, doors_panel.position.y), Card.NO_SIZE, false, Constants.DRAGGING_BASE_Z)
 			card.set_front_texture()
 			await animate_door_discarded(card)
 			SignalManager.card_added_to_limbo.emit(card)
-			doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
+			doors_panel.set_doors_found(color, GameManager.found_doors[color].size() as int)
 			await discard_nightmare_card()			
-			await draw_full_hand(false, true, true)
+			await draw_full_hand(true, true)
 		ignore_gui_events = false
 
 func find_nightmare_card() -> Card:
@@ -421,20 +523,20 @@ func key_open_door_selected(type: Constants.KEY_OPEN_DOOR, key: Card, door: Card
 		door.z_index = Constants.DRAGGING_BASE_Z
 		await door_found(door)
 		GameManager.set_door_as_found(door.card_model)
-		doors_panel.set_doors_found(door.card_model.color, GameManager.found_doors[door.card_model.color].size())
+		doors_panel.set_doors_found(door.card_model.color, GameManager.found_doors[door.card_model.color].size() as int)
 		open_door_panel.reset()
 		open_door_panel.set_panel_enabled(false)
 		if GameManager.check_won_game():
 			show_win_panel()
 			ignore_gui_events = false
 			return
-		await draw_full_hand(false, false, false)
+		await draw_full_hand(true, true)
 	if type == Constants.KEY_OPEN_DOOR.LIMBO:
 		await animate_card_to_limbo(door)
 		SignalManager.card_added_to_limbo.emit(door)
 		open_door_panel.reset()
 		open_door_panel.set_panel_enabled(false)
-		await draw_full_hand(false, true, true)
+		await draw_full_hand(true, true)
 	ignore_gui_events = false
 
 func deck_outline_enabled(enabled: bool) -> void:
@@ -569,7 +671,7 @@ func animate_card_to_deck(card: Card) -> void:
 	tween.tween_property(card, "global_position", deck.global_position, 0.2)
 	await tween.finished
 
-func _on_discard_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _on_discard_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventScreenTouch:
 		discard_panel.clear_counters()
 		discard_panel.setup()
@@ -597,32 +699,32 @@ func recreate_game_objects() -> void:
 		child.queue_free()
 		
 	doors_panel.setup(GameManager.doors_to_be_found)
-	for color in GameManager.found_doors.keys():
-		doors_panel.set_doors_found(color, GameManager.found_doors[color].size())
+	for color: CardManager.CARD_COLOR in GameManager.found_doors.keys():
+		doors_panel.set_doors_found(color, GameManager.found_doors[color].size() as int)
 		
 	for i in range(GameManager.hand.size()):
-		var c_model = GameManager.hand[i]
+		var c_model: CardModel = GameManager.hand[i]
 		if c_model != null:
-			var card = create_card(c_model, card_container, hand_markers[i].global_position, Card.FULL_SIZE, true, i + Constants.HAND_BASE_Z)
+			var card: Card = create_card(c_model, card_container, hand_markers[i].global_position, Card.FULL_SIZE, true, i + Constants.HAND_BASE_Z)
 			card.set_front_texture()
 			card.hand_position = i
 			card.rotation = hand_markers[i].rotation
 			card.freezed = false
 			
 	for i in range(GameManager.limbo.size()):
-		var c_model = GameManager.limbo[i]
-		var card = create_card(c_model, limbo.card_container, Vector2.ZERO, Card.LIMBO_SIZE, false, i + Constants.LIMBO_BASE_Z)
+		var c_model: CardModel = GameManager.limbo[i]
+		var card: Card = create_card(c_model, limbo.card_container, Vector2.ZERO, Card.LIMBO_SIZE, false, i + Constants.LIMBO_BASE_Z)
 		card.set_front_texture()
 
 	for i in range(GameManager.discard.size()):
-		var c_model = GameManager.discard[i]
-		var card = create_card(c_model, discard.card_container, Vector2.ZERO, Card.DISCARD_SIZE, false, i + Constants.DISCARD_BASE_Z)
+		var c_model: CardModel = GameManager.discard[i]
+		var card: Card = create_card(c_model, discard.card_container, Vector2.ZERO, Card.DISCARD_SIZE, false, i + Constants.DISCARD_BASE_Z)
 		card.set_front_texture()
 
 	labyrinth.card_container.global_position.x = 0
 	for i in range(GameManager.labyrinth.size()):
-		var c_model = GameManager.labyrinth[i]
-		var card = create_card(c_model, labyrinth.card_container, labyrinth.start_position_marker.position + Vector2(i * labyrinth.CARD_OFFSET, 0), Card.LABYRINTH_SIZE, false, i + Constants.LABYRINTH_BASE_Z)
+		var c_model: CardModel = GameManager.labyrinth[i]
+		var card: Card = create_card(c_model, labyrinth.card_container, labyrinth.start_position_marker.position + Vector2(i * labyrinth.CARD_OFFSET, 0), Card.LABYRINTH_SIZE, false, i + Constants.LABYRINTH_BASE_Z)
 		card.set_front_texture()
 	if GameManager.labyrinth.size() >= labyrinth.MAX_SIZE:
 		labyrinth.card_container.global_position.x = -labyrinth.CARD_OFFSET * (GameManager.labyrinth.size() - labyrinth.MAX_SIZE)

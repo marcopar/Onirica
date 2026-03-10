@@ -32,7 +32,7 @@ func _ready() -> void:
 	icon.texture = texture
 	enabled = true
 
-func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if not enabled:
 		return
 	if event is InputEventScreenTouch:

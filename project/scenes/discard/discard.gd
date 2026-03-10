@@ -10,7 +10,7 @@ func _ready() -> void:
 	SignalManager.card_return_to_hand.connect(card_return_to_hand)
 	SignalManager.card_added_to_discard.connect(card_added_to_discard)
 		
-func card_added_to_discard(card: Card, draw_card: bool) -> void:
+func card_added_to_discard(card: Card, _draw_card: bool) -> void:
 	highlight.enabled = false
 	card.hand_position = -1
 	card.set_discard_size()

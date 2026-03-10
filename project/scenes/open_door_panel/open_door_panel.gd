@@ -43,7 +43,7 @@ func _on_control_gui_input(event: InputEvent) -> void:
 			key.position.x += event.relative.x
 		pass
 
-func _on_key_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
+func _on_key_area_shape_entered(_area_rid: RID, area: Area2D, _area_shape_index: int, _local_shape_index: int) -> void:
 	if area == door:
 		door.selected = true
 		return
@@ -51,7 +51,7 @@ func _on_key_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: i
 		limbo.selected = true
 		return
 		
-func _on_key_area_shape_exited(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
+func _on_key_area_shape_exited(_area_rid: RID, area: Area2D, _area_shape_index: int, _local_shape_index: int) -> void:
 	if area == door:
 		door.selected = false
 		return
@@ -59,7 +59,7 @@ func _on_key_area_shape_exited(area_rid: RID, area: Area2D, area_shape_index: in
 		limbo.selected = false
 		return
 
-func set_panel_enabled(enabled: bool):
+func set_panel_enabled(enabled: bool) -> void:
 	visible = enabled
 	if visible:
 		process_mode = Node.PROCESS_MODE_INHERIT

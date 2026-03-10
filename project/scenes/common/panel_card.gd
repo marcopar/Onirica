@@ -1,6 +1,7 @@
 extends DraggableSprite
 
-class_name ProphecyCard
+class_name PanelCard
+
 @onready var label: TextureRect = $Label
 
 var card_model: CardModel:
@@ -32,15 +33,31 @@ func handle_position_update(drag_event: InputEventScreenDrag) -> void:
 func abort_dragging_action() -> void:
 	super.abort_dragging_action()
 	z_index = 0
-	SignalManager.prophecy_cards_reset_position.emit(self)
+	if is_in_group(Constants.GROUP_PROPHECY_CARDS):
+		SignalManager.prophecy_cards_reset_position.emit(self)
+	if is_in_group(Constants.GROUP_INCANTATION_CARDS):
+		SignalManager.incantation_cards_reset_position.emit(self)
 
 func handle_overlapping_areas() -> bool:
+	abort_dragging_action()	
 	for area in get_overlapping_areas():
 		if area.is_in_group(Constants.GROUP_PROPHECY_CARDS):
 			self.z_index = 0
 			SignalManager.swap_prophecy_cards.emit(self, area)
 			return true
+		if area.is_in_group(Constants.GROUP_INCANTATION_CARDS):
+			self.z_index = 0
+			SignalManager.swap_incantation_cards.emit(self, area)
+			return true
 	return false
+
+func touch_action() -> void:
+	if is_in_group(Constants.GROUP_PROPHECY_CARDS):
+		#no action
+		return
+	if is_in_group(Constants.GROUP_INCANTATION_CARDS) and card_model.type == CardManager.CARD_TYPE.DOOR:
+		#detect touches on doors
+		SignalManager.touch_event.emit(self)
 	
 func _to_string() -> String:
 	return card_model.to_string()

@@ -32,13 +32,8 @@ func reset() -> void:
 	SignalManager.nightmare_action_selected.emit(Constants.NIGHTMARE_DISCARD.NONE)
 	for button in buttons:
 		button.selected = false
-
-
-func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	pass # Replace with function body.
-
-
-func set_panel_enabled(enabled: bool):
+		
+func set_panel_enabled(enabled: bool) -> void:
 	visible = enabled
 	if visible:
 		process_mode = Node.PROCESS_MODE_INHERIT
