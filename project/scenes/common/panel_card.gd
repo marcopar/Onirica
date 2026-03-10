@@ -53,8 +53,10 @@ func handle_overlapping_areas() -> bool:
 
 func touch_action() -> void:
 	if is_in_group(Constants.GROUP_PROPHECY_CARDS):
+		#no action
 		return
 	if is_in_group(Constants.GROUP_INCANTATION_CARDS) and card_model.type == CardManager.CARD_TYPE.DOOR:
+		#detect touches on doors
 		SignalManager.touch_event.emit(self)
 	
 func _to_string() -> String:
