@@ -27,8 +27,8 @@ func _ready() -> void:
 
 func handle_position_update(drag_event: InputEventScreenDrag) -> void:
 	z_index = Constants.DRAGGING_BASE_Z
-	global_position.x = global_position.x + (drag_event.position.x - drag_start.x)
-	drag_start = drag_event.position
+	global_position.x = global_position.x + (drag_event.position.x - drag_step.x)
+	drag_step = drag_event.position
 	rotation = 0
 	
 func abort_dragging_action() -> void:

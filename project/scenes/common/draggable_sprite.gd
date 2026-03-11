@@ -4,7 +4,7 @@ class_name DraggableSprite
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
 
-const DEAD_ZONE: float = 30
+const DEAD_ZONE: float = 10
 
 var freezed: bool = false:
 	get:
@@ -14,6 +14,7 @@ var freezed: bool = false:
 		
 var dragging: bool = false
 var drag_start: Vector2 = Vector2.INF
+var drag_step: Vector2 = Vector2.INF
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -42,7 +43,8 @@ func _input(event: InputEvent) -> void:
 			abort_dragging_action()
 			return
 		if not drag_start.is_finite():
-			drag_start = drag_event.position
+			drag_start = global_position
+			drag_step = drag_event.position
 		handle_position_update(drag_event)
 
 func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
@@ -52,8 +54,11 @@ func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> voi
 		handle_dragging_touch_event(touch_event)
 
 func is_no_movement() -> bool:
+	if not drag_start.is_finite():
+		#drag not even started
+		return true
 	var delta: Vector2 = abs(drag_start - global_position)
-	return (not drag_start.is_finite() or delta.length() < DEAD_ZONE) and not dragging
+	return (delta.length() < DEAD_ZONE) and not dragging
 	
 func can_drag() -> bool:
 	return true
@@ -61,6 +66,7 @@ func can_drag() -> bool:
 func abort_dragging_action() -> void:
 	dragging = false
 	drag_start = Vector2.INF
+	drag_step = Vector2.INF
 
 func touch_action() -> void:
 	return
@@ -70,8 +76,8 @@ func handle_overlapping_areas() -> bool:
 
 func handle_position_update(drag_event: InputEventScreenDrag) -> void:
 	z_index = Constants.DRAGGING_BASE_Z
-	global_position = global_position + (drag_event.position - drag_start)
-	drag_start = drag_event.position
+	global_position = global_position + (drag_event.position - drag_step)
+	drag_step = drag_event.position
 	rotation = 0
 
 func handle_dragging_touch_event(touch_event: InputEventScreenTouch) -> void:
@@ -82,10 +88,6 @@ func handle_dragging_touch_event(touch_event: InputEventScreenTouch) -> void:
 	dragging = touch_event.pressed and can_drag() and not freezed
 	if(not touch_event.pressed):
 		if is_no_movement():
-			if not freezed:
-				# a freezed card is typically the nightmare card currently being resolved
-				# it's not dragging for sure and it should not go back in hand as abort_dragging dose
-				abort_dragging_action()
 			touch_action()
 			return
 		if handle_overlapping_areas():
