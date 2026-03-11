@@ -4,7 +4,7 @@ class_name DraggableSprite
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
 
-const DEAD_ZONE: float = 30
+const DEAD_ZONE: float = 20
 
 var freezed: bool = false:
 	get:
@@ -52,7 +52,7 @@ func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> voi
 		handle_dragging_touch_event(touch_event)
 
 func is_no_movement() -> bool:
-	var delta: Vector2 = abs(drag_start - global_position)
+	var delta: Vector2 = abs(drag_start - position)
 	return (not drag_start.is_finite() or delta.length() < DEAD_ZONE) and not dragging
 	
 func can_drag() -> bool:
@@ -70,8 +70,7 @@ func handle_overlapping_areas() -> bool:
 
 func handle_position_update(drag_event: InputEventScreenDrag) -> void:
 	z_index = Constants.DRAGGING_BASE_Z
-	global_position = global_position + (drag_event.position - drag_start)
-	drag_start = drag_event.position
+	global_position = drag_event.position
 	rotation = 0
 
 func handle_dragging_touch_event(touch_event: InputEventScreenTouch) -> void:
