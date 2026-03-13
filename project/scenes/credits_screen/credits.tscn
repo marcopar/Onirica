@@ -75,23 +75,25 @@ size_flags_vertical = 3
 bbcode_enabled = true
 text = "[font name=\"res://assets/sprites/gui/Tomorrow-SemiBold.ttf\"]
 [color=#86e2ff]
-[font size=46]
-Made in Italy by [url=https://www.flatworld.eu]Flatworld[/url]
+[font size=46]Made in Italy by [url=https://www.flatworld.eu]Flatworld[/url][/font]
 
 
-- Music -
-
-[url=https://linktr.ee/tsorthangrove]Tsorthan Grove[/url] [font size=24][url=https://creativecommons.org/licenses/by/4.0/](CC BY 4.0)[/url][/font]
 
 
-- Sound Effects - 
-
-[url=https://kenney.nl/]Kenney.nl[/url]
-[url=https://opengameart.org/users/p0ss]p0ss[/url] [font size=24][url=https://creativecommons.org/licenses/by-sa/3.0/](CC BY-SA 3.0)[/url][/font]
+[font size=46]- Music -[/font]
+[font size=40][url=https://linktr.ee/tsorthangrove]Tsorthan Grove[/url][/font] [font size=24][url=https://creativecommons.org/licenses/by/4.0/](CC BY 4.0)[/url][/font]
 
 
-- About the game -
-[/font]
+
+
+[font size=46]- Sound Effects -[/font]
+[font size=40][url=https://kenney.nl/]Kenney.nl[/url][/font]
+[font size=40][url=https://opengameart.org/users/p0ss]p0ss[/url][/font] [font size=24][url=https://creativecommons.org/licenses/by-sa/3.0/](CC BY-SA 3.0)[/url][/font]
+
+
+
+
+[font size=46]- About the game -[/font]
 [font size=36]
 Onirica is an unofficial (and partial) implementation of the card game Onirim by Shadi Torbey.
 
@@ -101,6 +103,8 @@ You should definetly consider to buy it.
 More informations can be found here: 
 [url=https://boardgamegeek.com/boardgame/156336/onirim-second-edition]Onirim on BoardGameGeek[/url]
 [url=https://inpatience.com/en/Our_Games-7-ONIRIM]Onirim on inPatience[/url]
+
+
 
 
 

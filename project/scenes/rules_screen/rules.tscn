@@ -66,18 +66,14 @@ theme_override_constants/margin_left = 100
 theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 50
 
-[node name="VBoxContainer" type="VBoxContainer" parent="GUI/VBoxContainer/MainArea/MarginContainer" unique_id=777536613]
-layout_mode = 2
-
-[node name="RulesText" type="RichTextLabel" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer" unique_id=1676002707]
+[node name="BaseRules" type="RichTextLabel" parent="GUI/VBoxContainer/MainArea/MarginContainer" unique_id=1676002707]
 layout_mode = 2
 size_flags_vertical = 3
 bbcode_enabled = true
 text = "[font name=\"res://assets/sprites/gui/Tomorrow-SemiBold.ttf\"]
 [color=#86e2ff]
+[center][font size=46]BASE GAME[/font][/center]
 [font size=36]
-[center]BASE GAME[/center]
-
 The deck is made of 76 cards.
 		18 red cards: 9 suns, 4 moons, 3 keys
 		17 blue cards: 8 suns, 4 moons, 3 keys
@@ -86,12 +82,12 @@ The deck is made of 76 cards.
 		8 doors: 2 for each color
 		10 Nightmare cards
 
-[center]OBJECTIVE OF THE GAME[/center]
+[center][font size=40]OBJECTIVE OF THE GAME[/font][/center]
 
 Unlock all 8 doors (visible at the top of the screen)
 To unlock the doors, you play cards from your hand, trying to form a valid sequence of 3 cards of the same color.
 
-[center]HOW TO PLAY CARDS[/center]
+[center][font size=40]HOW TO PLAY CARDS[/font][/center]
 
 At the beginning of the game, you are dealt cards until you have 5 location cards in your hand.
 Any door or nightmare drawn in this phase is put in the limbo (bottom left of the screen) and then reshuffled into the deck.
@@ -106,20 +102,20 @@ To discard a card, move it to the bottom right corner of the screen.
 When a moon or a sun is discarded, a new card is drawn.
 When a key is discarded, a prophecy is triggered.
     
-[center]PROPHECY[/center]
+[center][font size=40]PROPHECY[/font][/center]
 
-Discarding a key will open a panel showing the top 5 cards of the deck.
-You can reorder the cards and the rightmost one will be discarded (useful to discard nightmares)
+When a key is discarded a prophecy is triggered and a panel with the top 5 cards of the deck is shown.
+You can reorder the cards and the rightmost one will be discarded (e.g. nightmares)
 Doors can’t be discarded.
 
-[center]DRAWING CARDS[/center]
+[center][font size=40]DRAWING CARDS[/font][/center]
 
 Cards are automatically drawn to refill the hand to 5 cards.
 If a location card is drawn, nothing happens.
 If a door is drawn and a matching color key is in hand, you have the option to use the key to unlock the door or to put the door in the limbo and then reshuffle it into the deck.
 If a nightmare is drawn, it must be resolved.
 
-[center]NIGHTMARES[/center]
+[center][font size=40]NIGHTMARES[/font][/center]
 
 Nightmares can be resolved in 4 ways
 * Discard your hand
@@ -136,5 +132,41 @@ If the deck runs out of cards, you lose
 [/font]"
 vertical_alignment = 1
 
+[node name="TheGlyphsRules" type="RichTextLabel" parent="GUI/VBoxContainer/MainArea/MarginContainer" unique_id=1311807292]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[font name=\"res://assets/sprites/gui/Tomorrow-SemiBold.ttf\"]
+[color=#86e2ff]
+[center][font size=46]THE GLYPHS[/font][/center]
+[font size=36]
+In addition to the base cards, the deck also contains:
+		2 red glyph cards
+		2 blue glyph cards
+		2 green glyph cards
+		4 additional doors: 1 for each color
+
+
+[center][font size=40]HOW TO PLAY[/font][/center]
+You need to open 4 additional doors to win the game.
+
+Glyph cards are location cards like suns, moons and keys and they follow the same rules when played in the labyrinth.
+Glyph cards can be combined with the other location cards to form a valid sequence to open a door.
+    
+[center][font size=40]INCANTATION[/font][/center]
+
+When a glyph is discarded an incantation is triggered and a panel with the top 5 cards of the deck is shown.
+
+You can reorder the cards in the panel and if doors are present you have to select which one to open.
+If no doors are present, you can only reorder the cards and confirm by clicking on the deck.
+
+After the action is selected, the cards are put at the bottom of the deck in the selected order.
+
+[/font]
+[/color]
+[/font]"
+vertical_alignment = 1
+
 [connection signal="pressed" from="GUI/VBoxContainer/MenuBar/ExitButton" to="." method="_on_exit_button_pressed"]
-[connection signal="meta_clicked" from="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/RulesText" to="." method="_on_rules_text_meta_clicked"]
+[connection signal="meta_clicked" from="GUI/VBoxContainer/MainArea/MarginContainer/BaseRules" to="." method="_on_rules_text_meta_clicked"]
+[connection signal="meta_clicked" from="GUI/VBoxContainer/MainArea/MarginContainer/TheGlyphsRules" to="." method="_on_rules_text_meta_clicked"]

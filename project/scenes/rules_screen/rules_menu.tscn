@@ -1,0 +1,147 @@
+[gd_scene format=3 uid="uid://c1ag52g7gykvs"]
+
+[ext_resource type="Script" uid="uid://biqk7h6wmre67" path="res://scenes/rules_screen/rules_menu.gd" id="1_lm5ot"]
+[ext_resource type="Texture2D" uid="uid://b1gjt3rpk4sc3" path="res://assets/sprites/backgrounds/background.png" id="2_6bwuj"]
+[ext_resource type="Texture2D" uid="uid://5ts0q5ytbdy6" path="res://assets/sprites/gui/logout_96dp_FFFFFF_FILL0_wght400_GRAD0_opsz48.svg" id="3_lm5ot"]
+[ext_resource type="FontFile" uid="uid://c6ajo7m7m2p0g" path="res://assets/sprites/gui/Tomorrow-SemiBold.ttf" id="4_afrha"]
+[ext_resource type="StyleBox" uid="uid://bk0ptftk53l2t" path="res://scenes/normal_button_style.tres" id="5_cqhx1"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fsuix"]
+blend_mode = 3
+
+[sub_resource type="Gradient" id="Gradient_wem23"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.2, 0.8, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0.9797255, 0.9797255, 0.9797255, 1, 0, 0, 0, 1)
+metadata/_snap_enabled = true
+metadata/_snap_count = 5
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_y4jgh"]
+gradient = SubResource("Gradient_wem23")
+
+[node name="RulesMenu" type="Control" unique_id=621306541]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lm5ot")
+
+[node name="Background" type="TextureRect" parent="." unique_id=418140735]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_6bwuj")
+
+[node name="GUI" type="Control" parent="." unique_id=1505210768]
+custom_minimum_size = Vector2(1080, 1920)
+anchors_preset = 0
+offset_right = 1080.0
+offset_bottom = 1920.0
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI" unique_id=321118187]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MenuBar" type="MarginContainer" parent="GUI/VBoxContainer" unique_id=821623171]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 0
+
+[node name="ExitButton" type="TextureButton" parent="GUI/VBoxContainer/MenuBar" unique_id=616684659]
+modulate = Color(0.5254902, 0.8862745, 1, 1)
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+texture_normal = ExtResource("3_lm5ot")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="MainArea" type="Control" parent="GUI/VBoxContainer" unique_id=1523460933]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="GUI/VBoxContainer/MainArea" unique_id=242123294]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GUI/VBoxContainer/MainArea/MarginContainer" unique_id=1258565732]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="BaseGame" type="Button" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer" unique_id=597953410]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_focus_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_hover_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_fonts/font = ExtResource("4_afrha")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = ExtResource("5_cqhx1")
+theme_override_styles/pressed = ExtResource("5_cqhx1")
+theme_override_styles/hover = ExtResource("5_cqhx1")
+theme_override_styles/disabled = ExtResource("5_cqhx1")
+theme_override_styles/focus = ExtResource("5_cqhx1")
+text = "BASE GAME"
+
+[node name="Shade" type="TextureRect" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/BaseGame" unique_id=1901788592]
+material = SubResource("CanvasItemMaterial_fsuix")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_y4jgh")
+
+[node name="TheGlyphs" type="Button" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer" unique_id=2138662789]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_focus_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_hover_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_fonts/font = ExtResource("4_afrha")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = ExtResource("5_cqhx1")
+theme_override_styles/pressed = ExtResource("5_cqhx1")
+theme_override_styles/hover = ExtResource("5_cqhx1")
+theme_override_styles/disabled = ExtResource("5_cqhx1")
+theme_override_styles/focus = ExtResource("5_cqhx1")
+text = "THE GLYPHS"
+
+[node name="Shade" type="TextureRect" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/TheGlyphs" unique_id=143880103]
+material = SubResource("CanvasItemMaterial_fsuix")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_y4jgh")
+
+[connection signal="pressed" from="GUI/VBoxContainer/MenuBar/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/BaseGame" to="." method="_on_base_game_pressed"]
+[connection signal="pressed" from="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/TheGlyphs" to="." method="_on_the_glyphs_pressed"]
