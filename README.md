@@ -6,6 +6,7 @@ The original game includes more ways to play, more expansions and beautiful artw
 You should definetly consider to buy it.
 
 More informations can be found here: 
+
 [Onirim on BoardGameGeek](https://boardgamegeek.com/boardgame/156336/onirim-second-edition)
 
 [Onirim on inPatience](https://inpatience.com/en/Our_Games-7-ONIRIM)
