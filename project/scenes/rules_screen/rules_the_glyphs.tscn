@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://vlf6qdrqj85j"]
+
+[ext_resource type="PackedScene" uid="uid://b2vlkavh2cf8k" path="res://scenes/rules_screen/rules.tscn" id="1_0m2h7"]
+
+[node name="RulesTheGlyphs" unique_id=621306541 instance=ExtResource("1_0m2h7")]
+
+[node name="TheGlyphsRules" type="RichTextLabel" parent="GUI/VBoxContainer/MainArea/MarginContainer" parent_id_path=PackedInt32Array(306283604) index="0" unique_id=219722713]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[font name=\"res://assets/sprites/gui/Tomorrow-SemiBold.ttf\"]
+[color=#86e2ff]
+[center][font size=46]THE GLYPHS[/font][/center]
+[font size=36]
+In addition to the base cards, the deck also contains:
+		2 red glyph cards
+		2 blue glyph cards
+		2 green glyph cards
+		4 additional doors: 1 for each color
+
+
+[center][font size=40]HOW TO PLAY[/font][/center]
+You need to open 4 additional doors to win the game.
+
+Glyph cards are location cards like suns, moons and keys and they follow the same rules when played in the labyrinth.
+Glyph cards can be combined with the other location cards to form a valid sequence to open a door.
+    
+[center][font size=40]INCANTATION[/font][/center]
+
+When a glyph is discarded an incantation is triggered and a panel with the top 5 cards of the deck is shown.
+
+You can reorder the cards in the panel and if doors are present you have to select which one to open.
+If no doors are present, you can only reorder the cards and confirm by clicking on the deck.
+
+After the action is selected, the cards are put at the bottom of the deck in the selected order.
+
+[/font]
+[/color]
+[/font]"
+vertical_alignment = 1

@@ -12,8 +12,14 @@ func switch_to_credits() -> void:
 func switch_to_settings() -> void:
 	get_tree().change_scene_to_file("res://scenes/settings_screen/settings.tscn")
 	
-func switch_to_rules() -> void:
-	get_tree().change_scene_to_file("res://scenes/rules_screen/rules.tscn")
+func switch_to_rules_menu() -> void:
+	get_tree().change_scene_to_file("res://scenes/rules_screen/rules_menu.tscn")
+	
+func switch_to_rules_base() -> void:
+	get_tree().change_scene_to_file("res://scenes/rules_screen/rules_base.tscn")
+
+func switch_to_rules_the_glyphs() -> void:
+	get_tree().change_scene_to_file("res://scenes/rules_screen/rules_the_glyphs.tscn")
 	
 func switch_to_expansion_selection() -> void:
 	get_tree().change_scene_to_file("res://scenes/expansion_selection_screen/expansion_selection.tscn")
