@@ -31,4 +31,4 @@ func _on_settings_pressed() -> void:
 
 func _on_rules_pressed() -> void:
 	AudioManager.play_uiclick_sound()
-	SceneManager.switch_to_rules()
+	SceneManager.switch_to_rules_menu()
