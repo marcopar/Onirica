@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://dpnumcx06ayqk" path="res://scenes/deck_counter/deck_counter.tscn" id="11_ouso4"]
 [ext_resource type="Texture2D" uid="uid://5ts0q5ytbdy6" path="res://assets/sprites/gui/logout_96dp_FFFFFF_FILL0_wght400_GRAD0_opsz48.svg" id="12_blune"]
 [ext_resource type="PackedScene" uid="uid://cile6otgqkmob" path="res://scenes/incantation_panel/incantation_panel.tscn" id="13_nvumn"]
-[ext_resource type="PackedScene" uid="uid://e6l72l0k2qmx" path="res://scenes/discard_panel/discard_panel.tscn" id="14_7smn1"]
+[ext_resource type="PackedScene" uid="uid://e6l72l0k2qmx" path="res://scenes/card_counter_panel/card_counter_panel.tscn" id="14_7smn1"]
 [ext_resource type="PackedScene" uid="uid://ddo0ayeeujk0m" path="res://scenes/game_end_panel/game_end_panel.tscn" id="15_raeie"]
 [ext_resource type="FontFile" uid="uid://ocls0l48n0q2" path="res://assets/sprites/gui/Tomorrow-Bold.ttf" id="16_hxu8e"]
 
@@ -177,6 +177,34 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="DiscardPanel" parent="GUI/VBoxContainer/MainArea/DiscardPanelContainer" unique_id=653347061 instance=ExtResource("14_7smn1")]
+z_index = 1000
+custom_minimum_size = Vector2(900, 1200)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -450.0
+offset_top = -600.0
+offset_right = 450.0
+offset_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 0
+
+[node name="DeckPanelContainer" type="Control" parent="GUI/VBoxContainer/MainArea" unique_id=1088900565]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="DeckPanel" parent="GUI/VBoxContainer/MainArea/DeckPanelContainer" unique_id=2121675712 instance=ExtResource("14_7smn1")]
 z_index = 1000
 custom_minimum_size = Vector2(900, 1200)
 layout_mode = 1

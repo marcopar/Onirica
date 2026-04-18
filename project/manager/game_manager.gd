@@ -36,6 +36,7 @@ var discard: Array[CardModel]:
 var doors_to_be_found: int
 
 var the_glyphs_on: bool = false
+var crossroads_deadends_on: bool = false
 		
 #Variant because  we want to have an  Array as value
 var found_doors: Dictionary[CardManager.CARD_COLOR, Variant] = {

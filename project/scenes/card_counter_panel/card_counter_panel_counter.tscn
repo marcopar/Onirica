@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://8t2tuwn2eo6g"]
 
-[ext_resource type="Script" uid="uid://bm2gn4ql7ed5p" path="res://scenes/discard_panel/discard_panel_counter.gd" id="1_5dbci"]
+[ext_resource type="Script" uid="uid://bm2gn4ql7ed5p" path="res://scenes/card_counter_panel/card_counter_panel_counter.gd" id="1_5dbci"]
 [ext_resource type="Texture2D" uid="uid://bjg6keq0po07p" path="res://assets/sprites/gui/sunny_96dp_FFFFFF_FILL0_wght400_GRAD0_opsz48.svg" id="1_pb7yn"]
 [ext_resource type="FontFile" uid="uid://sswonxg48rqb" path="res://assets/sprites/gui/Tomorrow-Regular.ttf" id="2_5dbci"]
 
@@ -14,7 +14,7 @@ anchors_preset = 0
 mouse_filter = 2
 script = ExtResource("1_5dbci")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=357586132]
+[node name="HBoxContainer" type="VBoxContainer" parent="." unique_id=2124929526]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 1
 anchors_preset = 8
@@ -23,13 +23,12 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -65.0
-offset_top = -38.5
-offset_right = 65.0
-offset_bottom = 38.5
+offset_top = -50.0
+offset_right = 72.0
+offset_bottom = 106.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_constants/separation = 19
 
 [node name="Icon" type="TextureRect" parent="HBoxContainer" unique_id=1778550076]
 clip_contents = true

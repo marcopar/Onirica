@@ -1,11 +1,14 @@
 [gd_scene format=3 uid="uid://e6l72l0k2qmx"]
 
-[ext_resource type="PackedScene" uid="uid://8t2tuwn2eo6g" path="res://scenes/discard_panel/discard_panel_counter.tscn" id="1_lvojv"]
-[ext_resource type="Script" uid="uid://b8vc6a88uwxde" path="res://scenes/discard_panel/discard_panel.gd" id="1_vgxtx"]
+[ext_resource type="PackedScene" uid="uid://8t2tuwn2eo6g" path="res://scenes/card_counter_panel/card_counter_panel_counter.tscn" id="1_lvojv"]
+[ext_resource type="Script" uid="uid://b8vc6a88uwxde" path="res://scenes/card_counter_panel/card_counter_panel.gd" id="1_vgxtx"]
 [ext_resource type="Texture2D" uid="uid://dfyveq5eiq2xq" path="res://assets/sprites/icons/circle_outline.svg" id="2_gl2cn"]
 [ext_resource type="Texture2D" uid="uid://pm3i6isjac6q" path="res://assets/sprites/gui/moon-fill-white.svg" id="3_egv2n"]
+[ext_resource type="Texture2D" uid="uid://dae07du7bujat" path="res://assets/sprites/gui/halloween-ghost-svgrepo-com-white.svg" id="3_jodc7"]
 [ext_resource type="Texture2D" uid="uid://cio6pnpruhrbe" path="res://assets/sprites/gui/key-2-fill-white.svg" id="4_0h65k"]
+[ext_resource type="Texture2D" uid="uid://bjasaxee0u3pc" path="res://assets/sprites/gui/borg_96dp_FFFFFF_FILL0_wght400_GRAD0_opsz48.svg" id="4_ychlr"]
 [ext_resource type="Texture2D" uid="uid://dpbi54qhin08b" path="res://assets/sprites/gui/spiral-bold-white.svg" id="5_bs7hk"]
+[ext_resource type="Texture2D" uid="uid://cpngxw2smx0qv" path="res://assets/sprites/gui/door_front_96dp_FFFFFF_FILL0_wght400_GRAD0_opsz48.svg" id="7_2epkt"]
 [ext_resource type="Texture2D" uid="uid://csj0rq2ssrje6" path="res://assets/sprites/icons/triangle_outline.svg" id="7_ij7bi"]
 [ext_resource type="Texture2D" uid="uid://dy8q2xia7ltp2" path="res://assets/sprites/icons/square_outline.svg" id="8_yr8xo"]
 [ext_resource type="Texture2D" uid="uid://dq5l6q376yqpl" path="res://assets/sprites/icons/diamond_outline.svg" id="9_ohgrf"]
@@ -21,7 +24,7 @@ point_count = 1
 [sub_resource type="CurveTexture" id="CurveTexture_qwpt0"]
 curve = SubResource("Curve_vgxtx")
 
-[node name="DiscardPanel" type="TextureRect" unique_id=2121675712]
+[node name="CardCounterPanel" type="TextureRect" unique_id=2121675712]
 material = SubResource("CanvasItemMaterial_lvojv")
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,6 +41,26 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Generic" type="HBoxContainer" parent="VBoxContainer" unique_id=720273165]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Nighmares" parent="VBoxContainer/Generic" unique_id=550191198 instance=ExtResource("1_lvojv")]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="Icon" parent="VBoxContainer/Generic/Nighmares/HBoxContainer" parent_id_path=PackedInt32Array(550191198, 2124929526) index="0" unique_id=1778550076]
+texture = ExtResource("3_jodc7")
+
+[node name="Deadends" parent="VBoxContainer/Generic" unique_id=336308914 instance=ExtResource("1_lvojv")]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="Icon" parent="VBoxContainer/Generic/Deadends/HBoxContainer" parent_id_path=PackedInt32Array(336308914, 2124929526) index="0" unique_id=1778550076]
+texture = ExtResource("4_ychlr")
 
 [node name="Red" type="HBoxContainer" parent="VBoxContainer" unique_id=625031331]
 layout_mode = 2
@@ -64,7 +87,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Red/RedMoon/HBoxContainer" parent_id_path=PackedInt32Array(1302657969, 357586132) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Red/RedMoon/HBoxContainer" parent_id_path=PackedInt32Array(1302657969, 2124929526) index="0" unique_id=1778550076]
 texture = ExtResource("3_egv2n")
 
 [node name="RedKey" parent="VBoxContainer/Red" unique_id=771163890 instance=ExtResource("1_lvojv")]
@@ -73,7 +96,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Red/RedKey/HBoxContainer" parent_id_path=PackedInt32Array(771163890, 357586132) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Red/RedKey/HBoxContainer" parent_id_path=PackedInt32Array(771163890, 2124929526) index="0" unique_id=1778550076]
 texture = ExtResource("4_0h65k")
 
 [node name="RedGlyph" parent="VBoxContainer/Red" unique_id=404520395 instance=ExtResource("1_lvojv")]
@@ -83,8 +106,18 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Red/RedGlyph/HBoxContainer" parent_id_path=PackedInt32Array(404520395, 357586132) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Red/RedGlyph/HBoxContainer" parent_id_path=PackedInt32Array(404520395, 2124929526) index="0" unique_id=1778550076]
 texture = ExtResource("5_bs7hk")
+
+[node name="RedDoor" parent="VBoxContainer/Red" unique_id=1638724100 instance=ExtResource("1_lvojv")]
+visible = false
+modulate = Color(1, 0, 0, 1)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="Icon" parent="VBoxContainer/Red/RedDoor/HBoxContainer" parent_id_path=PackedInt32Array(1638724100, 2124929526) index="0" unique_id=1778550076]
+texture = ExtResource("7_2epkt")
 
 [node name="Green" type="HBoxContainer" parent="VBoxContainer" unique_id=46421346]
 layout_mode = 2
@@ -111,7 +144,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Green/GreenMoon/HBoxContainer" parent_id_path=PackedInt32Array(182732080, 357586132) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Green/GreenMoon/HBoxContainer" parent_id_path=PackedInt32Array(182732080, 2124929526) index="0" unique_id=1778550076]
 texture = ExtResource("3_egv2n")
 
 [node name="GreenKey" parent="VBoxContainer/Green" unique_id=1331025557 instance=ExtResource("1_lvojv")]
@@ -120,7 +153,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Green/GreenKey/HBoxContainer" parent_id_path=PackedInt32Array(1331025557, 357586132) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Green/GreenKey/HBoxContainer" parent_id_path=PackedInt32Array(1331025557, 2124929526) index="0" unique_id=1778550076]
 texture = ExtResource("4_0h65k")
 
 [node name="GreenGlyph" parent="VBoxContainer/Green" unique_id=1170034279 instance=ExtResource("1_lvojv")]
@@ -130,8 +163,18 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Green/GreenGlyph/HBoxContainer" parent_id_path=PackedInt32Array(1170034279, 357586132) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Green/GreenGlyph/HBoxContainer" parent_id_path=PackedInt32Array(1170034279, 2124929526) index="0" unique_id=1778550076]
 texture = ExtResource("5_bs7hk")
+
+[node name="GreenDoor" parent="VBoxContainer/Green" unique_id=594215731 instance=ExtResource("1_lvojv")]
+visible = false
+modulate = Color(0, 1, 0, 1)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="Icon" parent="VBoxContainer/Green/GreenDoor/HBoxContainer" parent_id_path=PackedInt32Array(594215731, 2124929526) index="0" unique_id=1778550076]
+texture = ExtResource("7_2epkt")
 
 [node name="Blue" type="HBoxContainer" parent="VBoxContainer" unique_id=1853377804]
 layout_mode = 2
@@ -158,7 +201,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Blue/BlueMoon/HBoxContainer" parent_id_path=PackedInt32Array(857234461, 357586132) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Blue/BlueMoon/HBoxContainer" parent_id_path=PackedInt32Array(857234461, 2124929526) index="0" unique_id=1778550076]
 texture = ExtResource("3_egv2n")
 
 [node name="BlueKey" parent="VBoxContainer/Blue" unique_id=1751463177 instance=ExtResource("1_lvojv")]
@@ -167,7 +210,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Blue/BlueKey/HBoxContainer" parent_id_path=PackedInt32Array(1751463177, 357586132) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Blue/BlueKey/HBoxContainer" parent_id_path=PackedInt32Array(1751463177, 2124929526) index="0" unique_id=1778550076]
 texture = ExtResource("4_0h65k")
 
 [node name="BlueGlyph" parent="VBoxContainer/Blue" unique_id=2135723767 instance=ExtResource("1_lvojv")]
@@ -177,8 +220,18 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Blue/BlueGlyph/HBoxContainer" parent_id_path=PackedInt32Array(2135723767, 357586132) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Blue/BlueGlyph/HBoxContainer" parent_id_path=PackedInt32Array(2135723767, 2124929526) index="0" unique_id=1778550076]
 texture = ExtResource("5_bs7hk")
+
+[node name="BlueDoor" parent="VBoxContainer/Blue" unique_id=1585354897 instance=ExtResource("1_lvojv")]
+visible = false
+modulate = Color(0, 1, 1, 1)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="Icon" parent="VBoxContainer/Blue/BlueDoor/HBoxContainer" parent_id_path=PackedInt32Array(1585354897, 2124929526) index="0" unique_id=1778550076]
+texture = ExtResource("7_2epkt")
 
 [node name="Yellow" type="HBoxContainer" parent="VBoxContainer" unique_id=1786523656]
 layout_mode = 2
@@ -205,7 +258,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Yellow/YellowMoon/HBoxContainer" parent_id_path=PackedInt32Array(1167671453, 357586132) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Yellow/YellowMoon/HBoxContainer" parent_id_path=PackedInt32Array(1167671453, 2124929526) index="0" unique_id=1778550076]
 texture = ExtResource("3_egv2n")
 
 [node name="YellowKey" parent="VBoxContainer/Yellow" unique_id=1785467525 instance=ExtResource("1_lvojv")]
@@ -214,7 +267,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Yellow/YellowKey/HBoxContainer" parent_id_path=PackedInt32Array(1785467525, 357586132) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Yellow/YellowKey/HBoxContainer" parent_id_path=PackedInt32Array(1785467525, 2124929526) index="0" unique_id=1778550076]
 texture = ExtResource("4_0h65k")
 
 [node name="YellowGlyph" parent="VBoxContainer/Yellow" unique_id=1543158197 instance=ExtResource("1_lvojv")]
@@ -224,8 +277,18 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Yellow/YellowGlyph/HBoxContainer" parent_id_path=PackedInt32Array(1543158197, 357586132) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Yellow/YellowGlyph/HBoxContainer" parent_id_path=PackedInt32Array(1543158197, 2124929526) index="0" unique_id=1778550076]
 texture = ExtResource("5_bs7hk")
+
+[node name="YellowDoor" parent="VBoxContainer/Yellow" unique_id=1946661101 instance=ExtResource("1_lvojv")]
+visible = false
+modulate = Color(1, 1, 0, 1)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="Icon" parent="VBoxContainer/Yellow/YellowDoor/HBoxContainer" parent_id_path=PackedInt32Array(1946661101, 2124929526) index="0" unique_id=1778550076]
+texture = ExtResource("7_2epkt")
 
 [node name="Multi" type="HBoxContainer" parent="VBoxContainer" unique_id=1502264334]
 layout_mode = 2
@@ -250,7 +313,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Multi/MultiMoon/HBoxContainer" parent_id_path=PackedInt32Array(179340761, 357586132) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Multi/MultiMoon/HBoxContainer" parent_id_path=PackedInt32Array(179340761, 2124929526) index="0" unique_id=1778550076]
 texture = ExtResource("3_egv2n")
 
 [node name="MultiKey" parent="VBoxContainer/Multi" unique_id=9010569 instance=ExtResource("1_lvojv")]
@@ -258,27 +321,33 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Multi/MultiKey/HBoxContainer" parent_id_path=PackedInt32Array(9010569, 357586132) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Multi/MultiKey/HBoxContainer" parent_id_path=PackedInt32Array(9010569, 2124929526) index="0" unique_id=1778550076]
 texture = ExtResource("4_0h65k")
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 
+[editable path="VBoxContainer/Generic/Nighmares"]
+[editable path="VBoxContainer/Generic/Deadends"]
 [editable path="VBoxContainer/Red/RedSun"]
 [editable path="VBoxContainer/Red/RedMoon"]
 [editable path="VBoxContainer/Red/RedKey"]
 [editable path="VBoxContainer/Red/RedGlyph"]
+[editable path="VBoxContainer/Red/RedDoor"]
 [editable path="VBoxContainer/Green/GreenSun"]
 [editable path="VBoxContainer/Green/GreenMoon"]
 [editable path="VBoxContainer/Green/GreenKey"]
 [editable path="VBoxContainer/Green/GreenGlyph"]
+[editable path="VBoxContainer/Green/GreenDoor"]
 [editable path="VBoxContainer/Blue/BlueSun"]
 [editable path="VBoxContainer/Blue/BlueMoon"]
 [editable path="VBoxContainer/Blue/BlueKey"]
 [editable path="VBoxContainer/Blue/BlueGlyph"]
+[editable path="VBoxContainer/Blue/BlueDoor"]
 [editable path="VBoxContainer/Yellow/YellowSun"]
 [editable path="VBoxContainer/Yellow/YellowMoon"]
 [editable path="VBoxContainer/Yellow/YellowKey"]
 [editable path="VBoxContainer/Yellow/YellowGlyph"]
+[editable path="VBoxContainer/Yellow/YellowDoor"]
 [editable path="VBoxContainer/Multi/MultiSun"]
 [editable path="VBoxContainer/Multi/MultiMoon"]
 [editable path="VBoxContainer/Multi/MultiKey"]
