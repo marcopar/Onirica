@@ -45,7 +45,6 @@ func _ready() -> void:
 	SignalManager.card_added_to_discard.connect(card_added_to_discard)
 	SignalManager.card_added_to_labyrinth.connect(card_added_to_labyrinth)
 	SignalManager.card_added_to_limbo.connect(card_added_to_limbo)
-	SignalManager.door_discarded.connect(door_discarded)
 	SignalManager.nightmare_action_selected.connect(nightmare_action_selected)
 	SignalManager.touch_event.connect(touch_event)
 	SignalManager.key_open_door_selected.connect(key_open_door_selected)
