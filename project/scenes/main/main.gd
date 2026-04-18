@@ -18,7 +18,9 @@ extends Node2D
 @onready var prophecy_panel: ProphecyPanel = $ProphecyPanel
 @onready var exit_button: TextureButton = $GUI/VBoxContainer/MenuBar/ExitButton
 @onready var discard_panel_container: Control = $GUI/VBoxContainer/MainArea/DiscardPanelContainer
-@onready var discard_panel: DiscardPanel = $GUI/VBoxContainer/MainArea/DiscardPanelContainer/DiscardPanel
+@onready var discard_panel: CardCounterPanel = $GUI/VBoxContainer/MainArea/DiscardPanelContainer/DiscardPanel
+@onready var deck_panel_container: Control = $GUI/VBoxContainer/MainArea/DeckPanelContainer
+@onready var deck_panel: CardCounterPanel = $GUI/VBoxContainer/MainArea/DeckPanelContainer/DeckPanel
 @onready var win_lose_panel_container: Control = $GUI/VBoxContainer/MainArea/WinLosePanelContainer
 @onready var win_panel: Control = $GUI/VBoxContainer/MainArea/WinLosePanelContainer/WinPanel
 @onready var lose_panel: Control = $GUI/VBoxContainer/MainArea/WinLosePanelContainer/LosePanel
@@ -48,7 +50,7 @@ func _ready() -> void:
 	SignalManager.touch_event.connect(touch_event)
 	SignalManager.key_open_door_selected.connect(key_open_door_selected)
 	SignalManager.deck_outline_enabled.connect(deck_outline_enabled)
-	SignalManager.discard_panel_closed.connect(discard_panel_closed)
+	SignalManager.counter_panel_closed.connect(counter_panel_closed)
 	SignalManager.incantation_door_selected.connect(incantation_door_selected)
 	
 	hand_markers.push_back(hand_marker_1)
@@ -296,6 +298,10 @@ func touch_event(object: Variant) -> void:
 	if incantation_panel.visible and object is Deck:		
 		await handle_incantation_action(object)
 		return
+	if not nightmare_panel.visible and not prophecy_panel.visible and not incantation_panel.visible and object is Deck:
+		deck_panel.clear_counters()
+		deck_panel.setup(GameManager.deck_model.deck, true)
+		deck_panel_container.visible = true
 	pass
 
 func handle_prophecy_action() -> void:
@@ -674,11 +680,11 @@ func animate_card_to_deck(card: Card) -> void:
 func _on_discard_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventScreenTouch:
 		discard_panel.clear_counters()
-		discard_panel.setup()
+		discard_panel.setup(GameManager.discard, false)
 		discard_panel_container.visible = true
 
-func discard_panel_closed() -> void:
-	discard_panel_container.visible = false
+func counter_panel_closed(source: CardCounterPanel) -> void:
+	source.get_parent().visible = false
 
 func _on_exit_button_pressed() -> void:
 	AudioManager.play_uiclick_sound()

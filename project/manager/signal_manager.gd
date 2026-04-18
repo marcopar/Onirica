@@ -27,7 +27,7 @@ signal key_open_door_selected(type: Constants.KEY_OPEN_DOOR, key: Card, door: Ca
 @warning_ignore("unused_signal")
 signal deck_outline_enabled(enabled: bool)
 @warning_ignore("unused_signal")
-signal discard_panel_closed()
+signal counter_panel_closed(source: CardCounterPanel)
 @warning_ignore("unused_signal")
 signal swap_prophecy_cards(card1: PanelCard, card2: PanelCard)
 @warning_ignore("unused_signal")
