@@ -314,7 +314,7 @@ func handle_prophecy_action() -> void:
 	var card_models: Array[CardModel] = prophecy_panel.card_models
 	var prophecy_cards: Array[PanelCard] = prophecy_panel.panel_cards
 	
-	#can't discard doors and deadends, etc
+	#can't discard doors and dead ends, etc
 	if not card_models[4].can_discard:
 		ignore_gui_events = false
 		return

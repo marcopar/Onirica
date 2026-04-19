@@ -54,12 +54,12 @@ size_flags_vertical = 6
 [node name="Icon" parent="VBoxContainer/Generic/Nighmares/HBoxContainer" parent_id_path=PackedInt32Array(550191198, 2124929526) index="0" unique_id=1778550076]
 texture = ExtResource("3_jodc7")
 
-[node name="Deadends" parent="VBoxContainer/Generic" unique_id=336308914 instance=ExtResource("1_lvojv")]
+[node name="DeadEnds" parent="VBoxContainer/Generic" unique_id=336308914 instance=ExtResource("1_lvojv")]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Generic/Deadends/HBoxContainer" parent_id_path=PackedInt32Array(336308914, 2124929526) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Generic/DeadEnds/HBoxContainer" parent_id_path=PackedInt32Array(336308914, 2124929526) index="0" unique_id=1778550076]
 texture = ExtResource("4_ychlr")
 
 [node name="Red" type="HBoxContainer" parent="VBoxContainer" unique_id=625031331]
@@ -327,7 +327,7 @@ texture = ExtResource("4_0h65k")
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 
 [editable path="VBoxContainer/Generic/Nighmares"]
-[editable path="VBoxContainer/Generic/Deadends"]
+[editable path="VBoxContainer/Generic/DeadEnds"]
 [editable path="VBoxContainer/Red/RedSun"]
 [editable path="VBoxContainer/Red/RedMoon"]
 [editable path="VBoxContainer/Red/RedKey"]

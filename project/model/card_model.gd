@@ -16,7 +16,7 @@ var color: CardManager.CARD_COLOR:
 
 var can_be_in_hand: bool:
 	get:
-		return type == CardManager.CARD_TYPE.DEADEND or type == CardManager.CARD_TYPE.SUN or \
+		return type == CardManager.CARD_TYPE.DEAD_END or type == CardManager.CARD_TYPE.SUN or \
 			type == CardManager.CARD_TYPE.MOON or type == CardManager.CARD_TYPE.KEY or \
 			type == CardManager.CARD_TYPE.GLYPH
 	

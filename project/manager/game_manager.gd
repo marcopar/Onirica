@@ -36,7 +36,7 @@ var discard: Array[CardModel]:
 var doors_to_be_found: int
 
 var the_glyphs_on: bool = false
-var crossroads_deadends_on: bool = false
+var crossroads_and_dead_ends_on: bool = false
 		
 #Variant because  we want to have an  Array as value
 var found_doors: Dictionary[CardManager.CARD_COLOR, Variant] = {
@@ -68,7 +68,10 @@ func new_game() -> void:
 	
 	if the_glyphs_on:
 		deck_model.deck.append_array(CardManager.create_the_glyphs_deck())
-
+	
+	if crossroads_and_dead_ends_on:
+		deck_model.deck.append_array(CardManager.create_crossroads_and_dead_ends_deck())
+		
 	doors_to_be_found = deck_model.get_number_of(CardManager.CARD_TYPE.DOOR)
 
 	found_doors = {

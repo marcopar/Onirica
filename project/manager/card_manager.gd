@@ -10,7 +10,7 @@ var CARD_COLOR_TEXT: Dictionary[CardManager.CARD_COLOR, String] = {
 		CARD_COLOR.NONE: "none"
 }
 
-enum CARD_TYPE {SUN, MOON, KEY, GLYPH, DOOR, NIGHTMARE, DEADEND, NONE}
+enum CARD_TYPE {SUN, MOON, KEY, GLYPH, DOOR, NIGHTMARE, DEAD_END, NONE}
 var CARD_TYPE_TEXT: Dictionary[CardManager.CARD_TYPE, String] = {
 		CARD_TYPE.SUN: "sun",
 		CARD_TYPE.MOON: "moon",
@@ -18,7 +18,7 @@ var CARD_TYPE_TEXT: Dictionary[CardManager.CARD_TYPE, String] = {
 		CARD_TYPE.GLYPH: "glyph",
 		CARD_TYPE.DOOR: "door",
 		CARD_TYPE.NIGHTMARE: "nightmare",
-		CARD_TYPE.DEADEND: "deadend",
+		CARD_TYPE.DEAD_END: "dead_end",
 		CARD_TYPE.NONE: "none"
 }
 
@@ -67,7 +67,7 @@ const GLYPHS_EXPANSION_DECK: Dictionary[CardManager.CARD_TYPE, Variant] = {
 	}
 }
 
-const CROSSROADS_AND_DEADENDS_EXPANSION_DECK: Dictionary[CardManager.CARD_TYPE, Variant] = {
+const CROSSROADS_AND_DEAD_ENDS_EXPANSION_DECK: Dictionary[CardManager.CARD_TYPE, Variant] = {
 	CARD_TYPE.SUN: {
 		CARD_COLOR.MULTI: 3
 	},
@@ -77,7 +77,7 @@ const CROSSROADS_AND_DEADENDS_EXPANSION_DECK: Dictionary[CardManager.CARD_TYPE, 
 	CARD_TYPE.KEY: {
 		CARD_COLOR.MULTI: 1
 	},
-	CARD_TYPE.DEADEND: {
+	CARD_TYPE.DEAD_END: {
 		CARD_COLOR.NONE: 10
 	},
 }
@@ -110,6 +110,16 @@ func create_the_glyphs_deck() -> Array[CardModel]:
 	for type: CARD_TYPE in GLYPHS_EXPANSION_DECK.keys():
 		for color: CARD_COLOR in GLYPHS_EXPANSION_DECK[type]:
 			var qty: int = GLYPHS_EXPANSION_DECK[type][color]
+			for i: int in range(0, qty):
+				var card: CardModel = create_card(type, color)
+				deck.push_back(card)
+	return deck
+	
+func create_crossroads_and_dead_ends_deck() -> Array[CardModel]:
+	var deck: Array[CardModel] = []
+	for type: CARD_TYPE in CROSSROADS_AND_DEAD_ENDS_EXPANSION_DECK.keys():
+		for color: CARD_COLOR in CROSSROADS_AND_DEAD_ENDS_EXPANSION_DECK[type]:
+			var qty: int = CROSSROADS_AND_DEAD_ENDS_EXPANSION_DECK[type][color]
 			for i: int in range(0, qty):
 				var card: CardModel = create_card(type, color)
 				deck.push_back(card)
