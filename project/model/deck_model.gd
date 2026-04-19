@@ -2,6 +2,9 @@ extends Node
 
 class_name DeckModel
 
+#for tresting
+var shuffle_disabled: bool = false
+
 var deck: Array[CardModel]:
 	get:
 		return deck
@@ -16,6 +19,8 @@ func shuffle() -> void:
 	_shuffle()
 
 func _shuffle() -> void:
+	if shuffle_disabled:
+		return
 	var n: int = deck.size()
 	randomize() # <- we only have 2**64 possible seeds available, 2**226 are needed
 	for i: int in range(n - 1, 0, -1):
@@ -52,4 +57,10 @@ func search(type: CardManager.CARD_TYPE, color: CardManager.CARD_COLOR) -> CardM
 		if card.type == type and card.color == color:
 			return card
 	return null
-			
+
+func search_and_remove(type: CardManager.CARD_TYPE, color: CardManager.CARD_COLOR) -> CardModel:
+	for card: CardModel in deck:
+		if card.type == type and card.color == color:
+			deck.erase(card)
+			return card
+	return null

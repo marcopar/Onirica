@@ -165,6 +165,58 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
+[node name="WinLosePanelContainer" type="Control" parent="GUI/VBoxContainer/MainArea" unique_id=1642094447]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="WinPanel" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer" unique_id=1859644697 instance=ExtResource("15_raeie")]
+visible = false
+z_index = 1000
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -150.0
+offset_right = 250.0
+offset_bottom = 150.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer/WinPanel" index="3" unique_id=1787065325]
+label_settings = SubResource("LabelSettings_nvumn")
+
+[node name="LosePanel" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer" unique_id=1459153273 instance=ExtResource("15_raeie")]
+visible = false
+z_index = 1000
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -150.0
+offset_right = 250.0
+offset_bottom = 150.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ColorRect" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer/LosePanel/MarginContainer" parent_id_path=PackedInt32Array(1459153273, 2108480358) index="0" unique_id=232331145]
+color = Color(0.31, 0, 0, 1)
+
+[node name="Label" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer/LosePanel" index="3" unique_id=1787065325]
+text = "Defeat!"
+label_settings = SubResource("LabelSettings_ou6is")
+
 [node name="DiscardPanelContainer" type="Control" parent="GUI/VBoxContainer/MainArea" unique_id=449390646]
 visible = false
 layout_mode = 1
@@ -177,7 +229,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="DiscardPanel" parent="GUI/VBoxContainer/MainArea/DiscardPanelContainer" unique_id=653347061 instance=ExtResource("14_7smn1")]
-z_index = 1000
+z_index = 1001
 custom_minimum_size = Vector2(900, 1200)
 layout_mode = 1
 anchors_preset = 8
@@ -205,7 +257,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="DeckPanel" parent="GUI/VBoxContainer/MainArea/DeckPanelContainer" unique_id=2121675712 instance=ExtResource("14_7smn1")]
-z_index = 1000
+z_index = 1001
 custom_minimum_size = Vector2(900, 1200)
 layout_mode = 1
 anchors_preset = 8
@@ -220,57 +272,6 @@ offset_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 0
-
-[node name="WinLosePanelContainer" type="Control" parent="GUI/VBoxContainer/MainArea" unique_id=1642094447]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="WinPanel" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer" unique_id=1859644697 instance=ExtResource("15_raeie")]
-visible = false
-z_index = 2000
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -250.0
-offset_top = -150.0
-offset_right = 250.0
-offset_bottom = 150.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="Label" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer/WinPanel" index="3" unique_id=1787065325]
-label_settings = SubResource("LabelSettings_nvumn")
-
-[node name="LosePanel" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer" unique_id=1459153273 instance=ExtResource("15_raeie")]
-visible = false
-z_index = 2000
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -250.0
-offset_top = -150.0
-offset_right = 250.0
-offset_bottom = 150.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="ColorRect" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer/LosePanel/MarginContainer" parent_id_path=PackedInt32Array(1459153273, 2108480358) index="0" unique_id=232331145]
-color = Color(0.31, 0, 0, 1)
-
-[node name="Label" parent="GUI/VBoxContainer/MainArea/WinLosePanelContainer/LosePanel" index="3" unique_id=1787065325]
-text = "Defeat!"
-label_settings = SubResource("LabelSettings_ou6is")
 
 [connection signal="area_entered" from="Deck" to="Deck" method="_on_area_entered"]
 [connection signal="area_exited" from="Deck" to="Deck" method="_on_area_exited"]

@@ -363,7 +363,7 @@ func handle_prophecy_action() -> void:
 	return
 	
 func incantation_door_selected(panel_card: PanelCard) -> void:
-	handle_incantation_action(panel_card)
+	await handle_incantation_action(panel_card)
 
 func handle_incantation_action(object: Variant) -> void:
 	if ignore_gui_events:

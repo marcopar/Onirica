@@ -117,15 +117,45 @@ func create_the_glyphs_deck() -> Array[CardModel]:
 	
 func create_test_deck() -> Array[CardModel]:
 	var deck: Array[CardModel] = []
-	var card: CardModel = create_card(CardManager.CARD_TYPE.SUN, CardManager.CARD_COLOR.RED)
+	var card: CardModel
+		
+	
+	card = create_card(CardManager.CARD_TYPE.MOON, CardManager.CARD_COLOR.GREEN)
 	deck.push_back(card)
-	card = create_card(CardManager.CARD_TYPE.SUN, CardManager.CARD_COLOR.RED)
+	card = create_card(CardManager.CARD_TYPE.SUN, CardManager.CARD_COLOR.GREEN)
 	deck.push_back(card)
-	card = create_card(CardManager.CARD_TYPE.SUN, CardManager.CARD_COLOR.RED)
+	card = create_card(CardManager.CARD_TYPE.MOON, CardManager.CARD_COLOR.GREEN)
 	deck.push_back(card)
-	card = create_card(CardManager.CARD_TYPE.SUN, CardManager.CARD_COLOR.RED)
+	
+	card = create_card(CardManager.CARD_TYPE.KEY, CardManager.CARD_COLOR.GREEN)
 	deck.push_back(card)
-	card = create_card(CardManager.CARD_TYPE.KEY, CardManager.CARD_COLOR.RED)
+	card = create_card(CardManager.CARD_TYPE.SUN, CardManager.CARD_COLOR.BLUE)
+	deck.push_back(card)
+	
+	card = create_card(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.RED)
+	deck.push_back(card)
+	card = create_card(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.RED)
+	deck.push_back(card)
+	card = create_card(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.GREEN)
+	deck.push_back(card)
+	card = create_card(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.GREEN)
+	deck.push_back(card)
+	card = create_card(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.BLUE)
+	deck.push_back(card)
+	card = create_card(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.BLUE)
+	deck.push_back(card)
+	card = create_card(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.YELLOW)
+	deck.push_back(card)
+	card = create_card(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.YELLOW)
+	deck.push_back(card)
+	
+	card = create_card(CardManager.CARD_TYPE.NIGHTMARE, CardManager.CARD_COLOR.NONE)
+	deck.push_back(card)
+	card = create_card(CardManager.CARD_TYPE.NIGHTMARE, CardManager.CARD_COLOR.NONE)
+	deck.push_back(card)
+	card = create_card(CardManager.CARD_TYPE.SUN, CardManager.CARD_COLOR.BLUE)
+	deck.push_back(card)
+	card = create_card(CardManager.CARD_TYPE.SUN, CardManager.CARD_COLOR.BLUE)
 	deck.push_back(card)
 	card = create_card(CardManager.CARD_TYPE.SUN, CardManager.CARD_COLOR.BLUE)
 	deck.push_back(card)

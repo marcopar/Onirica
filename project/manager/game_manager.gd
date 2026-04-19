@@ -54,14 +54,6 @@ func _ready() -> void:
 	pass
 
 func new_game() -> void:
-	deck_model = DeckModel.new()
-	deck_model.deck = CardManager.create_base_deck()
-	if the_glyphs_on:
-		deck_model.deck.append_array(CardManager.create_the_glyphs_deck())
-		
-	doors_to_be_found = deck_model.get_number_of(CardManager.CARD_TYPE.DOOR)
-	deck_model.shuffle()
-	
 	hand.clear()
 	#refill hand with null
 	for hand_position: int in range(0, HAND_SIZE):
@@ -71,12 +63,64 @@ func new_game() -> void:
 	limbo.clear()
 	discard.clear()
 	
+	deck_model = DeckModel.new()
+	deck_model.deck = CardManager.create_base_deck()
+	
+	if the_glyphs_on:
+		deck_model.deck.append_array(CardManager.create_the_glyphs_deck())
+
+	doors_to_be_found = deck_model.get_number_of(CardManager.CARD_TYPE.DOOR)
+
 	found_doors = {
-		CardManager.CARD_COLOR.RED: [],
-		CardManager.CARD_COLOR.GREEN: [],
-		CardManager.CARD_COLOR.BLUE: [],
-		CardManager.CARD_COLOR.YELLOW: []
+		CardManager.CARD_COLOR.RED: [
+		],
+		CardManager.CARD_COLOR.GREEN: [
+		],
+		CardManager.CARD_COLOR.BLUE: [
+		],
+		CardManager.CARD_COLOR.YELLOW: [
+		]		
 	}
+	deck_model.shuffle()
+	
+func new_test_game() -> void:
+	hand.clear()
+	#refill hand with null
+	for hand_position: int in range(0, HAND_SIZE):
+		hand.push_back(null)
+		
+	labyrinth.clear()
+	limbo.clear()
+	discard.clear()
+	
+	deck_model = DeckModel.new()	
+	deck_model.shuffle_disabled = true
+	deck_model.deck = CardManager.create_test_deck()
+	
+	if the_glyphs_on:
+		deck_model.deck.append_array(CardManager.create_the_glyphs_deck())
+
+	doors_to_be_found = deck_model.get_number_of(CardManager.CARD_TYPE.DOOR)
+
+	found_doors = {
+		CardManager.CARD_COLOR.RED: [
+			deck_model.search_and_remove(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.RED),
+			deck_model.search_and_remove(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.RED)
+		],
+		CardManager.CARD_COLOR.GREEN: [
+			deck_model.search_and_remove(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.GREEN)
+		],
+		CardManager.CARD_COLOR.BLUE: [
+			deck_model.search_and_remove(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.BLUE),
+			deck_model.search_and_remove(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.BLUE)
+		],
+		CardManager.CARD_COLOR.YELLOW: [
+			deck_model.search_and_remove(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.YELLOW),
+			deck_model.search_and_remove(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.YELLOW)
+		]		
+	}
+	deck_model.shuffle()
+	
 
 func shuffle() -> void:
 	deck_model.shuffle()
