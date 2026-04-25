@@ -29,6 +29,8 @@ material = SubResource("CanvasItemMaterial_lvojv")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -180.0
+offset_bottom = -720.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("CurveTexture_qwpt0")
@@ -41,6 +43,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 0
 
 [node name="Generic" type="HBoxContainer" parent="VBoxContainer" unique_id=720273165]
 layout_mode = 2
