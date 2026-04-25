@@ -85,7 +85,7 @@ const CROSSROADS_AND_DEAD_ENDS_EXPANSION_DECK: Dictionary[CardManager.CARD_TYPE,
 func create_card(type: CARD_TYPE, color: CARD_COLOR) -> CardModel:
 	var sprite_base: String = "res://assets/sprites/cards/"
 	var sprite_name: String
-	if color == CARD_COLOR.MULTI or color == CARD_COLOR.NONE:
+	if color == CARD_COLOR.NONE:
 		sprite_name = "%s%s.png" % [sprite_base, CARD_TYPE_TEXT[type]]
 	else:
 		sprite_name = "%s%s_%s.png" % [sprite_base, CARD_COLOR_TEXT[color], CARD_TYPE_TEXT[type]]
