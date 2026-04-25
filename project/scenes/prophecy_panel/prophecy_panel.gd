@@ -95,8 +95,11 @@ func swap_prophecy_cards(card1: PanelCard, card2: PanelCard) -> void:
 	panel_cards[i1] = panel_cards[i2]
 	panel_cards[i2] = panel_card
 	
-	SignalManager.deck_outline_enabled.emit(card_models[4].can_discard)
+	SignalManager.deck_outline_enabled.emit(can_close_panel())
 	
+func can_close_panel() -> bool:
+	return card_models[4].type != CardManager.CARD_TYPE.DOOR
+
 func prophecy_cards_reset_position(card: PanelCard) -> void:
 	var i: int = card_models.find(card.card_model)	
 	var marker: Marker2D = card_markers[i]
