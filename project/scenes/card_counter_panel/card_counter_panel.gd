@@ -3,7 +3,7 @@ extends TextureRect
 class_name CardCounterPanel
 
 @onready var nightmares: DiscardPanelCounter = $VBoxContainer/Generic/Nighmares
-@onready var deadends: DiscardPanelCounter = $VBoxContainer/Generic/Deadends
+@onready var dead_ends: DiscardPanelCounter = $VBoxContainer/Generic/DeadEnds
 
 @onready var red_sun: DiscardPanelCounter = $VBoxContainer/Red/RedSun
 @onready var red_moon: DiscardPanelCounter = $VBoxContainer/Red/RedMoon
@@ -66,7 +66,7 @@ func clear_counters() -> void:
 	CardManager.CARD_TYPE.NIGHTMARE: {
 		CardManager.CARD_COLOR.NONE: 0
 	},
-	CardManager.CARD_TYPE.DEADEND: {
+	CardManager.CARD_TYPE.DEAD_END: {
 		CardManager.CARD_COLOR.NONE: 0
 	},
 	CardManager.CARD_TYPE.SUN: {
@@ -110,8 +110,8 @@ func setup(car_models: Array[CardModel], show_all: bool) -> void:
 	blue_glyph.visible = GameManager.the_glyphs_on
 	yellow_glyph.visible = GameManager.the_glyphs_on	
 	
-	multi.visible = GameManager.crossroads_deadends_on
-	deadends.visible= GameManager.crossroads_deadends_on
+	multi.visible = GameManager.crossroads_and_dead_ends_on
+	dead_ends.visible= GameManager.crossroads_and_dead_ends_on
 	
 	red_door.visible = show_all
 	green_door.visible = show_all
@@ -125,7 +125,7 @@ func setup(car_models: Array[CardModel], show_all: bool) -> void:
 		counters[type][color] = counter + 1
 	
 	nightmares.set_number(counters[CardManager.CARD_TYPE.NIGHTMARE][CardManager.CARD_COLOR.NONE] as int)
-	deadends.set_number(counters[CardManager.CARD_TYPE.DEADEND][CardManager.CARD_COLOR.NONE] as int)
+	dead_ends.set_number(counters[CardManager.CARD_TYPE.DEAD_END][CardManager.CARD_COLOR.NONE] as int)
 	
 	red_sun.set_number(counters[CardManager.CARD_TYPE.SUN][CardManager.CARD_COLOR.RED] as int)
 	red_moon.set_number(counters[CardManager.CARD_TYPE.MOON][CardManager.CARD_COLOR.RED] as int)

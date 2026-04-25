@@ -230,7 +230,6 @@ size_flags_vertical = 3
 
 [node name="DiscardPanel" parent="GUI/VBoxContainer/MainArea/DiscardPanelContainer" unique_id=653347061 instance=ExtResource("14_7smn1")]
 z_index = 1001
-custom_minimum_size = Vector2(900, 1200)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

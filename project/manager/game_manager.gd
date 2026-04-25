@@ -36,7 +36,7 @@ var discard: Array[CardModel]:
 var doors_to_be_found: int
 
 var the_glyphs_on: bool = false
-var crossroads_deadends_on: bool = false
+var crossroads_and_dead_ends_on: bool = false
 		
 #Variant because  we want to have an  Array as value
 var found_doors: Dictionary[CardManager.CARD_COLOR, Variant] = {
@@ -68,7 +68,10 @@ func new_game() -> void:
 	
 	if the_glyphs_on:
 		deck_model.deck.append_array(CardManager.create_the_glyphs_deck())
-
+	
+	if crossroads_and_dead_ends_on:
+		deck_model.deck.append_array(CardManager.create_crossroads_and_dead_ends_deck())
+		
 	doors_to_be_found = deck_model.get_number_of(CardManager.CARD_TYPE.DOOR)
 
 	found_doors = {
@@ -131,12 +134,13 @@ func check_door_found() -> CardModel:
 	for card_model: CardModel in labyrinth:
 		last3.push_back(card_model)
 		if last3.size() != 3:
-			continue		
-		if check_for_door_combo(last3):
+			continue
+		var combo_color: CardManager.CARD_COLOR = check_for_door_combo(last3)
+		if combo_color != CardManager.CARD_COLOR.NONE:
 			#if it's the last 3 then we found a combo
 			if labyrinth.find(card_model) == labyrinth.size() - 1:
 				#get the door from the deck
-				var door: CardModel = deck_model.search(CardManager.CARD_TYPE.DOOR, card_model.color)
+				var door: CardModel = deck_model.search(CardManager.CARD_TYPE.DOOR, combo_color)
 				if door != null:
 					set_door_as_found(door)
 					return door
@@ -152,19 +156,24 @@ func set_door_as_found(door: CardModel) -> void:
 	deck_model.deck.erase(door)
 	found_doors[door.color].push_back(door)
 
-func check_for_door_combo(last3: Array[CardModel]) -> bool:
+func check_for_door_combo(last3: Array[CardModel]) -> CardManager.CARD_COLOR:
+	var multi_count: int = 0
 	var colors: Dictionary[CardManager.CARD_COLOR, bool] = {}
 	#count the different colors
 	for card_model in last3:
 		if card_model.color == CardManager.CARD_COLOR.MULTI:
+			multi_count = multi_count + 1
 			continue
 		colors[card_model.color] = true
 	#check the colors number and the types
+	if multi_count > 1:
+		#don't allow combos with multiple crossoroads
+		return CardManager.CARD_COLOR.NONE
 	if colors.keys().size() == 1 and \
 		last3[0].type != last3[1].type and \
 		last3[1].type != last3[2].type:
-			return true
-	return false
+			return colors.keys().pop_front()
+	return CardManager.CARD_COLOR.NONE
 	
 func card_added_to_discard(card_model: CardModel) -> void:
 	var hand_position: int = hand.find(card_model)
@@ -204,7 +213,8 @@ func get_save_dict() -> Dictionary[String, Variant]:
 			CardManager.CARD_COLOR.BLUE: [],
 			CardManager.CARD_COLOR.YELLOW: []
 		},
-		"the_glyphs_on": the_glyphs_on
+		"the_glyphs_on": the_glyphs_on,
+		"crossroads_and_dead_ends_on": crossroads_and_dead_ends_on
 	}
 	for c in deck_model.deck:
 		dict["deck"].append({"type": c.type, "color": c.color})
@@ -273,6 +283,7 @@ func load_game() -> void:
 				
 			doors_to_be_found = dict["doors_to_be_found"]
 			the_glyphs_on = dict["the_glyphs_on"]
+			crossroads_and_dead_ends_on = dict["crossroads_and_dead_ends_on"]
 			
 			found_doors = {
 				CardManager.CARD_COLOR.RED: [],

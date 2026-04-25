@@ -300,7 +300,7 @@ func touch_event(object: Variant) -> void:
 	if incantation_panel.visible and object is Deck:		
 		await handle_incantation_action(object)
 		return
-	if not nightmare_panel.visible and not prophecy_panel.visible and not incantation_panel.visible and object is Deck:
+	if nightmare_action_discard_selected != Constants.NIGHTMARE_DISCARD.DECK and not prophecy_panel.visible and not incantation_panel.visible and object is Deck:
 		deck_panel.clear_counters()
 		deck_panel.setup(GameManager.deck_model.deck, true)
 		deck_panel_container.visible = true
@@ -314,8 +314,8 @@ func handle_prophecy_action() -> void:
 	var card_models: Array[CardModel] = prophecy_panel.card_models
 	var prophecy_cards: Array[PanelCard] = prophecy_panel.panel_cards
 	
-	#can't discard doors and deadends, etc
-	if not card_models[4].can_discard:
+	#can't discard doors and dead ends, etc
+	if not prophecy_panel.can_close_panel():
 		ignore_gui_events = false
 		return
 		
