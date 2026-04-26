@@ -54,7 +54,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Generic/Nighmares/HBoxContainer" parent_id_path=PackedInt32Array(550191198, 2124929526) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Generic/Nighmares/HBoxContainer" parent_id_path=PackedInt32Array(550191198, 764233642) index="0" unique_id=1778550076]
 texture = ExtResource("3_jodc7")
 
 [node name="DeadEnds" parent="VBoxContainer/Generic" unique_id=336308914 instance=ExtResource("1_lvojv")]
@@ -62,7 +62,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Generic/DeadEnds/HBoxContainer" parent_id_path=PackedInt32Array(336308914, 2124929526) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Generic/DeadEnds/HBoxContainer" parent_id_path=PackedInt32Array(336308914, 764233642) index="0" unique_id=1778550076]
 texture = ExtResource("4_ychlr")
 
 [node name="Red" type="HBoxContainer" parent="VBoxContainer" unique_id=625031331]
@@ -90,7 +90,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Red/RedMoon/HBoxContainer" parent_id_path=PackedInt32Array(1302657969, 2124929526) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Red/RedMoon/HBoxContainer" parent_id_path=PackedInt32Array(1302657969, 764233642) index="0" unique_id=1778550076]
 texture = ExtResource("3_egv2n")
 
 [node name="RedKey" parent="VBoxContainer/Red" unique_id=771163890 instance=ExtResource("1_lvojv")]
@@ -99,7 +99,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Red/RedKey/HBoxContainer" parent_id_path=PackedInt32Array(771163890, 2124929526) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Red/RedKey/HBoxContainer" parent_id_path=PackedInt32Array(771163890, 764233642) index="0" unique_id=1778550076]
 texture = ExtResource("4_0h65k")
 
 [node name="RedGlyph" parent="VBoxContainer/Red" unique_id=404520395 instance=ExtResource("1_lvojv")]
@@ -109,7 +109,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Red/RedGlyph/HBoxContainer" parent_id_path=PackedInt32Array(404520395, 2124929526) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Red/RedGlyph/HBoxContainer" parent_id_path=PackedInt32Array(404520395, 764233642) index="0" unique_id=1778550076]
 texture = ExtResource("5_bs7hk")
 
 [node name="RedDoor" parent="VBoxContainer/Red" unique_id=1638724100 instance=ExtResource("1_lvojv")]
@@ -119,7 +119,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Red/RedDoor/HBoxContainer" parent_id_path=PackedInt32Array(1638724100, 2124929526) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Red/RedDoor/HBoxContainer" parent_id_path=PackedInt32Array(1638724100, 764233642) index="0" unique_id=1778550076]
 texture = ExtResource("7_2epkt")
 
 [node name="Green" type="HBoxContainer" parent="VBoxContainer" unique_id=46421346]
@@ -147,7 +147,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Green/GreenMoon/HBoxContainer" parent_id_path=PackedInt32Array(182732080, 2124929526) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Green/GreenMoon/HBoxContainer" parent_id_path=PackedInt32Array(182732080, 764233642) index="0" unique_id=1778550076]
 texture = ExtResource("3_egv2n")
 
 [node name="GreenKey" parent="VBoxContainer/Green" unique_id=1331025557 instance=ExtResource("1_lvojv")]
@@ -156,7 +156,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Green/GreenKey/HBoxContainer" parent_id_path=PackedInt32Array(1331025557, 2124929526) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Green/GreenKey/HBoxContainer" parent_id_path=PackedInt32Array(1331025557, 764233642) index="0" unique_id=1778550076]
 texture = ExtResource("4_0h65k")
 
 [node name="GreenGlyph" parent="VBoxContainer/Green" unique_id=1170034279 instance=ExtResource("1_lvojv")]
@@ -166,7 +166,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Green/GreenGlyph/HBoxContainer" parent_id_path=PackedInt32Array(1170034279, 2124929526) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Green/GreenGlyph/HBoxContainer" parent_id_path=PackedInt32Array(1170034279, 764233642) index="0" unique_id=1778550076]
 texture = ExtResource("5_bs7hk")
 
 [node name="GreenDoor" parent="VBoxContainer/Green" unique_id=594215731 instance=ExtResource("1_lvojv")]
@@ -176,7 +176,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Green/GreenDoor/HBoxContainer" parent_id_path=PackedInt32Array(594215731, 2124929526) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Green/GreenDoor/HBoxContainer" parent_id_path=PackedInt32Array(594215731, 764233642) index="0" unique_id=1778550076]
 texture = ExtResource("7_2epkt")
 
 [node name="Blue" type="HBoxContainer" parent="VBoxContainer" unique_id=1853377804]
@@ -204,7 +204,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Blue/BlueMoon/HBoxContainer" parent_id_path=PackedInt32Array(857234461, 2124929526) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Blue/BlueMoon/HBoxContainer" parent_id_path=PackedInt32Array(857234461, 764233642) index="0" unique_id=1778550076]
 texture = ExtResource("3_egv2n")
 
 [node name="BlueKey" parent="VBoxContainer/Blue" unique_id=1751463177 instance=ExtResource("1_lvojv")]
@@ -213,7 +213,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Blue/BlueKey/HBoxContainer" parent_id_path=PackedInt32Array(1751463177, 2124929526) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Blue/BlueKey/HBoxContainer" parent_id_path=PackedInt32Array(1751463177, 764233642) index="0" unique_id=1778550076]
 texture = ExtResource("4_0h65k")
 
 [node name="BlueGlyph" parent="VBoxContainer/Blue" unique_id=2135723767 instance=ExtResource("1_lvojv")]
@@ -223,7 +223,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Blue/BlueGlyph/HBoxContainer" parent_id_path=PackedInt32Array(2135723767, 2124929526) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Blue/BlueGlyph/HBoxContainer" parent_id_path=PackedInt32Array(2135723767, 764233642) index="0" unique_id=1778550076]
 texture = ExtResource("5_bs7hk")
 
 [node name="BlueDoor" parent="VBoxContainer/Blue" unique_id=1585354897 instance=ExtResource("1_lvojv")]
@@ -233,7 +233,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Blue/BlueDoor/HBoxContainer" parent_id_path=PackedInt32Array(1585354897, 2124929526) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Blue/BlueDoor/HBoxContainer" parent_id_path=PackedInt32Array(1585354897, 764233642) index="0" unique_id=1778550076]
 texture = ExtResource("7_2epkt")
 
 [node name="Yellow" type="HBoxContainer" parent="VBoxContainer" unique_id=1786523656]
@@ -261,7 +261,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Yellow/YellowMoon/HBoxContainer" parent_id_path=PackedInt32Array(1167671453, 2124929526) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Yellow/YellowMoon/HBoxContainer" parent_id_path=PackedInt32Array(1167671453, 764233642) index="0" unique_id=1778550076]
 texture = ExtResource("3_egv2n")
 
 [node name="YellowKey" parent="VBoxContainer/Yellow" unique_id=1785467525 instance=ExtResource("1_lvojv")]
@@ -270,7 +270,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Yellow/YellowKey/HBoxContainer" parent_id_path=PackedInt32Array(1785467525, 2124929526) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Yellow/YellowKey/HBoxContainer" parent_id_path=PackedInt32Array(1785467525, 764233642) index="0" unique_id=1778550076]
 texture = ExtResource("4_0h65k")
 
 [node name="YellowGlyph" parent="VBoxContainer/Yellow" unique_id=1543158197 instance=ExtResource("1_lvojv")]
@@ -280,7 +280,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Yellow/YellowGlyph/HBoxContainer" parent_id_path=PackedInt32Array(1543158197, 2124929526) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Yellow/YellowGlyph/HBoxContainer" parent_id_path=PackedInt32Array(1543158197, 764233642) index="0" unique_id=1778550076]
 texture = ExtResource("5_bs7hk")
 
 [node name="YellowDoor" parent="VBoxContainer/Yellow" unique_id=1946661101 instance=ExtResource("1_lvojv")]
@@ -290,7 +290,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Yellow/YellowDoor/HBoxContainer" parent_id_path=PackedInt32Array(1946661101, 2124929526) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Yellow/YellowDoor/HBoxContainer" parent_id_path=PackedInt32Array(1946661101, 764233642) index="0" unique_id=1778550076]
 texture = ExtResource("7_2epkt")
 
 [node name="Multi" type="HBoxContainer" parent="VBoxContainer" unique_id=1502264334]
@@ -316,7 +316,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Multi/MultiMoon/HBoxContainer" parent_id_path=PackedInt32Array(179340761, 2124929526) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Multi/MultiMoon/HBoxContainer" parent_id_path=PackedInt32Array(179340761, 764233642) index="0" unique_id=1778550076]
 texture = ExtResource("3_egv2n")
 
 [node name="MultiKey" parent="VBoxContainer/Multi" unique_id=9010569 instance=ExtResource("1_lvojv")]
@@ -324,7 +324,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 6
 
-[node name="Icon" parent="VBoxContainer/Multi/MultiKey/HBoxContainer" parent_id_path=PackedInt32Array(9010569, 2124929526) index="0" unique_id=1778550076]
+[node name="Icon" parent="VBoxContainer/Multi/MultiKey/HBoxContainer" parent_id_path=PackedInt32Array(9010569, 764233642) index="0" unique_id=1778550076]
 texture = ExtResource("4_0h65k")
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
