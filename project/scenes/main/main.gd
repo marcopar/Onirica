@@ -290,6 +290,13 @@ func nightmare_action_selected(type: Constants.NIGHTMARE_DISCARD) -> void:
 			set_hand_outline(true)
 
 func touch_event(object: Variant) -> void:
+	#show deck counters only when the deck is not an action trigger
+	if object is Deck:
+		if nightmare_action_discard_selected != Constants.NIGHTMARE_DISCARD.DECK and (not prophecy_panel.visible or not prophecy_panel.can_close_panel()):
+			deck_panel.clear_counters()
+			deck_panel.setup(GameManager.deck_model.deck, true)
+			deck_panel_container.visible = true
+			
 	if nightmare_panel.visible and nightmare_action_discard_selected != Constants.NIGHTMARE_DISCARD.NONE:
 		# nightmare action was selected so we check if we should activate the action
 		await handle_nightmare_action(nightmare_action_discard_selected, object)
@@ -299,11 +306,7 @@ func touch_event(object: Variant) -> void:
 		return
 	if incantation_panel.visible and object is Deck:		
 		await handle_incantation_action(object)
-		return
-	if nightmare_action_discard_selected != Constants.NIGHTMARE_DISCARD.DECK and not prophecy_panel.visible and not incantation_panel.visible and object is Deck:
-		deck_panel.clear_counters()
-		deck_panel.setup(GameManager.deck_model.deck, true)
-		deck_panel_container.visible = true
+		return	
 	pass
 
 func handle_prophecy_action() -> void:
@@ -490,6 +493,7 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 			await discard_nightmare_card()			
 			await draw_full_hand(true, true)
 		ignore_gui_events = false
+	ignore_gui_events = false
 
 func find_nightmare_card() -> Card:
 	for child in card_container.get_children():

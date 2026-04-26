@@ -8,7 +8,7 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_i2pqy"]
 font = ExtResource("4_wci2e")
-font_size = 40
+font_size = 64
 font_color = Color(0.5254902, 0.8862745, 1, 1)
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vimye"]
@@ -87,13 +87,17 @@ theme_override_constants/margin_bottom = 50
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GUI/VBoxContainer/MainArea/MarginContainer" unique_id=2065289536]
 layout_mode = 2
-theme_override_constants/separation = 50
+theme_override_constants/separation = 30
 
 [node name="Label" type="Label" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer" unique_id=1636816678]
 layout_mode = 2
 text = "Select expansions"
 label_settings = SubResource("LabelSettings_i2pqy")
 horizontal_alignment = 1
+
+[node name="Spacer0" type="Control" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer" unique_id=375828970]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
 
 [node name="TheGlyphs" type="Button" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer" unique_id=417552220]
 custom_minimum_size = Vector2(0, 150)
@@ -111,7 +115,7 @@ theme_override_styles/pressed = ExtResource("5_w7lp0")
 theme_override_styles/hover = ExtResource("5_w7lp0")
 theme_override_styles/disabled = ExtResource("5_w7lp0")
 theme_override_styles/focus = ExtResource("5_w7lp0")
-text = "THE GLYPHS ON"
+text = "THE GLYPHS"
 
 [node name="Shade" type="TextureRect" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/TheGlyphs" unique_id=1654667248]
 material = SubResource("CanvasItemMaterial_vimye")
@@ -124,6 +128,10 @@ grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_p57yh")
 
+[node name="Spacer1" type="Control" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer" unique_id=1129985505]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
 [node name="CrossroadsAndDedEnds" type="Button" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer" unique_id=690840696]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
@@ -134,13 +142,13 @@ theme_override_colors/font_hover_color = Color(0.5254902, 0.8862745, 1, 1)
 theme_override_colors/font_hover_pressed_color = Color(0.5254902, 0.8862745, 1, 1)
 theme_override_colors/font_disabled_color = Color(0.5254902, 0.8862745, 1, 1)
 theme_override_fonts/font = ExtResource("4_wci2e")
-theme_override_font_sizes/font_size = 46
+theme_override_font_sizes/font_size = 51
 theme_override_styles/normal = ExtResource("5_w7lp0")
 theme_override_styles/pressed = ExtResource("5_w7lp0")
 theme_override_styles/hover = ExtResource("5_w7lp0")
 theme_override_styles/disabled = ExtResource("5_w7lp0")
 theme_override_styles/focus = ExtResource("5_w7lp0")
-text = "CROSSROADS AND DEAD ENDS ON"
+text = "CROSSROADS AND DEAD ENDS"
 
 [node name="Shade" type="TextureRect" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/CrossroadsAndDedEnds" unique_id=601683758]
 material = SubResource("CanvasItemMaterial_vimye")
@@ -153,8 +161,37 @@ grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_p57yh")
 
-[node name="Spacer" type="Control" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer" unique_id=56442308]
-custom_minimum_size = Vector2(0, 100)
+[node name="Intersections" type="Button" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer" unique_id=927593951]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_focus_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_hover_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_fonts/font = ExtResource("4_wci2e")
+theme_override_font_sizes/font_size = 51
+theme_override_styles/normal = ExtResource("5_w7lp0")
+theme_override_styles/pressed = ExtResource("5_w7lp0")
+theme_override_styles/hover = ExtResource("5_w7lp0")
+theme_override_styles/disabled = ExtResource("5_w7lp0")
+theme_override_styles/focus = ExtResource("5_w7lp0")
+text = "INTERSECTIONS VARIANT"
+
+[node name="Shade" type="TextureRect" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/Intersections" unique_id=1687909633]
+material = SubResource("CanvasItemMaterial_vimye")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_p57yh")
+
+[node name="Spacer2" type="Control" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer" unique_id=56442308]
+custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 
 [node name="StartGame" type="Button" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer" unique_id=2044671862]
@@ -189,4 +226,5 @@ texture = SubResource("GradientTexture2D_p57yh")
 [connection signal="pressed" from="GUI/VBoxContainer/MenuBar/ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/TheGlyphs" to="." method="_on_the_glyphs_pressed"]
 [connection signal="pressed" from="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/CrossroadsAndDedEnds" to="." method="_on_crossroads_and_ded_ends_pressed"]
+[connection signal="pressed" from="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/Intersections" to="." method="_on_intersections_pressed"]
 [connection signal="pressed" from="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/StartGame" to="." method="_on_start_game_pressed"]
