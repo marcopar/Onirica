@@ -2,22 +2,21 @@ extends Node2D
 
 class_name RoundButton
 
-@onready var icon: Sprite2D = $Icon
 @onready var background: Sprite2D = $Background
 
-@export var texture: Texture2D
-
-var selected: bool = false:
+@export var selected: bool = false:
 	get:
 		return selected
-	set(value):		
+	set(value):
+		if background == null:
+			return
 		selected = value
 		if selected:
 			background.self_modulate = Color(1, 1, 0, 1)
 		else:
 			background.self_modulate = Color(1, 1, 1, 1)
 			
-var enabled: bool = true:
+@export var enabled: bool = true:
 	get:
 		return enabled
 	set(value):		
@@ -25,11 +24,10 @@ var enabled: bool = true:
 		if enabled:
 			modulate = Color(1, 1, 1, 1)
 		else:
-			modulate = Color(1, 1, 1, 0.5)
+			modulate = Color(1, 1, 1, 0.3)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	icon.texture = texture
 	enabled = true
 
 func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
