@@ -147,7 +147,8 @@ func draw_full_hand(nightmares_enabled: bool, doors_enabled: bool) -> void:
 		
 func check_door_against_hand_keys(door: Card) -> Card:
 	for card_model in GameManager.hand:
-		if card_model != null && card_model.type == CardManager.CARD_TYPE.KEY && card_model.color == door.card_model.color:
+		if card_model != null && card_model.type == CardManager.CARD_TYPE.KEY \
+			&& (card_model.color == door.card_model.color or card_model.color == CardManager.CARD_COLOR.MULTI):
 			return find_card_node(card_model)
 	return null
 
