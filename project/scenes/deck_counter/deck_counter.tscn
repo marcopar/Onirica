@@ -5,23 +5,17 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_c1qxh"]
 font = ExtResource("2_xwpgk")
-font_size = 48
-outline_size = 12
-outline_color = Color(0.080783345, 0.080783345, 0.080783345, 1)
+font_size = 54
 
 [sub_resource type="LabelSettings" id="LabelSettings_ug7ln"]
 font = ExtResource("2_xwpgk")
-font_size = 48
+font_size = 54
 font_color = Color(0.7806942, 4.548356e-06, 4.813075e-07, 1)
-outline_size = 12
-outline_color = Color(0.080783345, 0.080783345, 0.080783345, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_xwpgk"]
 font = ExtResource("2_xwpgk")
-font_size = 48
-font_color = Color(0.5, 0.5, 0.5, 1)
-outline_size = 12
-outline_color = Color(0.080783345, 0.080783345, 0.080783345, 1)
+font_size = 54
+font_color = Color(0.5996037, 0.5996037, 0.5996037, 1)
 
 [node name="DeckCounter" type="Control" unique_id=432479452]
 layout_mode = 3
@@ -47,19 +41,24 @@ theme_override_constants/separation = 10
 
 [node name="CardCount" type="Label" parent="HBoxContainer" unique_id=849813292]
 layout_mode = 2
-size_flags_horizontal = 6
+size_flags_horizontal = 7
 text = "00"
 label_settings = SubResource("LabelSettings_c1qxh")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NightmareCount" type="Label" parent="HBoxContainer" unique_id=1896704155]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer" unique_id=630285374]
+layout_mode = 2
+size_flags_horizontal = 7
+size_flags_vertical = 4
+
+[node name="NightmareCount" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=1896704155]
 layout_mode = 2
 size_flags_horizontal = 6
 text = "00"
 label_settings = SubResource("LabelSettings_ug7ln")
 
-[node name="DeadEndCount" type="Label" parent="HBoxContainer" unique_id=1547465059]
+[node name="DeadEndCount" type="Label" parent="HBoxContainer/VBoxContainer" unique_id=1547465059]
 layout_mode = 2
 size_flags_horizontal = 6
 text = "00"
