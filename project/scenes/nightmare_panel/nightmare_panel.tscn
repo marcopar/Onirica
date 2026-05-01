@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://dtcl11a05xwoe"]
 
 [ext_resource type="Script" uid="uid://lgunxy87r4b5" path="res://scenes/nightmare_panel/nightmare_panel.gd" id="1_fdyaw"]
-[ext_resource type="PackedScene" uid="uid://lxy2bi2qt2tk" path="res://scenes/nightmare_panel/nightmare_button.tscn" id="1_habke"]
-[ext_resource type="Texture2D" uid="uid://c38rjp8p3aj6j" path="res://assets/sprites/icons/discard_5.png" id="1_uyndy"]
+[ext_resource type="PackedScene" uid="uid://cnvk7ds1on5x1" path="res://scenes/common/round_button.tscn" id="2_fdyaw"]
 [ext_resource type="Texture2D" uid="uid://b58m2hj6f7hau" path="res://assets/sprites/icons/door.png" id="2_t4lxu"]
+[ext_resource type="Script" uid="uid://bjupbj7t6aq2l" path="res://scenes/nightmare_panel/nightmare_button.gd" id="3_fdyaw"]
 [ext_resource type="Texture2D" uid="uid://c5qu3i2sl286a" path="res://assets/sprites/icons/hand.png" id="3_fl2d7"]
 [ext_resource type="Texture2D" uid="uid://8rv57y1q14fg" path="res://assets/sprites/icons/key.png" id="4_3ai2i"]
 
@@ -27,21 +27,36 @@ material = SubResource("CanvasItemMaterial_fdyaw")
 scale = Vector2(1, 300)
 texture = SubResource("CurveTexture_t1ikr")
 
-[node name="ButtonDiscardDeck" parent="." unique_id=1465799526 instance=ExtResource("1_habke")]
+[node name="ButtonDiscardDeck" parent="." unique_id=364361071 instance=ExtResource("2_fdyaw")]
 position = Vector2(-300, 0)
+script = ExtResource("3_fdyaw")
 type = 1
-texture = ExtResource("1_uyndy")
 
-[node name="ButtonDiscardDoor" parent="." unique_id=1050180271 instance=ExtResource("1_habke")]
+[node name="ButtonDiscardDoor" parent="." unique_id=1436881669 instance=ExtResource("2_fdyaw")]
 position = Vector2(-100, 0)
+script = ExtResource("3_fdyaw")
 type = 2
+
+[node name="Icon" parent="ButtonDiscardDoor" index="2" unique_id=740488573]
 texture = ExtResource("2_t4lxu")
 
-[node name="ButtonDiscardHand" parent="." unique_id=1798718522 instance=ExtResource("1_habke")]
+[node name="ButtonDiscardHand" parent="." unique_id=1730395634 instance=ExtResource("2_fdyaw")]
 position = Vector2(100, 0)
+script = ExtResource("3_fdyaw")
+type = 0
+
+[node name="Icon" parent="ButtonDiscardHand" index="2" unique_id=740488573]
 texture = ExtResource("3_fl2d7")
 
-[node name="ButtonDiscardKey" parent="." unique_id=1462444153 instance=ExtResource("1_habke")]
+[node name="ButtonDiscardKey" parent="." unique_id=1070790328 instance=ExtResource("2_fdyaw")]
 position = Vector2(300, 0)
+script = ExtResource("3_fdyaw")
 type = 3
+
+[node name="Icon" parent="ButtonDiscardKey" index="2" unique_id=740488573]
 texture = ExtResource("4_3ai2i")
+
+[editable path="ButtonDiscardDeck"]
+[editable path="ButtonDiscardDoor"]
+[editable path="ButtonDiscardHand"]
+[editable path="ButtonDiscardKey"]

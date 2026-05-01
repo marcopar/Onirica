@@ -25,6 +25,7 @@ extends Node2D
 @onready var win_panel: Control = $GUI/VBoxContainer/MainArea/WinLosePanelContainer/WinPanel
 @onready var lose_panel: Control = $GUI/VBoxContainer/MainArea/WinLosePanelContainer/LosePanel
 @onready var incantation_panel: IncantationPanel = $IncantationPanel
+@onready var escape_button: EscapeButton = $EscapeButton
 
 const CARD = preload("res://scenes/card/card.tscn")
 
@@ -59,8 +60,10 @@ func _ready() -> void:
 	hand_markers.push_back(hand_marker_5)
 	#this is to handle overlapping cards properly
 	get_viewport().physics_object_picking_sort = true
-
+	
 	recreate_game_objects()
+	escape_button.visible = GameManager.crossroads_and_dead_ends_on
+	
 	await draw_full_hand(false, false)
 	
 	SignalManager.new_game.emit()

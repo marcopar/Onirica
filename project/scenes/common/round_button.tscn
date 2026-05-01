@@ -2,14 +2,13 @@
 
 [ext_resource type="Script" uid="uid://cv7ctqkb2bl5v" path="res://scenes/common/round_button.gd" id="1_03xdq"]
 [ext_resource type="Texture2D" uid="uid://c38rjp8p3aj6j" path="res://assets/sprites/icons/discard_5.png" id="2_0pi4w"]
-[ext_resource type="Gradient" uid="uid://bku5rcu7ieurn" path="res://scenes/limbo_discard_gradient.tres" id="3_kqmhw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ljo08"]
 radius = 100.0
 
 [sub_resource type="Gradient" id="Gradient_el3ds"]
-offsets = PackedFloat32Array(0, 0.560897, 0.674138)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.431373, 0, 0, 0, 0)
+offsets = PackedFloat32Array(0.5303458, 0.58892024, 0.6129146, 0.631969)
+colors = PackedColorArray(0.75, 0.75, 0.75, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_krnib"]
 gradient = SubResource("Gradient_el3ds")
@@ -18,16 +17,6 @@ height = 210
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 metadata/_snap_enabled = true
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_e7xj5"]
-blend_mode = 3
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_rjm8w"]
-gradient = ExtResource("3_kqmhw")
-width = 200
-height = 200
-fill = 1
-fill_from = Vector2(0.5, 0.5)
 
 [node name="RoundButton" type="Area2D" unique_id=364361071]
 script = ExtResource("1_03xdq")
@@ -40,9 +29,5 @@ texture = SubResource("GradientTexture2D_krnib")
 
 [node name="Icon" type="Sprite2D" parent="." unique_id=740488573]
 texture = ExtResource("2_0pi4w")
-
-[node name="Shade" type="Sprite2D" parent="." unique_id=380437622]
-material = SubResource("CanvasItemMaterial_e7xj5")
-texture = SubResource("GradientTexture2D_rjm8w")
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
