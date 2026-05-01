@@ -33,6 +33,7 @@ var hand_markers: Array[Marker2D]
 
 var nightmare_action_discard_selected: Constants.NIGHTMARE_DISCARD = Constants.NIGHTMARE_DISCARD.NONE
 var ignore_gui_events: bool = false
+var escape_in_progress: bool = false
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:
@@ -52,6 +53,7 @@ func _ready() -> void:
 	SignalManager.deck_outline_enabled.connect(deck_outline_enabled)
 	SignalManager.counter_panel_closed.connect(counter_panel_closed)
 	SignalManager.incantation_door_selected.connect(incantation_door_selected)
+	SignalManager.escape_selected.connect(escape_selected)
 	
 	hand_markers.push_back(hand_marker_1)
 	hand_markers.push_back(hand_marker_2)
@@ -204,12 +206,15 @@ func card_added_to_labyrinth(card: Card) -> void:
 func card_added_to_discard(card: Card, pdraw_card: bool) -> void:
 	GameManager.card_added_to_discard(card.card_model)
 	card.set_outline(false)
-	if not prophecy_panel.visible and not incantation_panel.visible and not open_door_panel.visible and not nightmare_panel.visible and card.card_model.type == CardManager.CARD_TYPE.KEY:
-		open_prophecy_panel()
-		return
-	if not incantation_panel.visible and not prophecy_panel.visible and not open_door_panel.visible and not nightmare_panel.visible and card.card_model.type == CardManager.CARD_TYPE.GLYPH:
-		open_incantation_panel()
-		return
+	if not escape_in_progress and not prophecy_panel.visible and not incantation_panel.visible \
+		and not open_door_panel.visible and not nightmare_panel.visible:
+		if card.card_model.type == CardManager.CARD_TYPE.KEY:
+			open_prophecy_panel()
+			return
+		if card.card_model.type == CardManager.CARD_TYPE.GLYPH:
+			open_incantation_panel()
+			return
+		
 	if pdraw_card:
 		await draw_full_hand(true, true)
 
@@ -260,6 +265,7 @@ func card_added_to_limbo(card: Card) -> void:
 
 func set_hand_freezed(value: bool) -> void:
 	exit_button.visible = !value
+	escape_button.enabled = !value
 	for child in card_container.get_children():
 		var card: Card = child
 		card.freezed = value
@@ -573,6 +579,81 @@ func show_lose_panel() -> void:
 	win_lose_panel_container.visible = true
 	exit_button.visible = true
 	
+func _on_discard_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
+	if event is InputEventScreenTouch:
+		discard_panel.clear_counters()
+		discard_panel.setup(GameManager.discard, false)
+		discard_panel_container.visible = true
+
+func counter_panel_closed(source: CardCounterPanel) -> void:
+	source.get_parent().visible = false
+
+func _on_exit_button_pressed() -> void:
+	AudioManager.play_uiclick_sound()
+	if win_panel.visible or lose_panel.visible:
+		GameManager.delete_save_file()
+	else:
+		GameManager.save_game()
+	SceneManager.switch_to_menu()
+
+func escape_selected() -> void:
+	if ignore_gui_events:
+		return
+	ignore_gui_events = true
+	escape_in_progress = true
+	for card_model in GameManager.hand:
+		if card_model != null:
+			var card: Card = find_card_node(card_model)
+			await animate_card_to_discard(card)
+			SignalManager.card_added_to_discard.emit(card, false)
+	#draw with the same logic as starting the game (nightmares are not resolved, doors are not open)
+	await draw_full_hand(false, false)
+	ignore_gui_events = false
+	escape_in_progress = false
+
+func recreate_game_objects() -> void:
+	for child in card_container.get_children():
+		child.queue_free()
+	for child in limbo.card_container.get_children():
+		child.queue_free()
+	for child in discard.card_container.get_children():
+		child.queue_free()
+	for child in $Labyrinth/CardContainer.get_children():
+		child.queue_free()
+		
+	doors_panel.setup(GameManager.doors_to_be_found)
+	for color: CardManager.CARD_COLOR in GameManager.found_doors.keys():
+		doors_panel.set_doors_found(color, GameManager.found_doors[color].size() as int)
+		
+	for i in range(GameManager.hand.size()):
+		var c_model: CardModel = GameManager.hand[i]
+		if c_model != null:
+			var card: Card = create_card(c_model, card_container, hand_markers[i].global_position, Card.FULL_SIZE, true, i + Constants.HAND_BASE_Z)
+			card.set_front_texture()
+			card.hand_position = i
+			card.rotation = hand_markers[i].rotation
+			card.freezed = false
+			
+	for i in range(GameManager.limbo.size()):
+		var c_model: CardModel = GameManager.limbo[i]
+		var card: Card = create_card(c_model, limbo.card_container, Vector2.ZERO, Card.LIMBO_SIZE, false, i + Constants.LIMBO_BASE_Z)
+		card.set_front_texture()
+
+	for i in range(GameManager.discard.size()):
+		var c_model: CardModel = GameManager.discard[i]
+		var card: Card = create_card(c_model, discard.card_container, Vector2.ZERO, Card.DISCARD_SIZE, false, i + Constants.DISCARD_BASE_Z)
+		card.set_front_texture()
+
+	labyrinth.card_container.global_position.x = 0
+	for i in range(GameManager.labyrinth.size()):
+		var c_model: CardModel = GameManager.labyrinth[i]
+		var card: Card = create_card(c_model, labyrinth.card_container, labyrinth.start_position_marker.position + Vector2(i * labyrinth.CARD_OFFSET, 0), Card.LABYRINTH_SIZE, false, i + Constants.LABYRINTH_BASE_Z)
+		card.set_front_texture()
+	if GameManager.labyrinth.size() >= labyrinth.MAX_SIZE:
+		labyrinth.card_container.global_position.x = -labyrinth.CARD_OFFSET * (GameManager.labyrinth.size() - labyrinth.MAX_SIZE)
+		
+	SignalManager.deck_updated.emit()
+	
 ####################################################
 ####################################################
 ####################################################
@@ -687,63 +768,3 @@ func animate_card_to_deck(card: Card) -> void:
 	var tween: Tween = get_tree().create_tween()
 	tween.tween_property(card, "global_position", deck.global_position, 0.2)
 	await tween.finished
-
-func _on_discard_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	if event is InputEventScreenTouch:
-		discard_panel.clear_counters()
-		discard_panel.setup(GameManager.discard, false)
-		discard_panel_container.visible = true
-
-func counter_panel_closed(source: CardCounterPanel) -> void:
-	source.get_parent().visible = false
-
-func _on_exit_button_pressed() -> void:
-	AudioManager.play_uiclick_sound()
-	if win_panel.visible or lose_panel.visible:
-		GameManager.delete_save_file()
-	else:
-		GameManager.save_game()
-	SceneManager.switch_to_menu()
-
-func recreate_game_objects() -> void:
-	for child in card_container.get_children():
-		child.queue_free()
-	for child in limbo.card_container.get_children():
-		child.queue_free()
-	for child in discard.card_container.get_children():
-		child.queue_free()
-	for child in $Labyrinth/CardContainer.get_children():
-		child.queue_free()
-		
-	doors_panel.setup(GameManager.doors_to_be_found)
-	for color: CardManager.CARD_COLOR in GameManager.found_doors.keys():
-		doors_panel.set_doors_found(color, GameManager.found_doors[color].size() as int)
-		
-	for i in range(GameManager.hand.size()):
-		var c_model: CardModel = GameManager.hand[i]
-		if c_model != null:
-			var card: Card = create_card(c_model, card_container, hand_markers[i].global_position, Card.FULL_SIZE, true, i + Constants.HAND_BASE_Z)
-			card.set_front_texture()
-			card.hand_position = i
-			card.rotation = hand_markers[i].rotation
-			card.freezed = false
-			
-	for i in range(GameManager.limbo.size()):
-		var c_model: CardModel = GameManager.limbo[i]
-		var card: Card = create_card(c_model, limbo.card_container, Vector2.ZERO, Card.LIMBO_SIZE, false, i + Constants.LIMBO_BASE_Z)
-		card.set_front_texture()
-
-	for i in range(GameManager.discard.size()):
-		var c_model: CardModel = GameManager.discard[i]
-		var card: Card = create_card(c_model, discard.card_container, Vector2.ZERO, Card.DISCARD_SIZE, false, i + Constants.DISCARD_BASE_Z)
-		card.set_front_texture()
-
-	labyrinth.card_container.global_position.x = 0
-	for i in range(GameManager.labyrinth.size()):
-		var c_model: CardModel = GameManager.labyrinth[i]
-		var card: Card = create_card(c_model, labyrinth.card_container, labyrinth.start_position_marker.position + Vector2(i * labyrinth.CARD_OFFSET, 0), Card.LABYRINTH_SIZE, false, i + Constants.LABYRINTH_BASE_Z)
-		card.set_front_texture()
-	if GameManager.labyrinth.size() >= labyrinth.MAX_SIZE:
-		labyrinth.card_container.global_position.x = -labyrinth.CARD_OFFSET * (GameManager.labyrinth.size() - labyrinth.MAX_SIZE)
-		
-	SignalManager.deck_updated.emit()
