@@ -2,14 +2,18 @@
 
 [ext_resource type="Script" uid="uid://bt2ppt5mpotk1" path="res://scenes/labyrinth/labyrinth.gd" id="1_ufj7f"]
 
-[sub_resource type="Gradient" id="Gradient_u2po4"]
-offsets = PackedFloat32Array(0, 0.539267, 1)
-colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0.992157, 0, 0, 0, 1)
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gl1fh"]
+blend_mode = 1
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_d1mfr"]
-gradient = SubResource("Gradient_u2po4")
-fill_from = Vector2(0.5, 1)
-fill_to = Vector2(0.5, 0)
+[sub_resource type="Gradient" id="Gradient_wwp6j"]
+offsets = PackedFloat32Array(0.1390625, 1)
+colors = PackedColorArray(1, 1, 0, 0.4, 1, 1, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_58xum"]
+gradient = SubResource("Gradient_wwp6j")
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 1)
 metadata/_snap_enabled = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wyiyu"]
@@ -44,14 +48,11 @@ size = Vector2(1080, 230)
 [node name="Labyrinth" type="Area2D" unique_id=1089145039 groups=["labyrinth"]]
 script = ExtResource("1_ufj7f")
 
-[node name="Highlight" type="PointLight2D" parent="." unique_id=1232525873]
-position = Vector2(541, -1.99994)
-scale = Vector2(18, 5)
-enabled = false
-color = Color(1, 1, 0, 1)
-energy = 2.0
-range_z_max = 0
-texture = SubResource("GradientTexture2D_d1mfr")
+[node name="Highlight" type="Sprite2D" parent="." unique_id=696289196]
+material = SubResource("CanvasItemMaterial_gl1fh")
+position = Vector2(540, 1.4543533e-05)
+scale = Vector2(15.312501, 2.9375005)
+texture = SubResource("GradientTexture2D_58xum")
 
 [node name="CardDetectionCollision" type="CollisionShape2D" parent="." unique_id=583228284]
 position = Vector2(540, 0)

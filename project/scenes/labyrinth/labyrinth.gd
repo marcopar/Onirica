@@ -7,7 +7,7 @@ const MAX_SIZE: int = 11
 
 @onready var card_container: Node2D = $CardContainer
 @onready var start_position_marker: Marker2D = $StartPosition
-@onready var highlight: PointLight2D = $Highlight
+@onready var highlight: Sprite2D = $Highlight
 
 var initial_global_position: Vector2
 var labyrinth_dragging: bool = false
@@ -23,7 +23,7 @@ func new_game() -> void:
 	global_position = initial_global_position
 
 func card_added_to_labyrinth(card: Card) -> void:
-	highlight.enabled = false
+	highlight.visible = false
 	card.set_labyrinth_size()
 	card.position = start_position_marker.position
 	card.position.x += CARD_OFFSET * GameManager.labyrinth.size()
@@ -38,16 +38,16 @@ func _on_area_entered(area: Area2D) -> void:
 	if area is Card:
 		var card: Card = area
 		if card.dragging:
-			highlight.enabled = true
+			highlight.visible = true
 
 func _on_area_exited(area: Area2D) -> void:
 	if area is Card:
 		var card: Card = area
 		if card.dragging:
-			highlight.enabled = false
+			highlight.visible = false
 			
 func card_return_to_hand(_card: Card) -> void:
-	highlight.enabled = false
+	highlight.visible = false
 
 
 func _on_scroll_input_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
