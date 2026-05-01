@@ -49,6 +49,7 @@ size = Vector2(1080, 230)
 script = ExtResource("1_ufj7f")
 
 [node name="Highlight" type="Sprite2D" parent="." unique_id=696289196]
+visible = false
 material = SubResource("CanvasItemMaterial_gl1fh")
 position = Vector2(540, 1.4543533e-05)
 scale = Vector2(15.312501, 2.9375005)
