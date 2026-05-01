@@ -472,7 +472,8 @@ func handle_nightmare_action(type: Constants.NIGHTMARE_DISCARD, object: Variant)
 			var card_model: CardModel = GameManager.deck_model.get_next_card()
 			var card: Card = create_card(card_model, card_container, deck.position, Card.NO_SIZE, false, Constants.DRAGGING_BASE_Z)
 			card.set_front_texture()
-			if card_model.can_be_in_hand:
+			#dead ends go to limbo
+			if card_model.can_be_in_hand and card_model.type != CardManager.CARD_TYPE.DEAD_END:
 				await animate_card_to_discard(card)
 				SignalManager.card_added_to_discard.emit(card, false)
 			else:
