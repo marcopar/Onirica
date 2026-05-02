@@ -41,10 +41,14 @@ texture = SubResource("CurveTexture_rmh13")
 
 [node name="Door" parent="." unique_id=131202227 instance=ExtResource("1_85b4l")]
 position = Vector2(300, 0)
+
+[node name="Icon" parent="Door" index="2" unique_id=740488573]
 texture = ExtResource("2_85b4l")
 
 [node name="Limbo" parent="." unique_id=677576620 instance=ExtResource("1_85b4l")]
 position = Vector2(-300, 0)
+
+[node name="Icon" parent="Limbo" index="2" unique_id=740488573]
 texture = ExtResource("1_tw2cc")
 
 [node name="Key" type="Area2D" parent="." unique_id=1843473191]
@@ -72,3 +76,6 @@ offset_bottom = 100.0
 [connection signal="area_shape_entered" from="Key" to="." method="_on_key_area_shape_entered"]
 [connection signal="area_shape_exited" from="Key" to="." method="_on_key_area_shape_exited"]
 [connection signal="gui_input" from="Control" to="." method="_on_control_gui_input"]
+
+[editable path="Door"]
+[editable path="Limbo"]
