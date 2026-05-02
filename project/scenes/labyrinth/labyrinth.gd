@@ -7,7 +7,7 @@ const MAX_SIZE: int = 11
 
 @onready var card_container: Node2D = $CardContainer
 @onready var start_position_marker: Marker2D = $StartPosition
-@onready var highlight: Sprite2D = $Highlight
+@onready var highlight: PointLight2D = $Highlight
 
 var initial_global_position: Vector2
 var labyrinth_dragging: bool = false
