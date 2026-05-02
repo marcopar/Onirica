@@ -3,7 +3,7 @@ extends Area2D
 class_name Discard
 
 @onready var card_container: Node2D = $CardContainer
-@onready var highlight: Sprite2D = $Highlight
+@onready var highlight: PointLight2D = $Highlight
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
