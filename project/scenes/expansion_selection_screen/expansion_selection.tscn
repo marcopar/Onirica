@@ -83,10 +83,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_top = 100
-theme_override_constants/margin_bottom = 50
+theme_override_constants/margin_bottom = 600
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GUI/VBoxContainer/MainArea/MarginContainer" unique_id=2065289536]
 layout_mode = 2
+size_flags_vertical = 0
 theme_override_constants/separation = 30
 
 [node name="Label" type="Label" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer" unique_id=1636816678]
@@ -194,9 +195,10 @@ texture = SubResource("GradientTexture2D_p57yh")
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 
-[node name="StartGame" type="Button" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer" unique_id=2044671862]
+[node name="StartGame" type="Button" parent="GUI/VBoxContainer/MainArea/MarginContainer" unique_id=2044671862]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
+size_flags_vertical = 8
 theme_override_colors/font_color = Color(0.5254902, 0.8862745, 1, 1)
 theme_override_colors/font_focus_color = Color(0.5254902, 0.8862745, 1, 1)
 theme_override_colors/font_pressed_color = Color(0.5254902, 0.8862745, 1, 1)
@@ -212,7 +214,7 @@ theme_override_styles/disabled = ExtResource("5_w7lp0")
 theme_override_styles/focus = ExtResource("5_w7lp0")
 text = "START GAME"
 
-[node name="Shade" type="TextureRect" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/StartGame" unique_id=1049620986]
+[node name="Shade" type="TextureRect" parent="GUI/VBoxContainer/MainArea/MarginContainer/StartGame" unique_id=1049620986]
 material = SubResource("CanvasItemMaterial_vimye")
 layout_mode = 1
 anchors_preset = 15
@@ -227,4 +229,4 @@ texture = SubResource("GradientTexture2D_p57yh")
 [connection signal="pressed" from="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/TheGlyphs" to="." method="_on_the_glyphs_pressed"]
 [connection signal="pressed" from="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/CrossroadsAndDedEnds" to="." method="_on_crossroads_and_ded_ends_pressed"]
 [connection signal="pressed" from="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/Intersections" to="." method="_on_intersections_pressed"]
-[connection signal="pressed" from="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/StartGame" to="." method="_on_start_game_pressed"]
+[connection signal="pressed" from="GUI/VBoxContainer/MainArea/MarginContainer/StartGame" to="." method="_on_start_game_pressed"]
