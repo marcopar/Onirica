@@ -12,15 +12,17 @@ text = "[font name=\"res://assets/sprites/gui/Tomorrow-SemiBold.ttf\"]
 [color=#86e2ff]
 [center][font size=46]THE GLYPHS[/font][/center]
 [font size=36]
-In addition to the base cards, the deck also contains:
+The following cards are added to the deck:
 		2 red glyph cards
 		2 blue glyph cards
 		2 green glyph cards
 		4 additional doors: 1 for each color
 
-
 [center][font size=40]HOW TO PLAY[/font][/center]
-You need to open 4 additional doors to win the game.
+
+A new type of location card (glyph) with its special power is now available, however, you need to open 4 additional doors to win the game.
+
+[center][font size=40]GLYPHS[/font][/center]
 
 Glyph cards are location cards like suns, moons and keys and they follow the same rules when played in the labyrinth.
 Glyph cards can be combined with the other location cards to form a valid sequence to open a door.

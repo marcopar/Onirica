@@ -142,6 +142,36 @@ grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_y4jgh")
 
+[node name="CrossroadsAndDeadEnds" type="Button" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer" unique_id=1244630032]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_focus_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_hover_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_colors/font_disabled_color = Color(0.5254902, 0.8862745, 1, 1)
+theme_override_fonts/font = ExtResource("4_afrha")
+theme_override_font_sizes/font_size = 51
+theme_override_styles/normal = ExtResource("5_cqhx1")
+theme_override_styles/pressed = ExtResource("5_cqhx1")
+theme_override_styles/hover = ExtResource("5_cqhx1")
+theme_override_styles/disabled = ExtResource("5_cqhx1")
+theme_override_styles/focus = ExtResource("5_cqhx1")
+text = "CROSSROADS AND DEAD ENDS"
+
+[node name="Shade" type="TextureRect" parent="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/CrossroadsAndDeadEnds" unique_id=1804246501]
+material = SubResource("CanvasItemMaterial_fsuix")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_y4jgh")
+
 [connection signal="pressed" from="GUI/VBoxContainer/MenuBar/ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/BaseGame" to="." method="_on_base_game_pressed"]
 [connection signal="pressed" from="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/TheGlyphs" to="." method="_on_the_glyphs_pressed"]
+[connection signal="pressed" from="GUI/VBoxContainer/MainArea/MarginContainer/VBoxContainer/CrossroadsAndDeadEnds" to="." method="_on_crossroads_and_dead_ends_pressed"]
