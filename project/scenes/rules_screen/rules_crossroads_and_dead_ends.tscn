@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://cq7abnk8w0wln"]
+
+[ext_resource type="PackedScene" uid="uid://b2vlkavh2cf8k" path="res://scenes/rules_screen/rules.tscn" id="1_gr186"]
+
+[node name="RulesCrossroadsAndDeadEnds" unique_id=621306541 instance=ExtResource("1_gr186")]
+
+[node name="CrossroadsAndDeadEndsRules" type="RichTextLabel" parent="GUI/VBoxContainer/MainArea/MarginContainer" parent_id_path=PackedInt32Array(306283604) index="0" unique_id=219722713]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[font name=\"res://assets/sprites/gui/Tomorrow-SemiBold.ttf\"]
+[color=#86e2ff]
+[center][font size=46]CROSSROADS AND DEAD ENDS[/font][/center]
+[font size=36]
+The following cards are added to the deck:
+		3 crossroad sun cards
+		2 crossroad moon cards
+		1 crossroad key card
+		10 dead end cards
+
+
+[center][font size=40]HOW TO PLAY[/font][/center]
+
+Two new type of location cards are now available: crossroads will help you in opening the doors while dead ends will clutter your hand limiting your options during the game.
+
+[center][font size=40]CROSSROADS[/font][/center]
+
+Crossroad cards are location cards that are all colors at the same time.
+You can play crossroads cards the same way as any other location card following the same placement rules.
+A crossroad card can be used as a wildcard in a sequence to open a door, with the restriction that you can only play a single crossroad card per sequence in order to trigger the door opening.
+When a door is opened using a crossroad card, the color of the other two normal location cards determines the color of the door.
+When the crossroad key is in your hand, you can use it to open a drawn door of any color.
+
+[center][font size=40]DEAD ENDS[/font][/center]
+
+Dead end cards are location cards that once drawn can't be played in the labyrinth or discarded.
+The only way to get rid of dead end cards in your hand is by discarding your hand when resolving a nightmare or by triggering an Escape.
+When a nightmare is resolved by discarding the top 5 cards of the deck, dead ends are not discarded, instead they go to the limbo and then back into the deck.
+
+[center][font size=40]ESCAPE[/font][/center]
+
+A new button is available sligthly above the discard pile to trigger an Escape.
+An Escape allows you to discard your hand and draw 5 new cards.
+
+[center][font size=40]INTERSECTION VARIANT[/font][/center]
+
+To increase the game difficulty the following restriction is added: a crossroad card is effective to open a door only if it's played as the second card of the sequence.
+
+[/font]
+[/color]
+[/font]"
+vertical_alignment = 1
