@@ -19,12 +19,8 @@ More informations can be found here:
 
 [Onirim on inPatience](https://inpatience.com/en/Our_Games-7-ONIRIM)
 
-Available on Android
+[Available on Android](https://play.google.com/store/apps/details?id=eu.flatworld.onirica)
 
-[https://play.google.com/store/apps/details?id=eu.flatworld.onirica]
-
-Available on itch.io
-
-[https://flatworld.itch.io/onirica]
+[Available on itch.io](https://flatworld.itch.io/onirica)
 
 *This project has no connection with the designer and the publishers of the original game.*
