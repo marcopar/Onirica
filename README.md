@@ -2,6 +2,13 @@
 
 Onirica is an unofficial (and partial) implementation of the card game Onirim by Shadi Torbey.
 
+Features:
+Base game
+The Glyphs expansion
+Crossroads and dead ends expansion
+Color blind friendly
+Free and no-ads forever
+
 The original game includes more ways to play, more expansions and beautiful artwork.
 
 You should definitely consider to buy it.
