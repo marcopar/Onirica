@@ -23,4 +23,20 @@ More informations can be found here:
 
 [Onirim on inPatience](https://inpatience.com/en/Our_Games-7-ONIRIM)
 
-*This project has no connection with the designer and the publishers of the original game.*
+***This project has no connection with the designer and the publishers of the original game.***
+
+
+## Screenshots
+<table>
+  <tr>
+    <td><img src="assets/screenshots/1.2/Screenshot_20260503_102922_Onirica.jpg" width="200"></td>
+    <td><img src="assets/screenshots/1.2/Screenshot_20260503_102934_Onirica.jpg" width="200"></td>
+    <td><img src="assets/screenshots/1.2/Screenshot_20260503_103103_Onirica.jpg" width="200"></td>
+    <td><img src="assets/screenshots/1.2/Screenshot_20260503_103128_Onirica.jpg" width="200"></td>
+  </tr>
+  <tr>
+    <td><img src="assets/screenshots/1.2/Screenshot_20260503_103141_Onirica.jpg" width="200"></td>
+    <td><img src="assets/screenshots/1.2/Screenshot_20260503_103234_Onirica.jpg" width="200"></td>
+    <td><img src="assets/screenshots/1.2/Screenshot_20260503_103322_Onirica.jpg" width="200"></td>
+  </tr>
+</table>
