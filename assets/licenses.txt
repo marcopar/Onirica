@@ -2,7 +2,10 @@ https://www.svgrepo.com/svg/51231/halloween-ghost
 LICENSE: CC0 License
 
 SVGs from phosphoricon - MIT license
+https://github.com/phosphor-icons/homepage
+
 SVGs from remixicon - Apache 2
+https://github.com/Remix-Design/remixicon
 
 Other icons from 
 https://fonts.google.com/icons?icon.set=Material+Symbols&icon.style=Outlined&icon.size=96&icon.color=%23000000&query=symb
