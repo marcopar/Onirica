@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Onirica"
-config/version="1.2.0"
+config/version="1.2.1"
 run/main_scene="uid://djaj5qaevc02v"
 config/features=PackedStringArray("4.6", "Mobile")
 boot_splash/stretch_mode=0
