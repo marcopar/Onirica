@@ -302,7 +302,9 @@ func nightmare_action_selected(type: Constants.NIGHTMARE_DISCARD) -> void:
 func touch_event(object: Variant) -> void:
 	#show deck counters only when the deck is not an action trigger
 	if object is Deck:
-		if nightmare_action_discard_selected != Constants.NIGHTMARE_DISCARD.DECK and (not prophecy_panel.visible or not prophecy_panel.can_close_panel()):
+		if nightmare_action_discard_selected != Constants.NIGHTMARE_DISCARD.DECK \
+			and (not prophecy_panel.visible or not prophecy_panel.can_close_panel()) \
+			and (not incantation_panel.visible):
 			deck_panel.clear_counters()
 			deck_panel.setup(GameManager.deck_model.deck, true)
 			deck_panel_container.visible = true
@@ -364,6 +366,7 @@ func handle_prophecy_action() -> void:
 	#remove the discarded card from the cards to be added back to the deck
 	card_models.pop_at(4)
 	#add them at the top of the deck in the selected order in the panel
+	#reverse as we put them on top of the deck one after the other, pos 0 must be on top at the end
 	card_models.reverse()
 	for card_model in card_models:
 		if card_model == null:
@@ -437,7 +440,6 @@ func handle_incantation_action(object: Variant) -> void:
 	
 	#execute the actual deck manipulation
 	#add them at the bootom of the deck in the selected order in the panel
-	card_models.reverse()
 	for card_model in card_models:
 		if card_model == null:
 			continue
