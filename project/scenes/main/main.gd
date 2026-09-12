@@ -302,7 +302,9 @@ func nightmare_action_selected(type: Constants.NIGHTMARE_DISCARD) -> void:
 func touch_event(object: Variant) -> void:
 	#show deck counters only when the deck is not an action trigger
 	if object is Deck:
-		if nightmare_action_discard_selected != Constants.NIGHTMARE_DISCARD.DECK and (not prophecy_panel.visible or not prophecy_panel.can_close_panel()):
+		if nightmare_action_discard_selected != Constants.NIGHTMARE_DISCARD.DECK \
+			and (not prophecy_panel.visible or not prophecy_panel.can_close_panel()) \
+			and (not incantation_panel.visible):
 			deck_panel.clear_counters()
 			deck_panel.setup(GameManager.deck_model.deck, true)
 			deck_panel_container.visible = true
