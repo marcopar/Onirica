@@ -50,11 +50,9 @@ var found_doors: Dictionary[CardManager.CARD_COLOR, Variant] = {
 		return found_doors
 	set(value):
 		found_doors = value
-		
-func _ready() -> void:
-	pass
-
+	
 func new_game() -> void:
+	Commons.game_log.clear()
 	hand.clear()
 	#refill hand with null
 	for hand_position: int in range(0, HAND_SIZE):
@@ -65,12 +63,15 @@ func new_game() -> void:
 	discard.clear()
 	
 	deck_model = DeckModel.new()
+	Commons.log_text("Create base deck")
 	deck_model.deck = CardManager.create_base_deck()
 	
 	if the_glyphs_on:
+		Commons.log_text("Create glyphs deck")
 		deck_model.deck.append_array(CardManager.create_the_glyphs_deck())
 	
 	if crossroads_and_dead_ends_on:
+		Commons.log_text("Create crossorads and dead ends deck")
 		deck_model.deck.append_array(CardManager.create_crossroads_and_dead_ends_deck())
 		
 	doors_to_be_found = deck_model.get_number_of(CardManager.CARD_TYPE.DOOR)
@@ -85,7 +86,7 @@ func new_game() -> void:
 		CardManager.CARD_COLOR.YELLOW: [
 		]		
 	}
-	deck_model.shuffle()
+	shuffle()
 	
 func new_test_game() -> void:
 	hand.clear()
@@ -123,10 +124,11 @@ func new_test_game() -> void:
 			deck_model.search_and_remove(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.YELLOW)
 		]		
 	}
-	deck_model.shuffle()
+	shuffle()
 	
 
 func shuffle() -> void:
+	Commons.log_text("Shuffle")
 	deck_model.shuffle()
 
 #checks the whole labyrinth every time but doesn't need to store extra flags
@@ -144,6 +146,7 @@ func check_door_found() -> CardModel:
 				var door: CardModel = deck_model.search(CardManager.CARD_TYPE.DOOR, combo_color)
 				if door != null:
 					set_door_as_found(door)
+					Commons.log_text("Door found %s" % door)
 					return door
 			#we found an old combo, clear the last3 and start from scratch
 			last3.clear()
@@ -180,18 +183,21 @@ func check_for_door_combo(last3: Array[CardModel]) -> CardManager.CARD_COLOR:
 	return CardManager.CARD_COLOR.NONE
 	
 func card_added_to_discard(card_model: CardModel) -> void:
+	Commons.log_text("card_added_to_discard %s" % card_model)
 	var hand_position: int = hand.find(card_model)
 	if hand_position != -1:
 		hand[hand_position] = null
 	discard.push_back(card_model)
 	
 func card_added_to_labyrinth(card_model: CardModel) -> void:
+	Commons.log_text("card_added_to_labyrinth %s" % card_model)
 	var hand_position: int = hand.find(card_model)
 	if hand_position != -1:
 		hand[hand_position] = null
 	labyrinth.push_back(card_model)
 
 func card_added_to_limbo(card_model: CardModel) -> void:
+	Commons.log_text("card_added_to_limbo %s" % card_model)
 	var hand_position: int = hand.find(card_model)
 	if hand_position != -1:
 		hand[hand_position] = null
@@ -201,8 +207,10 @@ func check_won_game() -> bool:
 	var found_doors_count: int = 0
 	for color: CardManager.CARD_COLOR in found_doors.keys():
 		found_doors_count += found_doors[color].size()
-	return found_doors_count == doors_to_be_found
-
+	var game_won: bool = found_doors_count == doors_to_be_found
+	Commons.log_text("game_won %s" % game_won)
+	return game_won
+	
 func get_save_dict() -> Dictionary[String, Variant]:
 	var dict: Dictionary[String, Variant] = {
 		"deck": [],
@@ -250,6 +258,7 @@ func save_game() -> void:
 	var file: FileAccess = FileAccess.open(SAVE_FILE_NAME, FileAccess.WRITE)
 	file.store_string(JSON.stringify(dict))
 	file.close()
+	Commons.log_text("game_saved")
 
 func load_game() -> void:
 	if not save_file_exists():
@@ -303,12 +312,14 @@ func load_game() -> void:
 				for c_data: Dictionary in fd[color_str]:
 					found_doors[color_idx].append(CardManager.create_card(c_data["type"] as int, c_data["color"] as int))
 			file.close()
+			Commons.log_text("game_loaded")
 			return
 	file.close()
 	#arriving here means there was an error parsing the json
 	delete_save_file()
 	GameManager.new_game()
-	
+	Commons.log_text("game_load_error")
+
 
 
 func dump_state() -> String:

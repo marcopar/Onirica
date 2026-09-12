@@ -6,6 +6,14 @@ const DIAMOND: Texture2D = preload("res://assets/sprites/icons/diamond_outline.s
 const CIRCLE: Texture2D = preload("res://assets/sprites/icons/circle_outline.svg")
 const TRIANGLE: Texture2D = preload("res://assets/sprites/icons/triangle_outline.svg")
 
+var game_log: PackedStringArray
+
+func log_text(text: String) -> void:
+	game_log.append("%s\n" % text) 
+
+func get_game_log() -> String:
+	return "".join(game_log)
+	
 func get_colorblid_symbol(card_color: CardManager.CARD_COLOR) -> Texture2D:
 	if SettingsManager.color_blind_on == false:
 		return null

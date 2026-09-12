@@ -39,7 +39,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		var e: InputEventKey = event
 		if e.as_text_keycode() == "D" and e.is_pressed():
-			print(GameManager.dump_state())
+			print(Commons.get_game_log())
 		
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:	
@@ -436,8 +436,7 @@ func handle_incantation_action(object: Variant) -> void:
 			card.queue_free()
 	
 	#execute the actual deck manipulation
-	#add them at the bootom of the deck in the selected order in the panel
-	card_models.reverse()
+	#add them at the bootom of the deck in the selected order in the panel	
 	for card_model in card_models:
 		if card_model == null:
 			continue

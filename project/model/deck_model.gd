@@ -34,14 +34,17 @@ func get_number_of_cards() -> int:
 
 func get_next_card() -> CardModel:
 	var card_model: CardModel = deck.pop_front()
+	Commons.log_text("get_next_card %s" % card_model)
 	SignalManager.deck_updated.emit()
 	return card_model
 	
 func add_card_front(card: CardModel) -> void:
+	Commons.log_text("add_card_front %s" % card)
 	deck.push_front(card)
 	SignalManager.deck_updated.emit()
 
 func add_card_back(card: CardModel) -> void:
+	Commons.log_text("add_card_back %s" % card)
 	deck.push_back(card)
 	SignalManager.deck_updated.emit()
 	
