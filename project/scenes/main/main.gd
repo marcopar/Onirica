@@ -364,6 +364,7 @@ func handle_prophecy_action() -> void:
 	#remove the discarded card from the cards to be added back to the deck
 	card_models.pop_at(4)
 	#add them at the top of the deck in the selected order in the panel
+	#reverse as we put them on top of the deck one after the other, pos 0 must be on top at the end
 	card_models.reverse()
 	for card_model in card_models:
 		if card_model == null:
@@ -437,7 +438,6 @@ func handle_incantation_action(object: Variant) -> void:
 	
 	#execute the actual deck manipulation
 	#add them at the bootom of the deck in the selected order in the panel
-	card_models.reverse()
 	for card_model in card_models:
 		if card_model == null:
 			continue
