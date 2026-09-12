@@ -311,35 +311,45 @@ func load_game() -> void:
 	
 
 
-func dump() -> void:
-	print("######################################################################")
-	print("== HAND ==")
+func dump_state() -> String:
+	var dump: PackedStringArray
+	
+	dump.append("######################################################################\n")
+	dump.append("== HAND ==\n")
 	for card_model in hand:
 		if card_model != null:
-			print(card_model)
-	print("\n")
+			dump.append(card_model.to_string())
+			dump.append("\n")
+	dump.append("\n")
 	
-	print("== LIMBO %d ==" % [limbo.size()])
+	dump.append("== LIMBO %d ==\n" % [limbo.size()])
 	for card_model in limbo:
-		print(card_model)
-	print("\n")
+		dump.append(card_model.to_string())
+		dump.append("\n")
+	dump.append("\n")
 	
-	print("== DISCARD %d ==" % [discard.size()])
+	dump.append("== DISCARD %d ==\n" % [discard.size()])
 	for card_model in discard:
-		print(card_model)
-	print("\n")
+		dump.append(card_model.to_string())
+		dump.append("\n")
+	dump.append("\n")
 	
-	print("== LABYRINTH %d ==" % [labyrinth.size()])
+	dump.append("== LABYRINTH %d ==\n" % [labyrinth.size()])
 	for card_model in labyrinth:
-		print(card_model)
-	print("\n")
+		dump.append(card_model.to_string())
+		dump.append("\n")
+	dump.append("\n")
 
-	print("== DECK %d ==" % [deck_model.deck.size()])
+	dump.append("== DECK %d ==\n" % [deck_model.deck.size()])
 	for card_model in deck_model.deck:
-		print(card_model)
-	print("\n")
+		dump.append(card_model.to_string())
+		dump.append("\n")
+	dump.append("\n")
 	
-	print("== FOUND DOORS ==")
+	dump.append("== FOUND DOORS ==\n")
 	for color: CardManager.CARD_COLOR in found_doors.keys():
-		print(CardManager.CARD_COLOR.keys()[color],  " = ", found_doors[color].size())
-	print("\n")
+		dump.append(str(CardManager.CARD_COLOR.keys()[color]))
+		dump.append(" = ")
+		dump.append(str(found_doors[color].size()))
+		dump.append("\n")
+	return "".join(dump)

@@ -37,4 +37,4 @@ var sprite_name: String:
 		sprite_name = value
 		
 func _to_string() -> String:
-	return "%s %s" % [CardManager.CARD_COLOR.keys()[color], CardManager.CARD_TYPE.keys()[type]]
+	return "%s %s %d" % [CardManager.CARD_TYPE.keys()[type], CardManager.CARD_COLOR.keys()[color], get_instance_id()]
