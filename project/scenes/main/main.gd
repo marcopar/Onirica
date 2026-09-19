@@ -270,10 +270,6 @@ func set_hand_freezed(value: bool) -> void:
 		var card: Card = child
 		card.freezed = value
 
-func door_discarded(color: CardManager.CARD_COLOR) -> void:
-	GameManager.door_discarded(color)
-	doors_panel.set_doors_found(color, GameManager.found_doors[color].size() as int)
-
 func nightmare_action_selected(type: Constants.NIGHTMARE_DISCARD) -> void:
 	nightmare_action_discard_selected = type
 	match(type):
