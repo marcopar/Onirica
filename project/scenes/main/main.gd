@@ -257,8 +257,6 @@ func open_incantation_panel() -> void:
 		if card_model.type != CardManager.CARD_TYPE.DOOR:
 			all_doors = false
 			break
-	if all_doors:
-		show_lose_panel()
 	
 func card_added_to_limbo(card: Card) -> void:
 	GameManager.card_added_to_limbo(card.card_model)
@@ -399,11 +397,11 @@ func handle_incantation_action(object: Variant) -> void:
 			return
 		door_panel_card_model = panel_card.card_model
 			
-	#reorder cards and close the prophecy panel
+	#reorder cards and close the incantation panel
 	var card_models: Array[CardModel] = incantation_panel.card_models
 	var incantation_cards: Array[PanelCard] = incantation_panel.panel_cards
 		
-	#execute the animations
+	#execute the animations and remove the cards from the deck
 	#in this order for animation purposes
 	for i in range(4, -1, -1):
 		#model in the i position as ordered in the panel
@@ -411,31 +409,31 @@ func handle_incantation_action(object: Variant) -> void:
 		if card_model == null:
 			#skip the empty slots
 			continue
-		#remove the card from the deck
-		GameManager.deck_model.get_next_card()
 		#let the placholder card disappear before animation
-		#we don't want to animate prophecy cards that are to be used only in the panel
+		#we don't want to animate incantation cards that are to be used only in the panel
 		incantation_cards[i].queue_free()
 		#cards go to the deck
 		if card_model == door_panel_card_model:
 			card_models.erase(card_model)
 			var door_card: Card = create_card(card_model, card_container, deck.position, Card.FULL_SIZE, false, Constants.DRAGGING_BASE_Z)
-			door_card.set_back_texture()		
+			door_card.set_back_texture()
 			await door_found(door_card)
+			#this removes the door from the deck
 			GameManager.set_door_as_found(card_model)
 			doors_panel.set_doors_found(door_card.card_model.color, GameManager.found_doors[door_card.card_model.color].size() as int)
 			if GameManager.check_won_game():
 				show_win_panel()
 				return
 		else:
-			#create a fake card showing the back texturre moving to the deck
+			#remove the card from the deck
+			GameManager.deck_model.get_next_card()
+			#create a fake card showing the back texture moving to the deck
 			var card: Card = create_card(card_model, card_container, incantation_panel.card_markers[i].global_position, Card.FULL_SIZE, false, Constants.DRAGGING_BASE_Z)
 			card.set_back_texture()
 			await animate_card_to_deck(card)
 			card.queue_free()
 	
-	#execute the actual deck manipulation
-	#add them at the bootom of the deck in the selected order in the panel
+	#add the cards back at the bootom of the deck in the selected order in the panel
 	for card_model in card_models:
 		if card_model == null:
 			continue
