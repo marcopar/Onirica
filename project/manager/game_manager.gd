@@ -101,29 +101,20 @@ func new_test_game() -> void:
 	deck_model.shuffle_disabled = true
 	deck_model.deck = CardManager.create_test_deck()
 	
-	if the_glyphs_on:
-		deck_model.deck.append_array(CardManager.create_the_glyphs_deck())
+	the_glyphs_on = true
 
 	doors_to_be_found = deck_model.get_number_of(CardManager.CARD_TYPE.DOOR)
 
 	found_doors = {
 		CardManager.CARD_COLOR.RED: [
-			deck_model.search_and_remove(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.RED),
-			deck_model.search_and_remove(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.RED)
 		],
 		CardManager.CARD_COLOR.GREEN: [
-			deck_model.search_and_remove(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.GREEN)
 		],
 		CardManager.CARD_COLOR.BLUE: [
-			deck_model.search_and_remove(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.BLUE),
-			deck_model.search_and_remove(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.BLUE)
 		],
 		CardManager.CARD_COLOR.YELLOW: [
-			deck_model.search_and_remove(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.YELLOW),
-			deck_model.search_and_remove(CardManager.CARD_TYPE.DOOR, CardManager.CARD_COLOR.YELLOW)
 		]		
 	}
-	deck_model.shuffle()
 	
 
 func shuffle() -> void:
