@@ -255,7 +255,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 0
 
-[node name="DeckPanelContainer" type="Control" parent="GUI/VBoxContainer/MainArea" unique_id=1088900565]
+[node name="CardCounterPanelContainer" type="Control" parent="GUI/VBoxContainer/MainArea" unique_id=1088900565]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -266,7 +266,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="DeckPanel" parent="GUI/VBoxContainer/MainArea/DeckPanelContainer" unique_id=2121675712 instance=ExtResource("14_7smn1")]
+[node name="CardCounterPanel" parent="GUI/VBoxContainer/MainArea/CardCounterPanelContainer" unique_id=2121675712 instance=ExtResource("14_7smn1")]
 z_index = 1001
 custom_minimum_size = Vector2(900, 1200)
 layout_mode = 1
