@@ -81,23 +81,18 @@ func create_incantation_card(model: CardModel, parent: Node2D, pposition: Vector
 	
 
 func swap_incantation_cards(card1: PanelCard, card2: PanelCard) -> void:
-	var i1: int = card_models.find(card1.card_model)
-	var i2: int = card_models.find(card2.card_model)
-	var marker1: Marker2D = card_markers[i1]
-	var marker2: Marker2D = card_markers[i2]
-	
-	card1.position = marker2.position
-	card1.rotation = marker2.rotation	
-	card2.position = marker1.position
-	card2.rotation = marker1.rotation
-	
-	card_models[i1] = card2.card_model
-	card_models[i2] = card1.card_model
-	
-	var panel_card: PanelCard = panel_cards[i1]
-	panel_cards[i1] = panel_cards[i2]
-	panel_cards[i2] = panel_card
+	var start: int = card_models.find(card1.card_model)
+	var end: int = card_models.find(card2.card_model)
 
+	card_models.remove_at(start)
+	card_models.insert(end, card1.card_model)
+	panel_cards.remove_at(start)
+	panel_cards.insert(end, card1)
+	
+	for pc in panel_cards:
+		var idx: int = panel_cards.find(pc)
+		pc.position = card_markers[idx].position
+		pc.rotation = card_markers[idx].rotation
 	
 func incantation_cards_reset_position(card: PanelCard) -> void:
 	var i: int = card_models.find(card.card_model)	
