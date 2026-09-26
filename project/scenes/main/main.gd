@@ -19,8 +19,8 @@ extends Node2D
 @onready var exit_button: TextureButton = $GUI/VBoxContainer/MenuBar/ExitButton
 @onready var discard_panel_container: Control = $GUI/VBoxContainer/MainArea/DiscardPanelContainer
 @onready var discard_panel: CardCounterPanel = $GUI/VBoxContainer/MainArea/DiscardPanelContainer/DiscardPanel
-@onready var deck_panel_container: Control = $GUI/VBoxContainer/MainArea/DeckPanelContainer
-@onready var deck_panel: CardCounterPanel = $GUI/VBoxContainer/MainArea/DeckPanelContainer/DeckPanel
+@onready var card_counter_panel_container: Control = $GUI/VBoxContainer/MainArea/CardCounterPanelContainer
+@onready var card_counter_panel: CardCounterPanel = $GUI/VBoxContainer/MainArea/CardCounterPanelContainer/CardCounterPanel
 @onready var win_lose_panel_container: Control = $GUI/VBoxContainer/MainArea/WinLosePanelContainer
 @onready var win_panel: Control = $GUI/VBoxContainer/MainArea/WinLosePanelContainer/WinPanel
 @onready var lose_panel: Control = $GUI/VBoxContainer/MainArea/WinLosePanelContainer/LosePanel
@@ -299,9 +299,9 @@ func touch_event(object: Variant) -> void:
 		if nightmare_action_discard_selected != Constants.NIGHTMARE_DISCARD.DECK \
 			and (not prophecy_panel.visible or not prophecy_panel.can_close_panel()) \
 			and (not incantation_panel.visible):
-			deck_panel.clear_counters()
-			deck_panel.setup(GameManager.deck_model.deck, true)
-			deck_panel_container.visible = true
+			card_counter_panel.clear_counters()
+			card_counter_panel.setup(GameManager.deck_model.deck, true)
+			card_counter_panel_container.visible = true
 			
 	if nightmare_panel.visible and nightmare_action_discard_selected != Constants.NIGHTMARE_DISCARD.NONE:
 		# nightmare action was selected so we check if we should activate the action
