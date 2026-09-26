@@ -250,13 +250,6 @@ func open_incantation_panel() -> void:
 	
 	incantation_panel.card_models = first_5_cards
 	incantation_panel.set_panel_enabled(true)
-	var all_doors: bool = true
-	for card_model in first_5_cards:
-		if card_model == null:
-			continue
-		if card_model.type != CardManager.CARD_TYPE.DOOR:
-			all_doors = false
-			break
 	
 func card_added_to_limbo(card: Card) -> void:
 	GameManager.card_added_to_limbo(card.card_model)
