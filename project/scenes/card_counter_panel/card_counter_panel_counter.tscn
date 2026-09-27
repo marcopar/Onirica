@@ -31,8 +31,8 @@ mouse_filter = 2
 theme_override_constants/separation = 12
 
 [node name="Icon" type="TextureRect" parent="HBoxContainer" unique_id=1778550076]
-clip_contents = true
 custom_minimum_size = Vector2(75, 75)
+clip_contents = true
 layout_mode = 2
 size_flags_vertical = 0
 mouse_filter = 2
